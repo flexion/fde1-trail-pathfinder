@@ -1,8 +1,8 @@
 # Project charter
 
 <!--
-  Filled in during TC1. Every week's Session 2 notebook reads this file and
-  stops if it is still the template. Amended as the cohort goes.
+  Filled in during TC1. Later weeks' notebooks read this file and stop if it
+  is still the template. Amended as the cohort goes.
 -->
 
 **Department:** Flexion, TrailSkills 2.0 Career Exploration team (delivery partner to American Trails and PTBA)
