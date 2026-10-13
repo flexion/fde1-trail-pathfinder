@@ -108,6 +108,11 @@ STATUS_RANK = {GapStatus.HAS: 0, GapStatus.CLOSE: 1, GapStatus.MISSING: 2}
 
 NO_SCORE_SUMMARY = "This role's requirements could not be scored."
 
+# Words a summary must keep when the fact applies. The template always says them;
+# a model summary that drops either one hides a skill, so it falls back to the template.
+NO_TRAINING_PHRASE = "no training"
+LATER_PHRASE = "after these"
+
 Key = tuple[Category, str]
 
 
@@ -210,11 +215,12 @@ def _cost_key(cost: float | None) -> tuple[int, float]:
 
 def plan_next_steps(
     gaps: list[SkillGap], trainings: list[Training]
-) -> tuple[list[tuple[SkillGap, Training, list[SkillGap]]], list[SkillRef]]:
+) -> tuple[list[tuple[SkillGap, Training, list[SkillGap]]], list[SkillRef], list[SkillGap]]:
     """Rank (gap, training) pairs and pick at most REC_MAX.
 
-    Returns the picks as (gap, training, other gaps that training also closes)
-    plus the close-or-missing skills no training covers.
+    Returns the picks as (gap, training, other gaps that training also closes),
+    the close-or-missing skills no training covers, and the gaps a training
+    does cover but the cap left out, so the summary can say they exist.
     """
     open_gaps = [g for g in gaps if g.status != GapStatus.HAS]
     pairs = [
@@ -247,7 +253,12 @@ def plan_next_steps(
         for g in open_gaps
         if not any(_closes(t, g) for t in trainings)
     ]
-    return picks, no_training
+    later = [
+        g
+        for g in open_gaps
+        if _key(g) not in covered and any(_closes(t, g) for t in trainings)
+    ]
+    return picks, no_training, later
 
 
 # --- Words: templates first, the model optional ---------------------------------
@@ -282,7 +293,9 @@ def template_reason(gap: SkillGap, training: Training, also: list[SkillGap]) -> 
     return core + "."
 
 
-def template_summary(role: str, gaps: list[SkillGap], n_steps: int, n_no_training: int) -> str:
+def template_summary(
+    role: str, gaps: list[SkillGap], n_steps: int, n_no_training: int, n_later: int = 0
+) -> str:
     total = len(gaps)
     has = sum(g.status == GapStatus.HAS for g in gaps)
     close = sum(g.status == GapStatus.CLOSE for g in gaps)
@@ -295,6 +308,12 @@ def template_summary(role: str, gaps: list[SkillGap], n_steps: int, n_no_trainin
     parts = [f"You meet {has} of {total} skills for {role}", f"{close} close and {missing} missing"]
     if n_steps:
         parts.append(f"{n_steps} next step{'s' if n_steps != 1 else ''} listed below")
+    if n_later:
+        # The cap keeps the list short; it must not make covered skills look uncovered.
+        parts.append(
+            f"{n_later} more skill{'s' if n_later != 1 else ''} "
+            f"{'have' if n_later != 1 else 'has'} training for {LATER_PHRASE}"
+        )
     if n_no_training:
         parts.append(
             f"no training in the catalog yet for {n_no_training} of them, so that route is "
@@ -314,7 +333,7 @@ _NUMBER = re.compile(r"\d+(?:\.\d+)?")
 _SECOND_SENTENCE = re.compile(r"[.!?]\s+\S")
 
 
-def _facts(request: Request, gaps, picks, no_training) -> dict:
+def _facts(request: Request, gaps, picks, no_training, later) -> dict:
     return {
         "role": request.role,
         "counts": {
@@ -324,6 +343,7 @@ def _facts(request: Request, gaps, picks, no_training) -> dict:
             "missing": sum(g.status == GapStatus.MISSING for g in gaps),
             "next_steps": len(picks),
             "no_training": len(no_training),
+            "later": len(later),
         },
         "gaps": [
             {
@@ -348,10 +368,11 @@ def _facts(request: Request, gaps, picks, no_training) -> dict:
             for gap, training, also in picks
         ],
         "no_training_for": [r.skill for r in no_training],
+        "later": [g.skill for g in later],
     }
 
 
-def _clean_line(text: object, allowed_numbers: set[str], must_mention: str | None) -> str | None:
+def _clean_line(text: object, allowed_numbers: set[str], must_mention: tuple[str, ...] = ()) -> str | None:
     """The model's line if it passes every check, else None. One line, one sentence."""
     if not isinstance(text, str):
         return None
@@ -360,12 +381,22 @@ def _clean_line(text: object, allowed_numbers: set[str], must_mention: str | Non
         return None
     if _SECOND_SENTENCE.search(line):
         return None
-    if must_mention and must_mention.lower() not in line.lower():
+    if any(m.lower() not in line.lower() for m in must_mention):
         return None
     # A number the facts do not contain is an invented fact (a cost, a count).
     if any(n not in allowed_numbers for n in _NUMBER.findall(line)):
         return None
     return line
+
+
+def _summary_must_mention(facts: dict) -> tuple[str, ...]:
+    """The phrases a model summary has to keep, given these facts."""
+    must = []
+    if facts["no_training_for"]:
+        must.append(NO_TRAINING_PHRASE)
+    if facts["later"]:
+        must.append(LATER_PHRASE)
+    return tuple(must)
 
 
 def _model_words(facts: dict, n_steps: int) -> tuple[list[str | None], str | None]:
@@ -381,7 +412,9 @@ def _model_words(facts: dict, n_steps: int) -> tuple[list[str | None], str | Non
         "and the level gap it closes, e.g. 'Takes <skill> from Entry to the Full Performance "
         "this role requires.' or, when 'from' is not claimed, 'Covers <skill> at the Entry "
         "level you have not claimed yet.' Mention 'free' only if its cost is free. "
-        "Then write ONE plain summary sentence for her, under 35 words, strengths first.\n"
+        "Then write ONE plain summary sentence for her, under 35 words, strengths first. "
+        f"If no_training_for is not empty, the summary must include the words '{NO_TRAINING_PHRASE}'. "
+        f"If later is not empty, it must say those skills have training for '{LATER_PHRASE}'.\n"
         'Return: {"reasons": ["...", ...], "summary": "..."}'
     )
     try:
@@ -397,10 +430,12 @@ def _model_words(facts: dict, n_steps: int) -> tuple[list[str | None], str | Non
     if not isinstance(reasons, list) or len(reasons) != n_steps:
         reasons = [None] * n_steps
     checked = [
-        _clean_line(text, allowed, step["skill"])
+        _clean_line(text, allowed, (step["skill"],))
         for text, step in zip(reasons, facts["next_steps"], strict=True)
     ]
-    summary = _clean_line(data.get("summary") if isinstance(data, dict) else None, allowed, None)
+    summary = _clean_line(
+        data.get("summary") if isinstance(data, dict) else None, allowed, _summary_must_mention(facts)
+    )
     return checked, summary
 
 
@@ -417,14 +452,14 @@ def solve(request: Request, *, use_model: bool = True) -> Response:
         return Response(gaps=[], summary=NO_SCORE_SUMMARY, needs_review=True, review_reason=reason)
 
     gaps = compute_gaps(request)
-    picks, no_training = plan_next_steps(gaps, request.trainings)
+    picks, no_training, later = plan_next_steps(gaps, request.trainings)
 
     reasons = [template_reason(g, t, also) for g, t, also in picks]
-    summary = template_summary(request.role, gaps, len(picks), len(no_training))
+    summary = template_summary(request.role, gaps, len(picks), len(no_training), len(later))
 
     if use_model:
         model_reasons, model_summary = _model_words(
-            _facts(request, gaps, picks, no_training), len(picks)
+            _facts(request, gaps, picks, no_training, later), len(picks)
         )
         reasons = [m or t for m, t in zip(model_reasons, reasons, strict=True)]
         summary = model_summary or summary

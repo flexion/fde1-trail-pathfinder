@@ -7,6 +7,7 @@ split is the point: the API is the product, the UI is disposable.
 
 import json
 import os
+from functools import cache
 from pathlib import Path
 
 from fastapi.responses import HTMLResponse
@@ -90,6 +91,7 @@ def homepage() -> str:
 
 
 @app.get("/sample")
+@cache  # the file only changes with a new image, so read it once
 def sample() -> dict:
     """Synthetic roles and trainings for the UI. Week 3 replaces this with retrieval."""
     return json.loads(SAMPLE.read_text(encoding="utf-8"))

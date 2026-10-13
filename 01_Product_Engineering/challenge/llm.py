@@ -34,6 +34,16 @@ SYSTEM_PROMPT = os.getenv(
 )
 
 
+def _call_kwargs(messages: list[dict], **options) -> dict:
+    """Arguments every model call shares, so the two paths cannot drift apart."""
+    kwargs = {"model": MODEL, "messages": messages, **options}
+    if API_BASE:
+        kwargs["api_base"] = API_BASE
+    if EXTRA_HEADERS:
+        kwargs["extra_headers"] = EXTRA_HEADERS
+    return kwargs
+
+
 def stream_reply(message: str, history: list[dict] | None = None):
     """Yield the assistant's reply as it arrives, one growing string at a time.
 
@@ -45,14 +55,8 @@ def stream_reply(message: str, history: list[dict] | None = None):
     messages.extend(history or [])
     messages.append({"role": "user", "content": message})
 
-    kwargs = {"model": MODEL, "messages": messages, "stream": True}
-    if API_BASE:
-        kwargs["api_base"] = API_BASE
-    if EXTRA_HEADERS:
-        kwargs["extra_headers"] = EXTRA_HEADERS
-
     reply = ""
-    for chunk in completion(**kwargs):
+    for chunk in completion(**_call_kwargs(messages, stream=True)):
         piece = chunk.choices[0].delta.content
         if piece:
             reply += piece
@@ -70,13 +74,7 @@ def complete(prompt: str, *, system: str | None = None, timeout: float = 20) -> 
     messages = [{"role": "system", "content": system}] if system else []
     messages.append({"role": "user", "content": prompt})
 
-    kwargs = {"model": MODEL, "messages": messages, "timeout": timeout}
-    if API_BASE:
-        kwargs["api_base"] = API_BASE
-    if EXTRA_HEADERS:
-        kwargs["extra_headers"] = EXTRA_HEADERS
-
-    content = completion(**kwargs).choices[0].message.content
+    content = completion(**_call_kwargs(messages, timeout=timeout)).choices[0].message.content
     if not content:
         raise ValueError("model returned an empty reply")
     return content

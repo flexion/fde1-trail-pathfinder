@@ -101,7 +101,7 @@ challenge, which carries the full detail.
 ### 📤 Share
 
 - [ ] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
-- [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
+- [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->
@@ -1162,16 +1162,16 @@ provider-reported usage, three runs. Each number is marked **measured** or
 **looked up**; anything else is **assumed** and says so.
 
 ```
-tokens_in        = 531            measured (identical on all three runs)
-tokens_out       = 221            measured (209, 186, 267; mean)
-$ per 1M in/out  = $0.20 / $1.20  looked up (Bedrock, GPT-5.6 Luna, after the July 2026 cut; older pages show $0.22 / $1.32)
-cost per call    = 531/1e6 × 0.20 + 221/1e6 × 1.20 = $0.00037
+tokens_in        = 833            measured (identical on all three runs)
+tokens_out       = 727            measured (598, 827, 755; mean; includes the model's thinking tokens)
+$ per 1M in/out  = $0.11 / $0.55  looked up (AWS Price List API, 2026-10-13: Claude Haiku 5.5 on Bedrock, us-east-2, US cross-region profile; the global profile is $0.10 / $0.50)
+cost per call    = 833/1e6 × 0.11 + 727/1e6 × 0.55 = $0.00049
 calls per day    = 76             assumed: ~1,600 members (looked up) × one comparison a month ÷ 21 working days. Confirm with the product owner.
-model per year   = 0.00037 × 76 × 250 = ~$7
+model per year   = 0.00049 × 76 × 250 = ~$9
 minutes per pass = 30             assumed: an ad hoc supervisor or mentor conversation; nobody has timed one
 loaded $/hour    = $28            looked up: a crew-lead posting in the project's sources pays $20/h; × 1.4 for load
 human per year   = 30/60 × 28 × 76 × 250 = ~$266,000
-ratio            = ~38,000×       comfortable, and misleading
+ratio            = ~28,000×       comfortable, and misleading
 ```
 
 Misleading because the human pass this replaces mostly does not happen: the
@@ -1181,10 +1181,11 @@ to approve training alignments and the retrieval layer the Week 3 build needs.
 The product owner's own estimate of what it should cost goes here after Step 12.
 
 **p95 latency target: 3 seconds end to end on a phone with weak signal.**
-Measured on a laptop over the gateway: 1.56 s, 1.88 s, 2.22 s. The no-model
+Measured end to end against the deployed app (Claude Haiku 5.5 on Bedrock), from a
+laptop: 3.96 s, 3.37 s, 3.61 s, so all three miss the target. The no-model
 fallback path is effectively instant, which is the point of having one.
 Latency, not cost, is the one more likely to stop this being used: the persona
-explores in the evening on poor signal, and at $7 a year nobody will ever ask
+explores in the evening on poor signal, and at $9 a year nobody will ever ask
 about the bill.
 
 **What I would swap to run this at work:**
@@ -1253,7 +1254,7 @@ challenge, which carries the full detail.
 ### 📤 Share
 
 - [ ] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
-- [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
+- [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->

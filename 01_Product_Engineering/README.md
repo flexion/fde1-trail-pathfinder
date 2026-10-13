@@ -268,7 +268,7 @@ challenge, which carries the full detail.
 ### 📤 Share
 
 - [ ] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
-- [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
+- [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->

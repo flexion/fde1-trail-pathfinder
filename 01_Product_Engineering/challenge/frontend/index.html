@@ -151,6 +151,7 @@
         div.className = "error";
         div.textContent = message;
         document.getElementById("errors").appendChild(div);
+        return div;
       }
 
       fetch("/health")
@@ -164,7 +165,8 @@
       // A blocked CDN fails silently (CLAUDE.md gotcha 4). Say so on the page.
       setTimeout(() => {
         if (!window.gradioClientLoaded) {
-          showError(
+          // Kept so a slow-but-successful load can take the warning back down.
+          window.cdnWarning = showError(
             "The Gradio client did not load from cdn.jsdelivr.net. Chat and Compare " +
               "will not work on this network until that request is allowed."
           );
@@ -180,6 +182,7 @@
       import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
 
       window.gradioClientLoaded = true;
+      window.cdnWarning?.remove();
 
       let client;
       try {
@@ -379,6 +382,8 @@
         } catch (err) {
           out.textContent = "(no reply)";
           showError(`Chat failed: ${err.message || err}`);
+          // Give the message back so a retry is one click, unless they already typed something new.
+          if (!input.value) input.value = message;
           return;
         }
 

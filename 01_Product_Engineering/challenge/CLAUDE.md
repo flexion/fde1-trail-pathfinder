@@ -139,6 +139,8 @@ Each one comes from watching the agent get something wrong in this repo.
    step may name a training that is not in the request's catalog, and the
    step count may not exceed `REC_MAX`. The agent wrote a golden that broke
    the ordering rule it had just written down; only a script caught it.
+   That script is `check_goldens.py`: run `uv run python check_goldens.py`
+   from `challenge/` and do not call the goldens done until it exits 0.
 2. **`README.md` contains the deliverables block twice.** When inserting
    student answers, anchor to the *last* `deliverables:start` marker, not the
    first. The agent appended the answers section at line 56 the first time.
