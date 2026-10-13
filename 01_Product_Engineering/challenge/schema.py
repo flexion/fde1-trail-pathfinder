@@ -130,12 +130,14 @@ class Response(BaseModel):
     review_reason: str | None = Field(default=None, description="Why needs_review is True")
 
 
-def solve(request: Request) -> Response:
+def solve(request: Request, *, use_model: bool = True) -> Response:
     """The whole product as one signature.
 
     Compute the gap deterministically from ratings against requirements. Pick
     up to REC_MAX trainings whose declared skills close a close-or-missing
     gap. Write one-line reasons. Never assert a fact the request did not
-    carry. Implemented in TC1 Step 8 and reimplemented over retrieval in TC3.
+    carry. Implemented in `pathfinder.solve()`; reimplemented over retrieval in TC3.
     """
-    raise NotImplementedError("implement against this signature")
+    from pathfinder import solve as _solve
+
+    return _solve(request, use_model=use_model)
