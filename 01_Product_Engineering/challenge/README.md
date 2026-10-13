@@ -100,7 +100,7 @@ challenge, which carries the full detail.
 
 ### 📤 Share
 
-- [ ] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
+- [x] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
 - [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
@@ -752,31 +752,31 @@ Fill these in directly in this README, and commit it.
 
 **Who did you ask?** (role, not name)
 
-Product owner / product manager on Flexion's TrailSkills 2.0 team. Conversation requested, not yet held as of 2026-10-13. Everything below is **from docs** (the project's AWS grant draft and technical-preferences note) until it is **confirmed** in that conversation; the full table is in [`use_case/ecosystem.md`](../../use_case/ecosystem.md).
+The Optionality Orchestrator, a researcher and developer on the project's original team, in a recorded Zoom demo on 2026-10-13. We did not put the infrastructure questions to them: for this prototype the infrastructure is ours to decide. Each answer below is marked **confirmed (our deployment)**, **team decision**, or **from docs, not asked** (the client's production plan); the full table is in [`use_case/ecosystem.md`](../../use_case/ecosystem.md). Next: a Flexion project manager closer to the project, planned to be booked for the week of 2026-10-19.
 
 **Where would this application run?**
 
-**From docs:** nowhere yet. The planned shape is serverless on AWS (static front end on S3 behind a CDN, Lambda behind API Gateway). A Python container has no slot in that plan, so the real answer is either a small container service added to it or a port of this logic into the TypeScript domain behind its model-provider port.
+**Confirmed (our deployment):** one container on Amazon ECS (Express Mode) in Flexion's AWS account, with a public HTTPS endpoint. **From docs, not asked:** the client's production plan is serverless (S3 behind a CDN, Lambda behind API Gateway), where a Python container has no slot; there the answer is a small container service added to it, or a port of this logic into the TypeScript domain behind its model-provider port.
 
 **Which cloud provider, if any?**
 
-**From docs:** AWS, under an AWS Imagine Grant application. The grant form says the client has no AWS account yet, so which account a prototype may use is an open question.
+**Team decision:** AWS, in Flexion's account, so the prototype is not blocked by the client having no AWS account yet. **From docs, not asked:** the platform is planned on AWS under an AWS Imagine Grant; which account production uses is open.
 
 **How would users authenticate?**
 
-**From docs:** Amazon Cognito with role-based access, per the grant. The explorer persona is signed out and the gap view is specced as signed in, so the answer is partly a product decision.
+**Team decision:** they would not. A sign-in step would turn away the explorer this is built for. This departs from the spec (gap view signed in) and from the grant's plan for Amazon Cognito.
 
 **Could this container reach an external LLM API? If not, what would it use instead?**
 
-**From docs:** unknown for the target account. The platform plan names Amazon Bedrock as the model provider; this app already runs through Flexion's Bifrost gateway, and `llm.py` is provider-agnostic, so the swap is `LLM_MODEL` and `LLM_API_BASE` in config, not code.
+**Confirmed (our deployment):** yes. The deployed container calls Claude Haiku 5.5 on Amazon Bedrock through its ECS task role, with no key to store. Local development ran through Flexion's Bifrost gateway; `llm.py` is provider-agnostic, so moving between them is `LLM_MODEL` and `LLM_API_BASE` in config, not code. **Team decision:** Bedrock, with a low-cost model until further analysis.
 
 **What surprised you in this conversation?**
 
-<!-- after the conversation -->
+How hard it is to identify the real stakeholders. The person we reached shaped the project early, but could not say what they would use the tool for, and pointed us to a project manager closer to the work. And their view that results this deterministic do not need an AI solution. Pathfinder already computes the gaps and picks the trainings without a model and uses AI only to reword them, so we now need to explore whether this project needs AI at all.
 
 **What would you have to change about this app to make it deployable there?**
 
-**From docs, pending confirmation:** vendor the CDN library into the image, put Cognito in front, read secrets from the account's secret store instead of `--env-file`, point the model config at Bedrock, and decide whether this stays a Python service or becomes a TypeScript adapter. Nothing in the contract (`schema.py`) changes.
+**For the prototype: nothing; it is deployed.** One thing is still open: vendor the CDN library into the image so the page does not depend on a public CDN at runtime. **For the client's production platform (from docs, not asked):** decide whether this stays a Python container service or becomes a TypeScript adapter behind the model-provider port, and read any future secrets from Secrets Manager. If the no-login decision holds, Cognito is not needed for the explorer path. Nothing in the contract (`schema.py`) changes.
 
 Then log the answers in [`use_case/ecosystem.md`](../../use_case/ecosystem.md)
 and the person you asked in
@@ -1155,6 +1155,26 @@ Verified: `docker build -t challenge .` and
 `localhost:7860`; `/health` reports the gateway model; the container runs as
 `appuser`, not root; there is no `.env` inside the image.
 
+### Step 12 — the demo
+
+Shown on 2026-10-13 in a live, recorded Zoom call to the Optionality
+Orchestrator, a researcher and developer on the project's original team who
+built early prototypes that did not go forward. We clicked through the app
+while they watched, then asked questions. Logged in
+[`use_case/stakeholders.md`](../../use_case/stakeholders.md).
+
+1. **What would you use this for?** They did not know.
+2. **What is missing before you would actually use it?** They were not sure.
+   They said less AI is better, since a skills knowledge base already exists,
+   and that the user they picture is someone on the trails with a phone and
+   limited internet access.
+3. **What would you expect it to cost?** Not asked. Our own position is under
+   the napkin math below: free to users.
+
+**The goldens.** They saw all six, rejected none, and had no reaction to the
+ranking. What the demo changed is in
+[`use_case/decisions.md`](../../use_case/decisions.md).
+
 ## Bring it to work
 
 **The napkin math.** One real call through `compare_skills_to_role` (golden 1),
@@ -1178,7 +1198,10 @@ Misleading because the human pass this replaces mostly does not happen: the
 charter's cost is that people *don't* get this conversation, not that it is
 expensive. The real cost of running this is not tokens; it is the steward time
 to approve training alignments and the retrieval layer the Week 3 build needs.
-The product owner's own estimate of what it should cost goes here after Step 12.
+**Their estimate:** not asked in the Step 12 demo, so there is no stakeholder
+number to compare. Our position: it should cost users nothing, because its job
+is to bring new people into the app. The ~$9 a year above is a running cost;
+who pays it has not been decided.
 
 **p95 latency target: 3 seconds end to end on a phone with weak signal.**
 Measured end to end against the deployed app (Claude Haiku 5.5 on Bedrock), from a
@@ -1195,10 +1218,11 @@ about the bill.
   employer-validated) and for a training catalog that today is about 40 calendar
   entries with no approved skill alignment. The first real input is the skill
   map; the first real blocker is that the catalog mapping does not exist.
-- **Model or endpoint.** Flexion's Bifrost gateway today; Amazon Bedrock in the
-  platform plan. Same model family, same price order, one line in `.env`. The
-  approved gateway does not change the price; it changes who can see the
-  traffic.
+- **Model or endpoint.** Local development ran through Flexion's Bifrost
+  gateway; the deployed app runs Claude Haiku 5.5 on Amazon Bedrock, which is
+  also the model provider in the platform plan. Moving between them is a config
+  change (`LLM_MODEL`, `LLM_API_BASE`), not a code change. The approved gateway
+  does not change the price; it changes who can see the traffic.
 - **Access or approval.** PTBA and American Trails steward sign-off on any
   training alignment before it can drive a next step (BR-3.6); product owner
   approval to use the skill map in a non-public build; and an AWS account to
@@ -1253,7 +1277,7 @@ challenge, which carries the full detail.
 
 ### 📤 Share
 
-- [ ] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
+- [x] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
 - [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline

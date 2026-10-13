@@ -18,36 +18,55 @@ put real hostnames, IPs, or architecture diagrams in this file.
 
 **Who did you ask?** (role, not name)
 
-Product owner / product manager on Flexion's TrailSkills 2.0 team. Conversation
-requested; until it happens, the rows below come from the project's own
-planning documents (the AWS grant draft and the technical-preferences note)
-and are marked **from docs**. A row changes to **confirmed** after the
-conversation.
+The Optionality Orchestrator, a researcher and developer on the project's
+original team who built early prototypes that did not go forward. Live Zoom
+call on 2026-10-13 (recorded), with Mai Yer Lee and Vaibhav Nigam: we clicked
+through the app while they watched, then asked questions. We did not put the
+eight infrastructure questions to them. For this prototype the infrastructure
+is ours to decide, so each row says where its answer comes from:
+
+- **Confirmed (our deployment):** true of the running TC1 prototype, and
+  checkable in our AWS account.
+- **Team decision:** a choice our team (Kevin, Mai Yer, Vaibhav) made and owns.
+- **From docs, not asked:** the client's production plan, read from the AWS
+  grant draft and the technical-preferences note. Nobody has confirmed it.
+
+Next conversation: a Flexion project manager closer to the project, who the
+Orchestrator pointed us to. Planned to be booked for the week of 2026-10-19.
 
 | # | Question | Answer |
 | :---: | --- | --- |
-| 1 | Where do internal apps run? (k8s, ECS, App Service, a VM someone maintains) | **From docs:** nothing runs yet. The planned production shape is serverless on AWS: static front end on S3 behind a CDN, API as Lambda functions behind API Gateway. No Kubernetes, no VMs. A Python container like this one has no obvious home in that plan, which is the first thing to ask about. |
-| 2 | Which cloud? AWS, Azure, GCP, on-prem, several? | **From docs:** AWS. The platform is being planned against an AWS Imagine Grant application, and the grant form itself says the client has no AWS account yet. Which account a course prototype may run in, Flexion's or the client's, is the question to ask. |
-| 3 | Is there an internal container registry? | **From docs:** none named. If the API runs as a container it would be ECR in whichever account owns the deployment. Unknown until asked. |
-| 4 | How do users log in? (Okta, Entra ID, Ping, SAML, homegrown) | **From docs:** Amazon Cognito with role-based access is the planned identity layer for the platform. The Pathfinder gap view is specced as signed-in, while the explorer persona arrives signed out, so this is a product question as much as an infrastructure one. |
-| 5 | Can the app reach the internet? Egress proxy? Allowlist? | **From docs:** unknown. Serverless on AWS usually means open egress by default, but the firm's and the client's security posture are not written down anywhere I can find. |
-| 6 | Where do secrets come from? (Vault, Secrets Manager, Key Vault) | **From docs:** not stated. AWS Secrets Manager or SSM Parameter Store is the default in that shape; `--env-file` is a laptop-only answer. |
-| 7 | Who approves a deployment, and what review does it need? | **From docs:** unknown. The grant names a platform steward role to be created at the client; who signs off on a deployment today is the question to ask. |
-| 8 | Is there an approved internal LLM endpoint already? | **From docs:** the grant names Amazon Bedrock as the model provider for the platform. For the course, Flexion's Bifrost gateway is the approved endpoint this app already uses, so swapping to Bedrock later is a config change in `.env`, not a code change. |
+| 1 | Where do internal apps run? (k8s, ECS, App Service, a VM someone maintains) | **Confirmed (our deployment):** the prototype runs as one container on Amazon ECS (Express Mode) in Flexion's AWS account, with a public HTTPS endpoint and a `/health` check. **From docs, not asked:** the client's planned production shape is serverless (static front end on S3 behind a CDN, Lambda behind API Gateway), where a Python container has no obvious home. |
+| 2 | Which cloud? AWS, Azure, GCP, on-prem, several? | **Team decision:** AWS, in Flexion's account, so the prototype is not blocked by the client having no AWS account yet. **From docs, not asked:** the platform itself is planned on AWS under an AWS Imagine Grant; which account production uses is open. |
+| 3 | Is there an internal container registry? | **Confirmed (our deployment):** Amazon ECR, in the same Flexion account, holds the image the service runs. Account and repository details are left out because this repo is public. |
+| 4 | How do users log in? (Okta, Entra ID, Ping, SAML, homegrown) | **Team decision:** no login. A sign-in step would turn away the explorer this is built for. This departs from the spec, which has the gap view signed in, and from the grant's plan for Amazon Cognito. |
+| 5 | Can the app reach the internet? Egress proxy? Allowlist? | **Team decision:** public access is required, so the app must be reachable from the open internet. **Confirmed (our deployment):** it is, at a public HTTPS URL; it calls Amazon Bedrock outbound, and the browser loads the Gradio client from a public CDN (`cdn.jsdelivr.net`). **From docs, not asked:** whether the client's production network allows either. |
+| 6 | Where do secrets come from? (Vault, Secrets Manager, Key Vault) | **Team decision:** AWS Secrets Manager when the app needs a secret. **Confirmed (our deployment):** today it needs none; it reaches Bedrock through its ECS task role, so there is no key to store. |
+| 7 | Who approves a deployment, and what review does it need? | **Team decision:** our team (Kevin, Mai Yer, Vaibhav) approves prototype deployments. We need control over this; it is not a client decision. **From docs, not asked:** the grant's planned platform steward role at the client would own production. |
+| 8 | Is there an approved internal LLM endpoint already? | **Team decision:** Amazon Bedrock, with a low-cost model (Claude Haiku 5.5) until further analysis. **Confirmed (our deployment):** that is what the live app calls. The grant also names Bedrock as the platform's model provider, and `llm.py` is provider-agnostic, so a different model is a config change. |
 
 **What surprised you?**
 
-<!-- after the conversation -->
+How hard it is to identify the real stakeholders. The person we reached shaped
+the project early, but could not say what they would use the tool for, and
+pointed us to a project manager closer to the work. And their view that
+results this deterministic do not need an AI solution. Pathfinder already
+computes the gaps and picks the trainings without a model and uses AI only to
+reword them, so we now need to explore whether this project needs AI at all.
 
 **What would you have to change about your app to deploy there?**
 
-**From docs, pending confirmation:** the planned platform is TypeScript on Next.js
-with the model behind a provider port, so this Python app would not ship as-is.
-It would either run as a small container service behind the API (ECS or App
-Runner, which the plan does not have yet) or be ported into the TypeScript
-domain as the `ModelProvider` adapter. Either way: vendor the CDN library,
-add Cognito in front, read secrets from the account's secret store, and point
-`LLM_API_BASE` at Bedrock instead of the course gateway.
+**For the prototype: nothing; it is deployed** (rows 1, 3, 5, 6 and 8). One
+thing is still open: the page loads the Gradio client from a public CDN at
+runtime, and vendoring it into the image would remove that dependency (Step 9
+in the challenge README).
+
+**For the client's production platform (from docs, not asked):** the plan is
+TypeScript on Next.js with the model behind a provider port, so this Python app
+would either run as a small container service beside the API (ECS, which the
+plan does not have yet) or be ported into the TypeScript domain as the
+`ModelProvider` adapter. If the no-login decision in row 4 holds, Cognito is not
+needed for the explorer path.
 
 ---
 
