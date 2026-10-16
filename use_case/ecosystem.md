@@ -20,14 +20,14 @@ put real hostnames, IPs, or architecture diagrams in this file.
 
 The Optionality Orchestrator, a researcher and developer on the project's
 original team who built early prototypes that did not go forward. Live Zoom
-call on 2026-10-13 (recorded), with Mai Yer Lee and Vaibhav Nigam: we clicked
+call on 2026-10-13 (recorded), with two of our team: we clicked
 through the app while they watched, then asked questions. We did not put the
 eight infrastructure questions to them. For this prototype the infrastructure
 is ours to decide, so each row says where its answer comes from:
 
 - **Confirmed (our deployment):** true of the running TC1 prototype, and
   checkable in our AWS account.
-- **Team decision:** a choice our team (Kevin, Mai Yer, Vaibhav) made and owns.
+- **Team decision:** a choice our three-person course team made and owns.
 - **From docs, not asked:** the client's production plan, read from the AWS
   grant draft and the technical-preferences note. Nobody has confirmed it.
 
@@ -42,7 +42,7 @@ Orchestrator pointed us to. Planned to be booked for the week of 2026-10-19.
 | 4 | How do users log in? (Okta, Entra ID, Ping, SAML, homegrown) | **Team decision:** no login. A sign-in step would turn away the explorer this is built for. This departs from the spec, which has the gap view signed in, and from the grant's plan for Amazon Cognito. |
 | 5 | Can the app reach the internet? Egress proxy? Allowlist? | **Team decision:** public access is required, so the app must be reachable from the open internet. **Confirmed (our deployment):** it is, at a public HTTPS URL; it calls Amazon Bedrock outbound, and the browser loads the Gradio client from a public CDN (`cdn.jsdelivr.net`). **From docs, not asked:** whether the client's production network allows either. |
 | 6 | Where do secrets come from? (Vault, Secrets Manager, Key Vault) | **Team decision:** AWS Secrets Manager when the app needs a secret. **Confirmed (our deployment):** today it needs none; it reaches Bedrock through its ECS task role, so there is no key to store. |
-| 7 | Who approves a deployment, and what review does it need? | **Team decision:** our team (Kevin, Mai Yer, Vaibhav) approves prototype deployments. We need control over this; it is not a client decision. **From docs, not asked:** the grant's planned platform steward role at the client would own production. |
+| 7 | Who approves a deployment, and what review does it need? | **Team decision:** our three-person course team approves prototype deployments. We need control over this; it is not a client decision. **From docs, not asked:** the grant's planned platform steward role at the client would own production. |
 | 8 | Is there an approved internal LLM endpoint already? | **Team decision:** Amazon Bedrock, with a low-cost model (Claude Haiku 5.5) until further analysis. **Confirmed (our deployment):** that is what the live app calls. The grant also names Bedrock as the platform's model provider, and `llm.py` is provider-agnostic, so a different model is a config change. |
 
 **What surprised you?**
