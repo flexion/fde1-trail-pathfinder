@@ -11,7 +11,12 @@ That property matters more than it looks like it does right now -- see the
 import json
 import os
 
+import litellm
 from litellm import completion
+
+# litellm prints a "Provider List" banner on every call with a custom model
+# name. Noise only; the calls succeed. Silence it.
+litellm.suppress_debug_info = True
 
 # LiteLLM picks the provider from the model string:
 #   "gpt-4.1-mini"                    -> OpenAI
@@ -29,6 +34,16 @@ SYSTEM_PROMPT = os.getenv(
 )
 
 
+def _call_kwargs(messages: list[dict], **options) -> dict:
+    """Arguments every model call shares, so the two paths cannot drift apart."""
+    kwargs = {"model": MODEL, "messages": messages, **options}
+    if API_BASE:
+        kwargs["api_base"] = API_BASE
+    if EXTRA_HEADERS:
+        kwargs["extra_headers"] = EXTRA_HEADERS
+    return kwargs
+
+
 def stream_reply(message: str, history: list[dict] | None = None):
     """Yield the assistant's reply as it arrives, one growing string at a time.
 
@@ -40,15 +55,26 @@ def stream_reply(message: str, history: list[dict] | None = None):
     messages.extend(history or [])
     messages.append({"role": "user", "content": message})
 
-    kwargs = {"model": MODEL, "messages": messages, "stream": True}
-    if API_BASE:
-        kwargs["api_base"] = API_BASE
-    if EXTRA_HEADERS:
-        kwargs["extra_headers"] = EXTRA_HEADERS
-
     reply = ""
-    for chunk in completion(**kwargs):
+    for chunk in completion(**_call_kwargs(messages, stream=True)):
         piece = chunk.choices[0].delta.content
         if piece:
             reply += piece
             yield reply
+
+
+def complete(prompt: str, *, system: str | None = None, timeout: float = 20) -> str:
+    """Return one whole reply, no streaming, or raise.
+
+    For callers that need the full text before they can check it (pathfinder
+    validates every line). The explicit timeout is the point: without one a
+    slow provider hangs the request, and the caller's template fallback never
+    gets its chance (BR-10.7).
+    """
+    messages = [{"role": "system", "content": system}] if system else []
+    messages.append({"role": "user", "content": prompt})
+
+    content = completion(**_call_kwargs(messages, timeout=timeout)).choices[0].message.content
+    if not content:
+        raise ValueError("model returned an empty reply")
+    return content

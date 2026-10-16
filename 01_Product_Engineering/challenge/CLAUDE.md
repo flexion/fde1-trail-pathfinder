@@ -130,6 +130,33 @@ model drive Week 1 are the ones who stall in Week 6.
 
 ---
 
+## Rules added during TC1
+
+Each one comes from watching the agent get something wrong in this repo.
+
+1. **Validate `use_case/evals/golden.jsonl` against `schema.py` before saying
+   it is done.** The gap list must be ordered has → close → missing, no next
+   step may name a training that is not in the request's catalog, and the
+   step count may not exceed `REC_MAX`. The agent wrote a golden that broke
+   the ordering rule it had just written down; only a script caught it.
+   That script is `check_goldens.py`: run `uv run python check_goldens.py`
+   from `challenge/` and do not call the goldens done until it exits 0.
+2. **`README.md` contains the deliverables block twice.** When inserting
+   student answers, anchor to the *last* `deliverables:start` marker, not the
+   first. The agent appended the answers section at line 56 the first time.
+3. **Mark every infrastructure answer with where it came from:** `confirmed`
+   (a conversation with a named role), `confirmed (our deployment)` (true of
+   the running prototype, checkable in our AWS account), `team decision` (a
+   choice the TC1 team made and owns), or `from docs`. Anything in
+   `use_case/ecosystem.md` that did not come from one of the first three is a
+   reading of planning documents, and planning documents disagree with each
+   other (database, auth state, accessibility level). The agent once wrote an
+   unsourced claim about which AWS account would be used.
+4. **Never put a cost, volume, or headline statistic in `use_case/` without a
+   source.** The project's own wiki flags its best-known figures as
+   unconfirmed. "Unknown, asking the product owner" is an acceptable answer;
+   a plausible number is not.
+
 ## What this project is
 
 A small chat application built on `gradio.Server`, containerized with Docker.

@@ -11,7 +11,7 @@ Use roles, not names. This is a public repo.
 
 | Week | Who (role) | What you asked | What you learned | Follow-up |
 | --- | --- | --- | --- | --- |
-| 1 | <!-- e.g. Platform Engineering lead --> | <!-- where would a container run here? --> | <!-- --> | <!-- --> |
+| 1 | Optionality Orchestrator (researcher and developer on the project's original team; built early prototypes that did not go forward) | Live Zoom demo of Pathfinder on 2026-10-13, recorded: what would you use this for, what is missing before you would use it, and the six goldens and their ranking. Cost and the infrastructure questions were not asked. | Could not say what they would use it for, or what is missing. Less AI is better, since a skills knowledge base exists. Pictures the user as someone on the trails with a phone and limited internet. Saw all six goldens, rejected none, no reaction to the ranking. Their view: deterministic results do not need an AI solution. | Pointed us to a Flexion project manager closer to the project; planned to be booked for the week of 2026-10-19. Explore whether the product needs AI at all (`decisions.md`). |
 
 ---
 
