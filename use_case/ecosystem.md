@@ -97,6 +97,14 @@ network. The useful comparison is against a Lambda or container in the target
 account, which is a Week 9 measurement. The one thing this already says: the
 course app's CDN dependency works here and may not work there.
 
+---
+
+## Week 2 — could a local model work?
+
+A local model only makes sense if users need model-written wording offline;
+first test whether the templates suffice and verify real signal gaps, then
+benchmark a small model on a phone if needed, and the app itself would also
+have to run on the phone.
 
 ---
 
