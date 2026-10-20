@@ -1,8 +1,5 @@
 # Datasheet
 
-<!-- Written in TC2, alongside your synthetic data. This file is committed; the
-     data itself is not. -->
-
 ## What this data is
 
 **Generated on:** 2026-10-18
@@ -37,15 +34,26 @@ gap logic; only `golden.jsonl` carries that claim.
 
 ## What it cannot validate
 
-<!-- The important half. Synthetic data cannot tell you about real distribution,
-     real frequency, or failure modes you did not think to generate. Say so. -->
-
 - This data cannot show whether a self-rating is honest. A person who rates
   themselves Expert on every skill produces a zero-gap profile regardless of
   their real skill level, and the system has no way to tell the two apart —
   catching that would require an interactive, conversational assessment, which
   this system does not have. The `gap_count: zero_gaps` case only tests that
   the system displays an empty result correctly, not that the zero gaps are real.
+- This data cannot prove each situation was tested 3 times, because 4 of the
+  35 profiles don't match the situation they were labeled as. For example,
+  Profile 32 was supposed to be missing 1 to 3 skills. It's missing none.
+  Also, Profiles 7 and 34 were supposed to have training available. Each also
+  has a skill with no training.
+- This data cannot show how often having no skill gaps happens for real
+  members, because we made an equal number of profiles for every situation on
+  purpose.
+- This data cannot show whether the trainings Pathfinder suggests are real and
+  currently available to members, because the AI model made up the training
+  list.
+- This data cannot prove that the suggestions in this data are correct,
+  because the same AI model wrote both the profiles and the suggestions, and no
+  person has reviewed the suggestions against a real skills assessment.
 
 ## What it must never be compared against
 
