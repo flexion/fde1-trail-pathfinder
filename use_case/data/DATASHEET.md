@@ -12,7 +12,8 @@ in `02_Open_Weights/challenge/axes.py` — not real records.
 35 schema-valid. 0 dead axis combinations (every one of the 12
 `training_availability` × `gap_count` points produced at least one valid row).
 
-**Settings:** `dedupe_threshold=0.7` (the `helpers.sdg.generate()` default,
+**Settings:** model `openai/bedrock/gpt-5.6-luna` via Flexion's Bifrost
+gateway. `dedupe_threshold=0.7` (the `helpers.sdg.generate()` default,
 not overridden — see the open question in `decisions.md`). Temperature and
 top-p were left at the provider's defaults; neither was explicitly set in
 `generate_data.py`, which is itself worth deciding on deliberately rather
