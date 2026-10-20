@@ -56,6 +56,7 @@ The generation is a prompt and a loop. **The datasheet is the assignment.**
 ---
 
 <!-- deliverables:start -->
+
 ## 🏗️ Build | 🚢 Ship | 📤 Share
 
 Three escalating bars. **Build** means it runs for you. **Ship** means someone
@@ -71,16 +72,16 @@ Eight questions are asked inside the notebooks as you work through them. *They
 are not submitted and not graded* — they are how you work out what the challenge
 is going to ask you for.
 
-| # | Question | Asked in |
-| :---: | --- | --- |
-| 1 | Whether a "should decline" axis value wants a higher or lower temperature than a routine one, and what the 95%-mass count says about it | S3 |
-| 2 | Why a fixed `k` is the wrong tool for a batch run whose prompts differ in how confident the model is | S3 |
-| 3 | Why the temperature ceiling you measured is nearly worthless to Legal on its own, and what two other things must sit beside it before a colleague or a regulator can reproduce the draft | S3 |
-| 4 | In the written answer to "why not the hosted model?", which numbers are measured and which looked up, which requirements the hosted option fails outright regardless of numbers, and how you mark a constraint apart from a preference | S3 |
-| 5 | One axis specific to your domain, and the failure it would expose that paraphrases cannot | S4 |
-| 6 | Whether you would raise or lower the dedupe threshold for your data, and what you would look at to decide | S4 |
-| 7 | One thing in your seeds the regex leak check cannot see that would still identify your firm | S4 |
-| 8 | Whether `synthetic_v1.jsonl` is prototyping or backtesting data, and the datasheet claim that follows | S4 |
+| # | Question                                                                                                                                                                                                                               | Asked in |
+| :-: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 1 | Whether a "should decline" axis value wants a higher or lower temperature than a routine one, and what the 95%-mass count says about it                                                                                                | S3       |
+| 2 | Why a fixed `k` is the wrong tool for a batch run whose prompts differ in how confident the model is                                                                                                                                 | S3       |
+| 3 | Why the temperature ceiling you measured is nearly worthless to Legal on its own, and what two other things must sit beside it before a colleague or a regulator can reproduce the draft                                               | S3       |
+| 4 | In the written answer to "why not the hosted model?", which numbers are measured and which looked up, which requirements the hosted option fails outright regardless of numbers, and how you mark a constraint apart from a preference | S3       |
+| 5 | One axis specific to your domain, and the failure it would expose that paraphrases cannot                                                                                                                                              | S4       |
+| 6 | Whether you would raise or lower the dedupe threshold for your data, and what you would look at to decide                                                                                                                              | S4       |
+| 7 | One thing in your seeds the regex leak check cannot see that would still identify your firm                                                                                                                                            | S4       |
+| 8 | Whether `synthetic_v1.jsonl` is prototyping or backtesting data, and the datasheet claim that follows                                                                                                                                | S4       |
 
 > **Jumping to one.** Open the notebook, then add the anchor to your browser's
 > address bar — `#question-7`. It works once the notebook has finished loading.
@@ -90,12 +91,12 @@ is going to ask you for.
 This is the graded part. Every item comes from a numbered step in the technical
 challenge, which carries the full detail.
 
-- [ ] Axes in your repo: at least two specific to your domain, one that covers inputs the system should **decline**
-- [ ] `use_case/data/synthetic_v1.jsonl` written (gitignored — the datasheet says how many rows)
-- [ ] Generated / after-dedupe / schema-valid counts reported, plus dead axis combinations
-- [ ] Leak check run **and** fifty rows read by you, with what you removed
-- [ ] `use_case/data/DATASHEET.md` filled in, including what the data cannot validate **and whether the goldens are disjoint from anything the system was tuned on**
-- [ ] **The model/endpoint row in `use_case/decisions.md`** — every number tagged *measured* or *looked up*, and constraints marked apart from preferences
+- [X] Axes in your repo: at least two specific to your domain, one that covers inputs the system should **decline**
+- [X] `use_case/data/synthetic_v1.jsonl` written (gitignored — the datasheet says how many rows)
+- [X] Generated / after-dedupe / schema-valid counts reported, plus dead axis combinations
+- [X] Leak check run **and** fifty rows read by you, with what you removed
+- [X] `use_case/data/DATASHEET.md` filled in, including what the data cannot validate **and whether the goldens are disjoint from anything the system was tuned on**
+- [X] **The model/endpoint row in `use_case/decisions.md`** — every number tagged *measured* or *looked up*, and constraints marked apart from preferences
 
 ### 📤 Share
 
@@ -103,6 +104,7 @@ challenge, which carries the full detail.
 - [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
+
 <!-- deliverables:end -->
 
 ---
@@ -111,12 +113,12 @@ challenge, which carries the full detail.
 
 Everything this challenge uses, from the people who maintain it.
 
-| Tool | What you use it for here | Docs |
-| --- | --- | --- |
-| LiteLLM | the generation call, whichever provider is behind it | [docs.litellm.ai](https://docs.litellm.ai/) |
-| pydantic | the schema from your charter, as the validator | [pydantic.dev/docs](https://pydantic.dev/docs/validation/latest/get-started/) |
-| Hugging Face Hub | model cards and licences, if you generate locally | [huggingface.co/docs/hub](https://huggingface.co/docs/hub/index) |
-| Ollama | an OpenAI-compatible local server, for Step 5 | [docs.ollama.com](https://docs.ollama.com/) |
+| Tool             | What you use it for here                             | Docs                                                                         |
+| ---------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
+| LiteLLM          | the generation call, whichever provider is behind it | [docs.litellm.ai](https://docs.litellm.ai/)                                   |
+| pydantic         | the schema from your charter, as the validator       | [pydantic.dev/docs](https://pydantic.dev/docs/validation/latest/get-started/) |
+| Hugging Face Hub | model cards and licences, if you generate locally    | [huggingface.co/docs/hub](https://huggingface.co/docs/hub/index)              |
+| Ollama           | an OpenAI-compatible local server, for Step 5        | [docs.ollama.com](https://docs.ollama.com/)                                   |
 
 ---
 
@@ -126,15 +128,15 @@ Everything this challenge uses, from the people who maintain it.
 minutes each and you will run several; reading fifty rows properly takes longer
 than you think.
 
-| Step | What it is | Rough time |
-| :---: | --- | --- |
-| 1 | Name your variation axes | 45 min |
-| 2 | Generate, dedupe, validate | 1 hr, mostly waiting |
-| 3 | Leak check, then read fifty rows | 45 min |
-| 4 | Write the datasheet | 45 min |
-| 5 | Run it on a model you own *(optional)* | 30 min |
-| 6 | Show it to someone who knows the real data | 30 min, plus their calendar |
-| 7 | Share: bring it to work | 30 min |
+| Step | What it is                                 | Rough time                  |
+| :--: | ------------------------------------------ | --------------------------- |
+|  1  | Name your variation axes                   | 45 min                      |
+|  2  | Generate, dedupe, validate                 | 1 hr, mostly waiting        |
+|  3  | Leak check, then read fifty rows           | 45 min                      |
+|  4  | Write the datasheet                        | 45 min                      |
+|  5  | Run it on a model you own *(optional)*   | 30 min                      |
+|  6  | Show it to someone who knows the real data | 30 min, plus their calendar |
+|  7  | Share: bring it to work                    | 30 min                      |
 
 > **Send the Step 6 message today.** The person who knows what the real inputs
 > look like is the only one who can tell you whether your fake ones are
@@ -144,12 +146,12 @@ than you think.
 
 ## What you are building
 
-| File | Role |
-| --- | --- |
-| Your axes, in your repo | The coverage decision. A dict; the thinking is the deliverable |
+| File                                 | Role                                                            |
+| ------------------------------------ | --------------------------------------------------------------- |
+| Your axes, in your repo              | The coverage decision. A dict; the thinking is the deliverable  |
 | `use_case/data/synthetic_v1.jsonl` | The dataset. **Gitignored.** Weeks 3, 4 and 8 all read it |
-| `use_case/data/DATASHEET.md` | What the data can and cannot prove. **Committed** |
-| `CLAUDE.md` | The instructions Claude Code reads before it touches anything |
+| `use_case/data/DATASHEET.md`       | What the data can and cannot prove. **Committed**         |
+| `CLAUDE.md`                        | The instructions Claude Code reads before it touches anything   |
 
 > Session 4's loop is packaged as `helpers/sdg.py`. `generate()` returns an
 > `SDGReport` carrying every count this challenge asks for, plus
@@ -206,11 +208,11 @@ up believing they tested something they did not.
 Three settings decide what you get, and the notebooks gave you the arithmetic
 for all three:
 
-| Setting | What it decides | Where you measured it |
-| --- | --- | --- |
-| Temperature | How much of the tail is live per token | S3 Task 3 — the 95%-mass count |
-| Top-p, not top-k | Whether the candidate set adapts to the model's confidence across different prompts | S3 Task 5 — the candidate-set table |
-| Dedupe threshold | What counts as "the same row twice" | S4 Task 4 — the *what got dropped* table |
+| Setting          | What it decides                                                                     | Where you measured it                       |
+| ---------------- | ----------------------------------------------------------------------------------- | ------------------------------------------- |
+| Temperature      | How much of the tail is live per token                                              | S3 Task 3 — the 95%-mass count             |
+| Top-p, not top-k | Whether the candidate set adapts to the model's confidence across different prompts | S3 Task 5 — the candidate-set table        |
+| Dedupe threshold | What counts as "the same row twice"                                                 | S4 Task 4 — the *what got dropped* table |
 
 Run every combination, not the sample the session used. Then watch the
 counters: an unparseable line means the model wrote badly; a **dead combination**
@@ -245,7 +247,7 @@ one team or one account in your company would ever produce.
 - [ ] No real names, companies, or identifiers survived.
 - [ ] No distinctive internal formats — reference schemes, code layouts.
 - [ ] Rare categories were *generated*, not copied. A category with one real
-      instance is identifying even with the name changed.
+  instance is identifying even with the name changed.
 - [ ] Nothing here would embarrass you in a public repo.
 
 The strongest protection is procedural: **generate from the schema and a
@@ -435,8 +437,7 @@ worth applied to it.
 
 ### ✅ Deliverables
 
-1. **Which project at work this is for**, one line under `## Bring it to
-   work` in your README. *"The fraud team cannot prototype against real
+1. **Which project at work this is for**, one line under `## Bring it to work` in your README. *"The fraud team cannot prototype against real
    transactions until the DPIA clears"* names one; *"data access"* does not.
 2. **What you would swap** — three lines under the same heading, one each for
    the **data** (what you would seed from, and whether you would generate from
@@ -451,13 +452,13 @@ worth applied to it.
 
 ## What this challenge deposits for later
 
-| What you write | Where it lives | When it comes back |
-| --- | --- | --- |
-| The synthetic dataset | `use_case/data/synthetic_v1.jsonl` | **Week 3** builds retrieval over it. **Week 4** scores against your goldens, not this. **Week 8** fine-tunes on it. |
-| The datasheet | `use_case/data/DATASHEET.md` | **Week 4**, when a number needs defending. **Week 10**, when an auditor-shaped reader asks where the data came from. |
-| The temperature ceiling and dedupe threshold | `use_case/decisions.md` | **Week 8** — a fine-tuned model has to be sampled somehow, and this is the baseline. |
-| A blocked download, or a working local model | `use_case/ecosystem.md` | **Week 9**, which extends this file with the full deployment checklist. |
-| The three swap lines | Your README, `## Bring it to work` | **Week 10** — the final report's "what it would take to run" section. |
+| What you write                               | Where it lives                       | When it comes back                                                                                                                    |
+| -------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| The synthetic dataset                        | `use_case/data/synthetic_v1.jsonl` | **Week 3** builds retrieval over it. **Week 4** scores against your goldens, not this. **Week 8** fine-tunes on it. |
+| The datasheet                                | `use_case/data/DATASHEET.md`       | **Week 4**, when a number needs defending. **Week 10**, when an auditor-shaped reader asks where the data came from.      |
+| The temperature ceiling and dedupe threshold | `use_case/decisions.md`            | **Week 8** — a fine-tuned model has to be sampled somehow, and this is the baseline.                                           |
+| A blocked download, or a working local model | `use_case/ecosystem.md`            | **Week 9**, which extends this file with the full deployment checklist.                                                         |
+| The three swap lines                         | Your README, `## Bring it to work` | **Week 10** — the final report's "what it would take to run" section.                                                          |
 
 ---
 
@@ -494,7 +495,64 @@ Please include the following in your final submission:
 
 ---
 
+## 📝 My answers
+
+### Axes
+
+- `training_availability` — approved / not-yet-approved / none available /
+  multiple match. Covers whether the system recommends correctly, flags an
+  unapproved match as a draft, declines instead of inventing a training
+  (the mandatory decline case), and handles a tie.
+- `gap_count` — zero / one-to-three / four-or-more. Zero tests the
+  empty-result case; four-or-more is the only value that forces the
+  rank-and-cap-at-3 rule to actually choose and cut something.
+
+### Generation counts
+
+36 generated (0 unparseable) → 36 distinct after dedupe (100%) → 35
+schema-valid. 0 dead axis combinations. Dedupe threshold kept at the 0.7
+default — checked the 8 closest-similarity pairs in the generated set by
+hand and found no real duplicates, just shared domain vocabulary (see
+`decisions.md`, Week 2). Temperature and top-p were left at the provider's
+defaults — neither was explicitly set, which is itself worth deciding on
+deliberately rather than leaving implicit.
+
+### Step 3 — leak check and reading the rows
+
+The automated leak check flagged 7 strings, all of them the fixed
+`category`/skill-level vocabulary we deliberately forced into every row
+(e.g. "Trail Maintenance," "Full Performance") — expected shared vocabulary,
+not real leaks. Read all 35 rows against the manual checks (real
+names/IDs, distinctive formats, rare categories generated not copied).
+Nothing removed.
+
+### Step 6 — stakeholder review
+
+**Pending.** A conversation with the Product Owner and the TrailSkills team
+to review `synthetic_v1.jsonl` and `DATASHEET.md` is planned, but no time is
+scheduled yet as of 2026-10-20. Will update this section with the three
+questions and their answers once it happens — see `use_case/stakeholders.md`,
+Week 2.
+
+## Bring it to work
+
+**Trail Pathfinder** — we don't have access to real TrailSkills.org member
+profile data to prototype against.
+
+**What we'd swap:**
+
+- **Data:** unlikely to ever get real TrailSkills member profiles (third-party
+  user data, not ours to pull) — plan is to keep generating from the
+  schema/description rather than real records, even long-term.
+- **Model/endpoint:** same model and gateway as now — open to changing later
+  based on performance and cost. No network-egress constraint, since nothing
+  here is real user data.
+- **Access/approval:** not pursuing real data access right now.
+
+---
+
 <!-- deliverables:start -->
+
 ## 🏗️ Build | 🚢 Ship | 📤 Share
 
 Three escalating bars. **Build** means it runs for you. **Ship** means someone
@@ -510,16 +568,16 @@ Eight questions are asked inside the notebooks as you work through them. *They
 are not submitted and not graded* — they are how you work out what the challenge
 is going to ask you for.
 
-| # | Question | Asked in |
-| :---: | --- | --- |
-| 1 | Whether a "should decline" axis value wants a higher or lower temperature than a routine one, and what the 95%-mass count says about it | S3 |
-| 2 | Why a fixed `k` is the wrong tool for a batch run whose prompts differ in how confident the model is | S3 |
-| 3 | Why the temperature ceiling you measured is nearly worthless to Legal on its own, and what two other things must sit beside it before a colleague or a regulator can reproduce the draft | S3 |
-| 4 | In the written answer to "why not the hosted model?", which numbers are measured and which looked up, which requirements the hosted option fails outright regardless of numbers, and how you mark a constraint apart from a preference | S3 |
-| 5 | One axis specific to your domain, and the failure it would expose that paraphrases cannot | S4 |
-| 6 | Whether you would raise or lower the dedupe threshold for your data, and what you would look at to decide | S4 |
-| 7 | One thing in your seeds the regex leak check cannot see that would still identify your firm | S4 |
-| 8 | Whether `synthetic_v1.jsonl` is prototyping or backtesting data, and the datasheet claim that follows | S4 |
+| # | Question                                                                                                                                                                                                                               | Asked in |
+| :-: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 1 | Whether a "should decline" axis value wants a higher or lower temperature than a routine one, and what the 95%-mass count says about it                                                                                                | S3       |
+| 2 | Why a fixed `k` is the wrong tool for a batch run whose prompts differ in how confident the model is                                                                                                                                 | S3       |
+| 3 | Why the temperature ceiling you measured is nearly worthless to Legal on its own, and what two other things must sit beside it before a colleague or a regulator can reproduce the draft                                               | S3       |
+| 4 | In the written answer to "why not the hosted model?", which numbers are measured and which looked up, which requirements the hosted option fails outright regardless of numbers, and how you mark a constraint apart from a preference | S3       |
+| 5 | One axis specific to your domain, and the failure it would expose that paraphrases cannot                                                                                                                                              | S4       |
+| 6 | Whether you would raise or lower the dedupe threshold for your data, and what you would look at to decide                                                                                                                              | S4       |
+| 7 | One thing in your seeds the regex leak check cannot see that would still identify your firm                                                                                                                                            | S4       |
+| 8 | Whether `synthetic_v1.jsonl` is prototyping or backtesting data, and the datasheet claim that follows                                                                                                                                | S4       |
 
 > **Jumping to one.** Open the notebook, then add the anchor to your browser's
 > address bar — `#question-7`. It works once the notebook has finished loading.
@@ -529,33 +587,34 @@ is going to ask you for.
 This is the graded part. Every item comes from a numbered step in the technical
 challenge, which carries the full detail.
 
-- [ ] Axes in your repo: at least two specific to your domain, one that covers inputs the system should **decline**
-- [ ] `use_case/data/synthetic_v1.jsonl` written (gitignored — the datasheet says how many rows)
-- [ ] Generated / after-dedupe / schema-valid counts reported, plus dead axis combinations
-- [ ] Leak check run **and** fifty rows read by you, with what you removed
-- [ ] `use_case/data/DATASHEET.md` filled in, including what the data cannot validate **and whether the goldens are disjoint from anything the system was tuned on**
-- [ ] **The model/endpoint row in `use_case/decisions.md`** — every number tagged *measured* or *looked up*, and constraints marked apart from preferences
+- [X] Axes in your repo: at least two specific to your domain, one that covers inputs the system should **decline**
+- [X] `use_case/data/synthetic_v1.jsonl` written (gitignored — the datasheet says how many rows)
+- [X] Generated / after-dedupe / schema-valid counts reported, plus dead axis combinations
+- [X] Leak check run **and** fifty rows read by you, with what you removed
+- [X] `use_case/data/DATASHEET.md` filled in, including what the data cannot validate **and whether the goldens are disjoint from anything the system was tuned on**
+- [X] **The model/endpoint row in `use_case/decisions.md`** — every number tagged *measured* or *looked up*, and constraints marked apart from preferences
 
 ### 📤 Share
 
 - [ ] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
-- [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
+- [X] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
+
 <!-- deliverables:end -->
 
 ---
 
 ## Where this goes next
 
-| Week | What it adds to this data |
-| --- | --- |
-| 3 | Retrieval — your endpoint answers from a corpus, and this is the first corpus it has. |
-| 4 | Evals — the goldens are the bar, this data is the traffic, and the datasheet says which is which. |
-| 6 | Guardrails — the `top_k` mask you wrote becomes a grammar the model cannot escape. |
-| 8 | Fine-tuning — this is the training set, and open weights are what you train. |
-| 9 | Infrastructure — the blocked download and the licence on your model both land in the deployment checklist. |
-| 10 | Production — the final report, with the swap lines you started this week as its "what it would take to run" section. |
+| Week | What it adds to this data                                                                                             |
+| ---- | --------------------------------------------------------------------------------------------------------------------- |
+| 3    | Retrieval — your endpoint answers from a corpus, and this is the first corpus it has.                                |
+| 4    | Evals — the goldens are the bar, this data is the traffic, and the datasheet says which is which.                    |
+| 6    | Guardrails — the `top_k` mask you wrote becomes a grammar the model cannot escape.                                 |
+| 8    | Fine-tuning — this is the training set, and open weights are what you train.                                         |
+| 9    | Infrastructure — the blocked download and the licence on your model both land in the deployment checklist.           |
+| 10   | Production — the final report, with the swap lines you started this week as its "what it would take to run" section. |
 
 Everything after this week assumes you have data you can show people, and a
 document that says what it is.
