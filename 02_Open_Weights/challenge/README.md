@@ -528,11 +528,20 @@ Nothing removed.
 
 ### Step 6 — stakeholder review
 
-**Pending.** A conversation with the Product Owner and the TrailSkills team
-to review `synthetic_v1.jsonl` and `DATASHEET.md` is planned, but no time is
-scheduled yet as of 2026-10-20. Will update this section with the three
-questions and their answers once it happens — see `use_case/stakeholders.md`,
-Week 2.
+**Partial — answers still coming.** On 2026-10-20 we sent our stakeholder,
+the Flexion project manager who also acts as product owner, a doc with 20
+sample profiles, the datasheet's limits, and the three questions: which would
+never happen, what is missing, and what would worry you if this were public.
+
+Her first response was a question: *"did you use the example role definitions
+and competency mappings to generate these sample profiles?"* We checked: no.
+Only the 5 skill categories and 3 levels are real; all 31 roles and 117
+skills in the data were invented by the model.
+
+We sent her the live app link and asked for a meeting. Her answers to the
+three questions will go here once we have them. For now we are keeping the
+profiles as they are — see `use_case/stakeholders.md` and
+`use_case/decisions.md`, Week 2.
 
 ## Bring it to work
 
