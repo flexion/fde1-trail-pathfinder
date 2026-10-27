@@ -20,9 +20,9 @@ They are the fixed point of the whole cohort. A model-generated example encodes
 what the model already does; a hand-written one encodes what *you* would accept,
 which is the only thing worth measuring against.
 
-### `retrieval-dataset.jsonl` — the data the SQL path reads
+### `retrieval_dataset.py` — builds the data the SQL path reads
 
-49 records in 13 scenarios, covering every cell of the two TC2 axes
+Generates `use_case/data/retrieval_dataset.jsonl` (49 records in 13 scenarios, **local only**: `use_case/data/` is gitignored, so only this script ships and you regenerate the file), covering every cell of the two TC2 axes
 (`training_availability` × `gap_count`). Four scenarios (`golden-01`, `-02`,
 `-03`, `-05`) are copied from `golden.jsonl`, so the ten questions above still
 resolve; nine (`axis-01` … `axis-09`) are authored, one per cell the goldens

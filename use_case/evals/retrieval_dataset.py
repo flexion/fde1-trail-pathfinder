@@ -1,6 +1,6 @@
 """Build and check `retrieval-dataset.jsonl`, the data the Week 3 SQL path reads.
 
-    python use_case/evals/retrieval_dataset.py          # write the JSONL
+    python use_case/evals/retrieval_dataset.py          # write use_case/data/retrieval_dataset.jsonl (local, gitignored)
     python use_case/evals/retrieval_dataset.py --check  # verify it (CI-safe)
 
 Thirteen scenarios cover all twelve cells of the two TC2 axes
@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-OUT = HERE / "retrieval-dataset.jsonl"
+OUT = HERE.parent / "data" / "retrieval_dataset.jsonl"  # use_case/data/ is gitignored: the data stays local
 GOLDEN = HERE / "golden.jsonl"
 QUESTIONS = HERE / "retrieval.jsonl"
 APP = HERE.parent.parent / "01_Product_Engineering" / "challenge"
