@@ -20,6 +20,42 @@ They are the fixed point of the whole cohort. A model-generated example encodes
 what the model already does; a hand-written one encodes what *you* would accept,
 which is the only thing worth measuring against.
 
+### `retrieval-dataset.jsonl` — the data the SQL path reads
+
+49 records in 13 scenarios, covering every cell of the two TC2 axes
+(`training_availability` × `gap_count`). Four scenarios (`golden-01`, `-02`,
+`-03`, `-05`) are copied from `golden.jsonl`, so the ten questions above still
+resolve; nine (`axis-01` … `axis-09`) are authored, one per cell the goldens
+miss. All of it is invented, with real framework skill names.
+
+One record per line: `id`, `profile_id`, `kind` (`role` | `ratings` | `training`),
+`axes`, `origin`, `data`. Roles carry the required skills, trainings carry
+`skills_taught`, cost, proof and `alignment_approved`. `ratings` records are
+**request input**, not something to retrieve; keep them out of any index.
+
+| | zero gaps | 1–3 gaps | 4+ gaps |
+| --- | --- | --- | --- |
+| approved exists | golden-05 | golden-01, golden-02 | axis-07 |
+| exists, not approved | axis-01 | axis-02 | axis-03 |
+| none available | axis-08 | golden-03 | axis-09 |
+| multiple match | axis-04 | axis-05 | axis-06 |
+
+The 4+ scenarios with approved trainings (`axis-06`, `-07`) each have more
+closable gaps than `REC_MAX`, so the cap of three has to cut. In both, the close
+gap's training is free, so close-first and free-first agree and golden 6's open
+ranking question is not decided by this data.
+
+```bash
+python use_case/evals/retrieval_dataset.py          # regenerate (needs the app env)
+python use_case/evals/retrieval_dataset.py --check  # verify
+```
+
+`--check` derives each scenario's axes from `pathfinder.py`'s own rules and fails
+on a wrong tag, an uncovered cell, a 4+ scenario the cap never cuts, or a `gold`
+id in `retrieval.jsonl` that is missing or in the wrong scenario. Run it with
+`uv run` from `01_Product_Engineering/challenge/`. It replaces
+`retrieval-corpus.jsonl` as the data source once the SQL path is built.
+
 | Week | What uses this file |
 | --- | --- |
 | 2 | Seeds for synthetic data generation — your variation axes come from these. |
