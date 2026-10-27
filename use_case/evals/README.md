@@ -2,8 +2,8 @@
 
 ## `golden.jsonl`
 
-Five examples, written by hand, in TC1 Step 7. Five — not fifty, and not
-generated.
+Six authored examples from TC1. The first five establish the initial cases;
+the sixth records an unresolved product question about recommendation ranking.
 
 Each line is one object:
 
@@ -40,18 +40,84 @@ wrong thing.
 
 ## `retrieval.jsonl`
 
-Ten real questions from your use case, written in TC3, each labelled with the
-record(s) in `use_case/data/synthetic_v1.jsonl` that should answer it — plus
-the five your first real user typed. One object per line:
+The current set contains **ten questions adapted from the existing golden
+fixtures**. A [readable question list](retrieval-questions.md) is also available.
+These are assistant-authored
+test questions, not collected user utterances or stakeholder-approved questions.
+They do not by themselves satisfy the assignment's real-question provenance
+requirement, and no new user-demo questions have been collected.
+
+This set uses `retrieval-corpus.jsonl`, derived from golden inputs, **not** the
+35-row TC2 `synthetic_v1.jsonl`. It is a small fixture-based development suite,
+not an independent holdout or evidence that the TC2 data problem is repaired.
+The first three original goldens were also shown to the TC2 generator.
+
+One object per line retains the assignment's core fields:
 
 ```json
 {"question": "...", "gold": ["<record id>", "<record id>"], "kind": "lookup | multi-hop | decline"}
 ```
 
-`gold` lists **every** record needed, because the measure is complete answers,
-not "something relevant came back". At least one question is a `decline` — one
-your data cannot answer — so you find out whether the endpoint knows when its
-top *k* is the wrong answer.
+Each case additionally has an `id`, explicit scenario `context`, an
+`expected_answer` for review/scoring, and provenance naming the original golden
+line and file checksum. Only the question and context are inference inputs;
+never pass `gold`, `expected_answer`, or the original golden `output`/`why`
+to the answering model or retrieval index.
+
+| Question | Golden | Coverage | Kind |
+| --- | --- | --- | --- |
+| retrieval-01 | 1 | Required skills, categories, and levels | lookup |
+| retrieval-02 | 1 | Has / close / missing from supplied self-ratings | lookup |
+| retrieval-03 | 1 | Tread-maintenance gap, matching training, price, and evidence | multi-hop |
+| retrieval-04 | 1 | Free drainage training meeting the role requirement | multi-hop |
+| retrieval-05 | 1 | Compare two courses' prices and completion evidence | multi-hop |
+| retrieval-06 | 2 | Same skill name in different categories | lookup |
+| retrieval-07 | 2 | Jobsite Safety gap and the approved training match | multi-hop |
+| retrieval-08 | 3 | Decline to invent a course for an empty catalog | decline |
+| retrieval-09 | 5 | Do not sell unnecessary training to someone meeting the role | multi-hop |
+| retrieval-10 | 1 | Decline to invent online availability or a session date | decline |
+
+**Five of ten questions require two source records.** For this fixture record
+layout, returning only one record cannot supply all evidence for those cases.
+This is an evidence-count requirement, not a measured choice of retrieval
+strategy. The other cases are three single-record lookups and two declines.
+Some lookups also require deterministic computation against request context;
+`lookup` here means one evidence record, not that the answer is a copied string.
+
+Golden 4 remains an existing unknown-skill regression case; it is not used to
+manufacture a valid role record. Golden 6 remains excluded from this suite
+because its recommendation-order decision is explicitly unresolved.
+
+### Corpus and source IDs
+
+`retrieval-corpus.jsonl` contains **eight fixture records**, copied only from
+the inputs of goldens 1, 2, 3, and 5: four scenario-specific role records and
+four training records. It contains no generated answers, `why` explanations,
+or self-ratings. Each record points to its original JSON field(s).
+
+- `golden-01:role` means the role and required skills in original line 1.
+- `golden-01:training-02` means the second training in original line 1.
+- `profile_id` identifies the scenario; role names and training titles must
+  never be used to merge different scenarios.
+
+These IDs are pinned to the source checksum stored in the files. If the
+goldens are edited or reordered, review and update both files together before
+running evaluations; line-based IDs are not stable across such changes.
+
+Apply `context.profile_id` as a scope filter before retrieval. The evaluation
+assumes the existing category-scoped skill rules: compute gaps deterministically,
+accept only approved alignments at the required level or higher, and do not
+recommend a course to close a gap that does not exist. Approval and prices in
+these fixtures are simulated, not claims about real offerings.
+
+`gold` names every required evidence record for answerable questions. For both
+decline cases it is deliberately empty: there is no record supporting a course
+recommendation (08) or an availability/date claim (10). A decline can explain
+the absence of information, but must not manufacture the requested facts.
+The profile 3 catalog is known to be empty from the complete scoped fixture;
+one search returning no results is not generally proof that a catalog is empty.
+Citation recall is not applicable to empty-gold cases; review refusal behavior
+separately rather than dividing by zero or counting a refusal as retrieval success.
 
 | Week | What uses this file |
 | --- | --- |
