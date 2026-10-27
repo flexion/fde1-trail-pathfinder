@@ -25,6 +25,15 @@ If you cannot name what you did not do, you did not choose.
 | 7 | <!-- memory type --> | <!-- --> | <!-- --> | <!-- --> |
 | 8 | <!-- model --> | <!-- --> | <!-- --> | <!-- --> |
 
+### Week 3: non-text content
+
+Pathfinder compares skill ratings to a role and suggests trainings. Every record is a structured text row, so there is no non-text content to retrieve.
+
+1. **Is the information visual?** No. Roles, skills, levels, costs and training proof are text fields.
+2. **Does a number live only in pixels?** No. Every value we use is a field in a row.
+3. **Descriptions or one parse per image?** Not needed. There are no images.
+4. **Video or audio?** None, so no transcript question.
+
 ---
 
 The last column is the one people skip and the one people ask about. "We chose
