@@ -3,10 +3,14 @@
 Written in TC1 Step 5, before any implementation. The charter's In → Out row
 is the prose version of this file; `use_case/CHARTER.md` is the source.
 
-Week 1 passes the role's required skills and the training catalog slice in
-with the request, because nothing can retrieve them yet. Week 3 replaces
-those two fields with retrieval from the role library and the catalog. The
-shape of the answer does not change.
+Week 1 passed the role's required skills and the training catalog slice in
+with the request, because nothing could retrieve them yet. Week 3 (TC3) makes
+both optional: left empty, the app looks them up in its stored corpus
+(`corpus.py`) by role name within a scope, and `Response.sources` names the
+record ids it used. The shape of the answer otherwise does not change.
+
+TC3 also adds `Answer`: the contract for `ask_pathfinder`, a free-text
+question answered from the same records, with sources, that can decline.
 """
 
 from __future__ import annotations
@@ -78,17 +82,24 @@ class Training(BaseModel):
 
 
 class Request(BaseModel):
-    """What the explorer hands in, plus the governed content the answer needs."""
+    """What the explorer hands in. The governed content (requirements, catalog)
+    is looked up from the stored corpus unless the caller supplies it."""
 
     role: str = Field(description="A draft role from the role library, by name")
-    required_skills: list[RequiredSkill] = Field(
-        min_length=1, description="The role's required skills and levels (role library)"
-    )
     self_ratings: list[SelfRating] = Field(
         description="Her rating on each required skill. Unrated skills count as missing."
     )
+    scope: str = Field(
+        default="trailskills",
+        description="Which stored records to look in: 'trailskills' (the real role library) or a scenario id",
+    )
+    required_skills: list[RequiredSkill] = Field(
+        default_factory=list,
+        description="The role's required skills and levels. Empty means look the role up in the corpus.",
+    )
     trainings: list[Training] = Field(
-        default_factory=list, description="The catalog slice that touches these skills"
+        default_factory=list,
+        description="The catalog slice that touches these skills. Empty means look it up in the corpus.",
     )
 
 
@@ -128,6 +139,27 @@ class Response(BaseModel):
         ),
     )
     review_reason: str | None = Field(default=None, description="Why needs_review is True")
+    sources: list[str] = Field(
+        default_factory=list,
+        description="Record ids the answer was grounded in: the role record and every training considered. Empty when the caller supplied the content itself.",
+    )
+
+
+class Answer(BaseModel):
+    """What `ask_pathfinder` returns: a grounded answer to one question, or a decline."""
+
+    question: str
+    scope: str
+    answer: str = Field(description="Plain text she can read on a phone. Names the records it used.")
+    sources: list[str] = Field(
+        default_factory=list, description="Every record id the answer was grounded in. Never empty unless declined."
+    )
+    declined: bool = Field(
+        default=False,
+        description="True when the stored records cannot answer: nothing in scope is named, or the fact asked for is not a field any record has.",
+    )
+    reason: str | None = Field(default=None, description="Why it declined, or why the model's words were replaced")
+    trace: dict = Field(default_factory=dict, description="What the lookup matched: roles, trainings, skills")
 
 
 def solve(request: Request, *, use_model: bool = True) -> Response:

@@ -19,7 +19,7 @@ COPY pyproject.toml uv.lock ./
 RUN uv export --frozen --no-dev --no-emit-project -o requirements.txt \
  && uv pip install --system --no-cache -r requirements.txt
 
-COPY llm.py app.py schema.py pathfinder.py ./
+COPY llm.py app.py schema.py pathfinder.py corpus.py ask.py ./
 COPY data/ ./data/
 COPY frontend/ ./frontend/
 

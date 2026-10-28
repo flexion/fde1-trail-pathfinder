@@ -119,6 +119,28 @@ one search returning no results is not generally proof that a catalog is empty.
 Citation recall is not applicable to empty-gold cases; review refusal behavior
 separately rather than dividing by zero or counting a refusal as retrieval success.
 
+### Scoring labels (TC3 Step 3)
+
+Each line also carries Session 5's scoring fields. `expected_terms` lists what
+a passing answer must contain (case-insensitive substrings; `a|b` means either).
+The two decline cases carry `must_not` instead: a refusal that contains any of
+those invented something. `retrieval_compare.py` reads both.
+
+### The comparison
+
+```sh
+uv run --group week3 python use_case/evals/retrieval_compare.py             # scoped, with the model: the canonical run
+uv run --group week3 python use_case/evals/retrieval_compare.py --unscoped   # no scope key: what ranking has to cope with
+uv run --group week3 python use_case/evals/retrieval_compare.py --no-model   # retrieval only: recall, evidence, latency
+```
+
+Five techniques over the app's stored corpus (`01_Product_Engineering/challenge/data/corpus.jsonl`,
+built by `use_case/build_corpus.py`): `lookup` (what shipped: exact names, SQL
+join, no ranking), `bm25_rag` and `dci_wiki` (Session 5's two tool loops),
+`dense` (embeddings and cosine) and `hybrid` (RRF over BM25 and dense). Results
+land in `retrieval_results[_unscoped][_nomodel].md` with the raw answers and
+traces in the matching `.jsonl`. The canonical file is `retrieval_results.md`.
+
 | Week | What uses this file |
 | --- | --- |
 | 3 | Scores three or more retrieval techniques against each other. The decision in `decisions.md` cites the numbers. |
