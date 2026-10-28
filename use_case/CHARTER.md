@@ -106,6 +106,6 @@ a labeled draft until a steward approves it.
 | --- | --- | --- |
 | 1 | Cap next steps at 3 total, ranked, not one per gap | BR-6.5 is a tested business rule; the Pathfinder proposal's "one per gap" is a proposal, and the proposals README says the repo wins where they disagree |
 | 1 | User is the emerging professional (corps member), not the working crew leader | The crew leader's gap view needs the evidenced/unevidenced split, which depends on the credential wallet this app cannot reach |
-| 3 | Retrieval approach | <!-- TC3 --> |
+| 3 | Direct SQL lookup over the stored role library and catalog, by exact name within a scope; no ranking. Measured against BM25 Agentic RAG, a model-navigated wiki, dense and hybrid retrieval. | See `use_case/decisions.md` Week 3: exact answers want exact queries; ranking only adds a way to be wrong. The schema gained `sources`; requirements and catalog are now looked up, not passed in. |
 | 5 | Agent architecture | <!-- TC5 --> |
 | 8 | Model | <!-- TC8 --> |

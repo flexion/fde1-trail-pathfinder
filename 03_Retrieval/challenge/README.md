@@ -599,3 +599,66 @@ challenge, which carries the full detail.
 
 Everything after this week assumes your app answers from your data and can say
 where the answer came from.
+
+---
+
+## 📝 My answers
+
+### Step 1 — the labels
+
+`use_case/evals/retrieval.jsonl`: ten questions adapted from the goldens, each
+with `gold` record ids, `kind`, and Session 5's scoring fields (`expected_terms`,
+`must_not`). **Five of the ten need two records**, so top-1 is ruled out; top-k
+is 4 in the comparison. Two are declines (08: empty catalog; 10: a field no
+record has).
+
+### Step 2 — the schema
+
+Implemented, not redesigned. `Request.required_skills` and `trainings` are now
+optional: empty means the app looks the role and its catalog slice up in its
+stored corpus by exact name within a `scope`. `Response` gained `sources`.
+`Answer` is the new contract for the question endpoint. Recorded in
+`use_case/decisions.md` (Week 3, second row).
+
+### Step 3 — the measurement
+
+Script: `use_case/evals/retrieval_compare.py`. Five techniques over the same
+136 stored records (real role library + sample listings, the golden fixtures,
+the TC2 scenarios), one chunk per record: `lookup` (shipped), `bm25_rag`,
+`dci_wiki`, `dense`, `hybrid`. Settings are written at the bottom of every
+results file.
+
+- `use_case/evals/retrieval_results.md` — the canonical run (scoped, model
+  `openai/bedrock/gpt-5.6-luna` via Bifrost). All five techniques pass 10/10
+  and cite 8/8; the lookup does it in 0.9 model calls and 885 chars of
+  evidence per question, the DCI wiki loop in 3.2 calls, the rankers in 2.0.
+- `use_case/evals/retrieval_results_unscoped.md` — no scope key, ranked over
+  all 136 records: recall falls to 6–7/8 for DCI, dense and hybrid, citation
+  to 5–7/8 for every ranker, because three records are titled "Trail Crew
+  Member". The lookup keeps 8/8 recall but returns all three.
+- Embedding tokens: *n/a* (the dense runs used the local ONNX
+  `BAAI/bge-small-en-v1.5`; the gateway's Titan embedder is configured for
+  the next run and the script prints the measured count when it is used).
+
+### Step 4 — the endpoint
+
+`ask_pathfinder(question, scope="trailskills", role=None, self_ratings=None)`
+in `01_Product_Engineering/challenge/app.py`. Lookup by exact role, training
+or skill name → SQL join → the records, rendered with their ids → one model
+call → `Answer{answer, sources, declined, reason, trace}`. Every answer names
+its record ids in square brackets.
+
+**On the decline questions:** 08 is declined in code before any model call
+(the question asks for a course; the scope has no training record), and 10 is
+declined by the model because the training record has no delivery mode or
+session date, with any invented number rejected by a check against the
+records. A question that names nothing in scope is declined in code too.
+Both verified in the container (`docker run --env-file .env`): 08 and 10 come
+back `declined: true`, 03 answers with both its sources.
+
+### Step 5 — the decision
+
+`use_case/decisions.md`, Week 3: direct SQL lookup, the three rejected
+techniques, the measured numbers, and the empty-result rate (0 of 371 required
+skills with an approved alignment; 26% with a draft one, on 11 sample listings).
+Non-text answers are in the same file.
