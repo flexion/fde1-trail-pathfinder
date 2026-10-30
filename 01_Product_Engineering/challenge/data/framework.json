@@ -1,0 +1,3122 @@
+{
+ "source": {
+  "repository": "flexion/flexion-trailskills2.0-career-explorer",
+  "commit": "3760651233e297d7c6b92a5585a30eeeffcdc7c4",
+  "path": "prototype/trailskills-org-2/src/data.json"
+ },
+ "categories": [
+  {
+   "id": "trail-construction",
+   "name": "Trail Construction",
+   "prototype_name": "Trail Construction"
+  },
+  {
+   "id": "trail-maintenance",
+   "name": "Trail Maintenance",
+   "prototype_name": "Trail Maintenance"
+  },
+  {
+   "id": "project-planning-and-design",
+   "name": "Project Planning and Design",
+   "prototype_name": "Project Planning and Design"
+  },
+  {
+   "id": "crew-management",
+   "name": "Crew Management",
+   "prototype_name": "Crew Leadership"
+  },
+  {
+   "id": "program-administration",
+   "name": "Program Administration",
+   "prototype_name": "Program Administration"
+  }
+ ],
+ "competencies": [
+  {
+   "id": "trail-sustainability-principles",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Trail Sustainability Principles",
+   "definition": "Understand and apply principles of trail sustainability to all components of a trail construction project",
+   "url": "https://www.trailskills.org/skills/trail-sustainability-principles"
+  },
+  {
+   "id": "safety-site-management",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Safety/Site Management",
+   "definition": "Plan and manage the trail construction site to meet safety and resource protection goals and requirements",
+   "url": "https://www.trailskills.org/skills/safety-site-management"
+  },
+  {
+   "id": "construction-specifications",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Construction Specifications",
+   "definition": "Understand and apply common construction specifications/trail management objectives such as corridor height/width, tread width, cross/outslope, protrusions, obstacles, and compaction",
+   "url": "https://www.trailskills.org/skills/construction-specifications"
+  },
+  {
+   "id": "corridor-clearing",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Corridor Clearing/Site Preparation",
+   "definition": "Clear the corridor and prepare the site in preparation for construction using proper pruning techniques",
+   "url": "https://www.trailskills.org/skills/corridor-clearing"
+  },
+  {
+   "id": "corridor-clearing-pruning-side-cutting-brushing",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Corridor Clearing: Pruning/ Side-Cutting/ Brushing",
+   "definition": "Use pruning and brushing techniques to maximize safety, minimize visual impacts and support healthy trailside vegetation",
+   "url": "https://www.trailskills.org/skills/corridor-clearing-pruning-side-cutting-brushing"
+  },
+  {
+   "id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut",
+   "definition": "Felling, brushing, bucking and limbing logs of various sizes safely using proper, well-maintained equipment",
+   "url": "https://www.trailskills.org/skills/corridor-clearing-felling-tree-removal-chainsaw-crosscut"
+  },
+  {
+   "id": "corridor-clearing-material-and-debris-management",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Corridor Clearing: Material and Debris Management",
+   "definition": "Materials and debris removal from corridor using low impact techniques, according to project and resource protection requirements",
+   "url": "https://www.trailskills.org/skills/corridor-clearing-material-and-debris-management"
+  },
+  {
+   "id": "hand-built-trail-construction",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Hand-Built Trail Construction",
+   "definition": "Using hand tools, construct a trail with a full bench, raised tread, and/or combination that meets the construction specifications and minimizes off trail impacts",
+   "url": "https://www.trailskills.org/skills/hand-built-trail-construction"
+  },
+  {
+   "id": "mechanized-trail-construction",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Mechanized Trail Construction",
+   "definition": "Safely use and maintain mechanized trail construction equipment (e.g., mini-excavators, skid steers, trail dozers, compactors) to construct trail that meets construction specifications and minimizes off trail impacts",
+   "url": "https://www.trailskills.org/skills/mechanized-trail-construction"
+  },
+  {
+   "id": "trail-finishwork",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Trail Finishwork",
+   "definition": "Utilize tools, often mechanical (i.e. excavators, harrow rakes, compact utility loaders, compactors), to meet specifications for final tread surface and backslope preparation and compaction, construction spoils management, and erosion control stabilization",
+   "url": "https://www.trailskills.org/skills/trail-finishwork"
+  },
+  {
+   "id": "water-management-drainage-features",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Water Management/Drainage Features",
+   "definition": "Construct drainage features that decrease erosion and increase sheet flow, including grade reversals, rolling grade dips, berms, ditches, and sheet drains",
+   "url": "https://www.trailskills.org/skills/water-management-drainage-features"
+  },
+  {
+   "id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Water Crossing Structures",
+   "definition": "Develop a water crossing structure (e.g., boardwalk, puncheon, turnpike, bridge, ford) to span drainageways or wetland areas and raise the trail above the high water line while maintaining uninterrupted hydrology beneath the constructed feature",
+   "url": "https://www.trailskills.org/skills/water-crossing-structures-boardwalk-puncheon-turnpike-ford"
+  },
+  {
+   "id": "retaining-walls",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Retaining Walls",
+   "definition": "Construct stone or wood retaining walls to bolster unconsolidated soils, gain elevation, or transition tread from rocks/natural barriers",
+   "url": "https://www.trailskills.org/skills/retaining-walls"
+  },
+  {
+   "id": "tread-hardening",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Tread Hardening and Surfacing",
+   "definition": "Install the appropriate treadway hardening technique for a trail given the slopes, soils, available material (e.g., wood, rock, gravel) and designed use, including advanced hardening techniques including but not limited to aggregate addition, various types of rock armoring, turnpiking, rock culverts, boulder causeway, rock drains and chemical additives",
+   "url": "https://www.trailskills.org/skills/tread-hardening"
+  },
+  {
+   "id": "decommissioning-trails",
+   "category_id": "trail-construction",
+   "category": "Trail Construction",
+   "name": "Decommissioning Trails",
+   "definition": "Demonstrated ability to plan and implement the closure, reclamation, and revegetation of a trail segment",
+   "url": "https://www.trailskills.org/skills/decommissioning-trails"
+  },
+  {
+   "id": "trail-sustainability-principles-2",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Trail Sustainability Principles",
+   "definition": "Understand and apply principles of trail sustainability to all components of trail maintenance",
+   "url": "https://www.trailskills.org/skills/trail-sustainability-principles-2"
+  },
+  {
+   "id": "safety-site-management-2",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Safety/Site Management",
+   "definition": "Plan and manage the trail maintenance site to meet safety and resource protection goals and requirements",
+   "url": "https://www.trailskills.org/skills/safety-site-management-2"
+  },
+  {
+   "id": "maintenance-specifications",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Maintenance Specifications",
+   "definition": "Understand and apply common maintenance specifications, including corridor height/width, tread width, cross/outslope, protrusions, obstacles, and water management techniques",
+   "url": "https://www.trailskills.org/skills/maintenance-specifications"
+  },
+  {
+   "id": "corridor-clearing-power-tools",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Corridor Clearing/Site Preparation",
+   "definition": "Clear the corridor and prepare the site (brushing, logging out, hazard tree removal, rock/stump removal) in preparation for maintenance using proper pruning techniques",
+   "url": "https://www.trailskills.org/skills/corridor-clearing-power-tools"
+  },
+  {
+   "id": "corridor-clearing-pruning-side-cutting-brushing-2",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Corridor Clearing: Pruning/ Side-Cutting/ Brushing",
+   "definition": "Use pruning and brushing techniques to maximize safety, minimize visual impacts and support healthy trailside vegetation",
+   "url": "https://www.trailskills.org/skills/corridor-clearing-pruning-side-cutting-brushing-2"
+  },
+  {
+   "id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut",
+   "definition": "Felling, brushing, bucking and limbing logs of various sizes safely using proper, well-maintained equipment",
+   "url": "https://www.trailskills.org/skills/corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut"
+  },
+  {
+   "id": "corridor-clearing-material-and-debris-management-2",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Corridor Clearing: Material and Debris Management",
+   "definition": "Materials and debris removal from corridor using low impact techniques, according to project and resource protection requirements",
+   "url": "https://www.trailskills.org/skills/corridor-clearing-material-and-debris-management-2"
+  },
+  {
+   "id": "tread-maintenance-hand-tools",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Tread Maintenance - Hand tools",
+   "definition": "Using hand tools, maintain a trail to its designed specifications for tread width, cross/outslope, protrusions, and obstacles using hand tools and minimizes off trail impacts",
+   "url": "https://www.trailskills.org/skills/tread-maintenance-hand-tools"
+  },
+  {
+   "id": "tread-maintenance-mechanized-equipment",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Tread Maintenance - Mechanized Equipment",
+   "definition": "Safely use mechanized trail equipment (e.g., mini-excavators, skid steers, trail dozers, compactors) to maintain trail to meet maintenance specifications for tread width, cross/outslope, protrusions and obstacles and minimizes off trail impacts",
+   "url": "https://www.trailskills.org/skills/tread-maintenance-mechanized-equipment"
+  },
+  {
+   "id": "drainage-features-water-management",
+   "category_id": "trail-maintenance",
+   "category": "Trail Maintenance",
+   "name": "Drainage Features/Water Management",
+   "definition": "Construct/restore trail drainage features that decrease erosion and increase sheet flow, including knicks, grade reversals, rolling grade dips, berms, ditches, and sheet drains",
+   "url": "https://www.trailskills.org/skills/drainage-features-water-management"
+  },
+  {
+   "id": "trail-sustainability-principles-3",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Trail Sustainability Principles",
+   "definition": "Understand and apply principles of trail sustainability to all components of project planning and design",
+   "url": "https://www.trailskills.org/skills/trail-sustainability-principles-3"
+  },
+  {
+   "id": "define-purpose-and-need-of-project",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Define Purpose, Need, and Feasibility of Project",
+   "definition": "Use primary data (e.g., stakeholder outreach, trail use data, trail counters) and secondary data (e.g., planning documents, natural and cultural resource survey information, and site-specific resource limitations including soils, hydrology, geology, slope) to define the purpose of the proposed project, the need that it will meet, and its feasibility",
+   "url": "https://www.trailskills.org/skills/define-purpose-and-need-of-project"
+  },
+  {
+   "id": "stakeholder-engagement-2",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Stakeholder Engagement",
+   "definition": "Identify stakeholders from interested individuals, agencies, and organizations to inform an outreach strategy and engage stakeholders in a transparent, authentic, and meaningful way",
+   "url": "https://www.trailskills.org/skills/stakeholder-engagement-2"
+  },
+  {
+   "id": "land-use-plan-conformance",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Land Use Plan Alignment",
+   "definition": "Identify elements of the general management, forest, or comprehensive resource management plans as they relate to the trail project",
+   "url": "https://www.trailskills.org/skills/land-use-plan-conformance"
+  },
+  {
+   "id": "corridor-planning",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Corridor Planning",
+   "definition": "Collect, analyze and integrate spatial data and field collected data to identify potential areas (broad corridors) that meet the project purpose and need, and establish potential areas of avoidance",
+   "url": "https://www.trailskills.org/skills/corridor-planning"
+  },
+  {
+   "id": "trail-specifications",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Trail Specifications",
+   "definition": "Identify trail specifications (i.e. tread surface, trail width, trail corridor height, grades, cross slope, turning radius, obstacles/protrusions, and structures) that match the project purpose, need, and resources",
+   "url": "https://www.trailskills.org/skills/trail-specifications"
+  },
+  {
+   "id": "conceptual-trail-plan-development",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Conceptual Trail Plan Development",
+   "definition": "Integrate and assess the data collected during the trail planning process (i.e. trail use, stakeholder input, land use plans, spatial data/analysis and field data) to develop a conceptual trail plan that identifies trail corridor, site-specific trail specifications and matches the project need, purpose and resources",
+   "url": "https://www.trailskills.org/skills/conceptual-trail-plan-development"
+  },
+  {
+   "id": "design",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Field Design: Trail Alignment Identification and Marking",
+   "definition": "Delineate the trail alignment, width, height, grade and structures appropriate to the intended trail use in the field with field flagging and GPS",
+   "url": "https://www.trailskills.org/skills/design"
+  },
+  {
+   "id": "cost-estimation",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Project Cost Estimation",
+   "definition": "Estimate the cost of project construction, maintenance and related oversight, permitting and planning (including tools, consumables, volunteer and staff time, contractors and consultants, equipment, materials)",
+   "url": "https://www.trailskills.org/skills/cost-estimation"
+  },
+  {
+   "id": "trail-plans",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Trail Plan Development",
+   "definition": "Transfer field-delineated trail design (location, alignment, structures), along with construction process, materials, notes, and special conditions into a trail planning document that will guide the trail development process",
+   "url": "https://www.trailskills.org/skills/trail-plans"
+  },
+  {
+   "id": "permitting",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Compliance and Permitting",
+   "definition": "Ensure compliance with applicable permitting requirements at the federal level (National Environmental Protection Act/NEPA, Section 106 of the Antiquities Act, the Historic Preservation Act, National Pollutant Discharge Elimination System/NPDES, US Army Corps of Engineers) and state, regional, county and local level (Erosion & Sediment Control/E&SC, Stormwater Pollution Prevention/SWPP, and other regulations related to wildlife, natural heritage, archeological/cultural resources, and environmental resource protection)",
+   "url": "https://www.trailskills.org/skills/permitting"
+  },
+  {
+   "id": "implementation-plan",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Implementation Plan",
+   "definition": "Accurately interpret specifications, construction process notes, and construction documents to develop an implementation plan based on available labor and funding",
+   "url": "https://www.trailskills.org/skills/implementation-plan"
+  },
+  {
+   "id": "interpretation",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Interpretation",
+   "definition": "Identify specific interpretive and educational opportunities on trails to contextualize the visitor experience (e.g., history, habitats, scenery, flora/fauna), and make recommendations for interpretive method",
+   "url": "https://www.trailskills.org/skills/interpretation"
+  },
+  {
+   "id": "trail-inventory-and-assessment",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Trail Inventory and Assessment",
+   "definition": "Inventory and assess existing trails and their conditions, identifying causes of trail degradation (e.g., water, grades, soil conditions, users, and/or use patterns) and the appropriate actions to address the deficiencies",
+   "url": "https://www.trailskills.org/skills/trail-inventory-and-assessment"
+  },
+  {
+   "id": "operations-and-maintenance-plan-development",
+   "category_id": "project-planning-and-design",
+   "category": "Project Planning and Design",
+   "name": "Operations and Maintenance Plan Development",
+   "definition": "Transfer field data, spatial data, and land management plan information into an operations and maintenance plan that will direct ongoing trail management including: maintenance specifications, seasonal maintenance schedule, operational protocols, and risk management protocols",
+   "url": "https://www.trailskills.org/skills/operations-and-maintenance-plan-development"
+  },
+  {
+   "id": "crew-recruitment",
+   "category_id": "crew-management",
+   "category": "Crew Management",
+   "name": "Crew Recruitment",
+   "definition": "Perform inclusive and proactive recruitment and hiring (i.e., hiring beyond basic knowledge, skills, and abilities) of diverse crew members and staff",
+   "url": "https://www.trailskills.org/skills/crew-recruitment"
+  },
+  {
+   "id": "crew-training",
+   "category_id": "crew-management",
+   "category": "Crew Management",
+   "name": "Crew Training",
+   "definition": "Implement a training program that provides crew members with the skills, knowledge, and behaviors that are necessary for high quality trail operations, the implementation of trail management goals, safe operations, overall effectiveness and team engagement",
+   "url": "https://www.trailskills.org/skills/crew-training"
+  },
+  {
+   "id": "crew-management",
+   "category_id": "crew-management",
+   "category": "Crew Management",
+   "name": "Crew Management",
+   "definition": "Schedule, assign specific tasks and general duties, ensure appropriate safety and operational equipment is assigned, and provide overall management of personnel in carrying out assigned project work",
+   "url": "https://www.trailskills.org/skills/crew-management"
+  },
+  {
+   "id": "jobsite-safety",
+   "category_id": "crew-management",
+   "category": "Crew Management",
+   "name": "Jobsite Safety",
+   "definition": "Ensure a safe jobsite by conducting task- and site-specific hazard analysis, identifying and mitigating risks, demonstrating situational awareness, and responding to safety incidents",
+   "url": "https://www.trailskills.org/skills/jobsite-safety"
+  },
+  {
+   "id": "performance-management",
+   "category_id": "crew-management",
+   "category": "Crew Management",
+   "name": "Performance Management",
+   "definition": "Create and utilize a systematic approach (criteria for evaluation) for oversight of personnel and volunteers to ensure skills, knowledge, and behaviors meet standards for high quality trail operations, the implementation of trail management goals, safe operations, and overall effectiveness",
+   "url": "https://www.trailskills.org/skills/performance-management"
+  },
+  {
+   "id": "budgeting",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Program and Project Budgeting",
+   "definition": "Determine the overall costs of trail programs and projects including tools, consumables, volunteer and staff time, contractors and consultants, equipment, materials",
+   "url": "https://www.trailskills.org/skills/budgeting"
+  },
+  {
+   "id": "contract-administration",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Contract Administration",
+   "definition": "Provide management of trail-related contracts as well as oversight of contractor activities, deliverables, deadlines, and payments",
+   "url": "https://www.trailskills.org/skills/contract-administration"
+  },
+  {
+   "id": "funding-grants",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Funding/Grants",
+   "definition": "Identify funding sources that align with trail-related project/s; write and submit grants and grant reports; track grant fund expenditures; and communicate effectively with funders",
+   "url": "https://www.trailskills.org/skills/funding-grants"
+  },
+  {
+   "id": "communications",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Communications",
+   "definition": "Effectively communicate trail and partnership information to trail administrators, trail managers, contractors and consultants, volunteers, and the public",
+   "url": "https://www.trailskills.org/skills/communications"
+  },
+  {
+   "id": "education-and-public-outreach",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Education and Public Outreach",
+   "definition": "Develop and conduct workshops, seminars and other training for employees, public and private sector partners, volunteers, and the public on trail skills, land management issues and priorities, and policy that impacts trails",
+   "url": "https://www.trailskills.org/skills/education-and-public-outreach"
+  },
+  {
+   "id": "inspections-monitoring",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Inspections/Monitoring",
+   "definition": "Monitor and document trail use and conditions to determine impacts on natural, social/experiential, historic, and cultural resources",
+   "url": "https://www.trailskills.org/skills/inspections-monitoring"
+  },
+  {
+   "id": "visitor-use-management-and-monitoring",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Visitor Use Management",
+   "definition": "Manage trails for a variety of uses and visitor experiences while meeting trail objectives",
+   "url": "https://www.trailskills.org/skills/visitor-use-management-and-monitoring"
+  },
+  {
+   "id": "policy-directives-law",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Policy/Directives/Law",
+   "definition": "Apply knowledge of land management agency policies and law (including legislation, regulations, policy, planning, strategy, and management directives/guidelines) to the management of trails",
+   "url": "https://www.trailskills.org/skills/policy-directives-law"
+  },
+  {
+   "id": "partnership-and-collaboration",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Partnership and Collaboration",
+   "definition": "Partner and collaborate effectively with a variety of user groups and organizations to bolster stewardship capacity and community support for trail projects and programs",
+   "url": "https://www.trailskills.org/skills/partnership-and-collaboration"
+  },
+  {
+   "id": "agreement-development-2",
+   "category_id": "program-administration",
+   "category": "Program Administration",
+   "name": "Agreement Development",
+   "definition": "Develop cooperative agreements or memoranda of understanding with land managers and partners that address the roles and responsibilities of all parties and define cooperative relationships",
+   "url": "https://www.trailskills.org/skills/agreement-development-2"
+  }
+ ],
+ "roles": [
+  {
+   "id": "volunteer-trail-worker",
+   "title": "Volunteer Trail Worker",
+   "volunteer": true,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Entry"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Entry"
+    }
+   ]
+  },
+  {
+   "id": "volunteer-coordinator",
+   "title": "Volunteer Coordinator",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "communications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "education-and-public-outreach",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "partnership-and-collaboration",
+     "level": "Full Performance"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "budgeting",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "funding-grants",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "visitor-use-management-and-monitoring",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "agreement-development-2",
+     "level": "Entry"
+    }
+   ]
+  },
+  {
+   "id": "trail-crew-member",
+   "title": "Trail Crew Member",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Entry"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Entry"
+    }
+   ]
+  },
+  {
+   "id": "trail-maintenance-crew-member",
+   "title": "Trail Maintenance Crew Member",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Entry"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Entry"
+    }
+   ]
+  },
+  {
+   "id": "trail-equipment-operator",
+   "title": "Trail Equipment Operator",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Entry"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "design",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Entry"
+    }
+   ]
+  },
+  {
+   "id": "trail-crew-leader-foreman",
+   "title": "Trail Crew Leader / Foreman",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-planning",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "cost-estimation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "implementation-plan",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "communications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "education-and-public-outreach",
+     "level": "Entry"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "define-purpose-and-need-of-project",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "stakeholder-engagement-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "land-use-plan-conformance",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "design",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "operations-and-maintenance-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "budgeting",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "contract-administration",
+     "level": "Entry"
+    }
+   ]
+  },
+  {
+   "id": "project-manager",
+   "title": "Project Manager",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "land-use-plan-conformance",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-planning",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "design",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "cost-estimation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "implementation-plan",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "budgeting",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "contract-administration",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "communications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "education-and-public-outreach",
+     "level": "Full Performance"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "define-purpose-and-need-of-project",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "stakeholder-engagement-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "conceptual-trail-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-plans",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "interpretation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "operations-and-maintenance-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "funding-grants",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "inspections-monitoring",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "visitor-use-management-and-monitoring",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "policy-directives-law",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "partnership-and-collaboration",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "agreement-development-2",
+     "level": "Entry"
+    }
+   ]
+  },
+  {
+   "id": "trail-designer-planner",
+   "title": "Trail Designer / Planner",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "define-purpose-and-need-of-project",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "stakeholder-engagement-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "land-use-plan-conformance",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-planning",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "conceptual-trail-plan-development",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "design",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "cost-estimation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-plans",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "implementation-plan",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "operations-and-maintenance-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "budgeting",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "communications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "inspections-monitoring",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "visitor-use-management-and-monitoring",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "policy-directives-law",
+     "level": "Full Performance"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "safety-site-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "interpretation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "contract-administration",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "funding-grants",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "education-and-public-outreach",
+     "level": "Full Performance"
+    }
+   ]
+  },
+  {
+   "id": "trail-land-manager",
+   "title": "Trail Manager / Land Manager",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "define-purpose-and-need-of-project",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "stakeholder-engagement-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "land-use-plan-conformance",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-planning",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "design",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "cost-estimation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-plans",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "implementation-plan",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "operations-and-maintenance-plan-development",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "budgeting",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "contract-administration",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "funding-grants",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "communications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "education-and-public-outreach",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "inspections-monitoring",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "visitor-use-management-and-monitoring",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "policy-directives-law",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "partnership-and-collaboration",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "agreement-development-2",
+     "level": "Full Performance"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "conceptual-trail-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "interpretation",
+     "level": "Full Performance"
+    }
+   ]
+  },
+  {
+   "id": "trail-program-nonprofit-manager",
+   "title": "Trail Program / Nonprofit Manager",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "budgeting",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "contract-administration",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "funding-grants",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "communications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "education-and-public-outreach",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "inspections-monitoring",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "visitor-use-management-and-monitoring",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "policy-directives-law",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "partnership-and-collaboration",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "agreement-development-2",
+     "level": "Expert"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "safety-site-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "define-purpose-and-need-of-project",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "stakeholder-engagement-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "land-use-plan-conformance",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "corridor-planning",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "conceptual-trail-plan-development",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "design",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "cost-estimation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-plans",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "implementation-plan",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "interpretation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "operations-and-maintenance-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Expert"
+    }
+   ]
+  },
+  {
+   "id": "trail-contractor-business-owner",
+   "title": "Trail Contractor / Business Owner",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "define-purpose-and-need-of-project",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "stakeholder-engagement-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "land-use-plan-conformance",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-planning",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "conceptual-trail-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "design",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "cost-estimation",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-plans",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "implementation-plan",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "operations-and-maintenance-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-recruitment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "budgeting",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "contract-administration",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "communications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "education-and-public-outreach",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "inspections-monitoring",
+     "level": "Expert"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "interpretation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "funding-grants",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "policy-directives-law",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "partnership-and-collaboration",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "agreement-development-2",
+     "level": "Full Performance"
+    }
+   ]
+  },
+  {
+   "id": "technical-trail-builder",
+   "title": "Technical Trail Builder",
+   "volunteer": false,
+   "requirements": [
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-finishwork",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "decommissioning-trails",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "maintenance-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management-2",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "trail-sustainability-principles-3",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "define-purpose-and-need-of-project",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "stakeholder-engagement-2",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "land-use-plan-conformance",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "corridor-planning",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-specifications",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "design",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "permitting",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "implementation-plan",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-inventory-and-assessment",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "inspections-monitoring",
+     "level": "Full Performance"
+    }
+   ],
+   "role_dependent": [
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-hardening",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Expert"
+    },
+    {
+     "skill_id": "conceptual-trail-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "cost-estimation",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "trail-plans",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "interpretation",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "operations-and-maintenance-plan-development",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Full Performance"
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Entry"
+    },
+    {
+     "skill_id": "performance-management",
+     "level": "Entry"
+    }
+   ]
+  }
+ ],
+ "backgrounds": [
+  {
+   "id": "corps",
+   "label": "Conservation corps",
+   "keywords": [
+    "corps",
+    "americorps",
+    "conservation crew",
+    "trail crew"
+   ],
+   "suggestions": [
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Entry",
+     "confidence": 0.9
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Entry",
+     "confidence": 0.9
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Entry",
+     "confidence": 0.85
+    },
+    {
+     "skill_id": "hand-built-trail-construction",
+     "level": "Entry",
+     "confidence": 0.8
+    },
+    {
+     "skill_id": "corridor-clearing-pruning-side-cutting-brushing",
+     "level": "Entry",
+     "confidence": 0.75
+    },
+    {
+     "skill_id": "trail-sustainability-principles",
+     "level": "Entry",
+     "confidence": 0.6
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Entry",
+     "confidence": 0.6
+    }
+   ]
+  },
+  {
+   "id": "military",
+   "label": "Military service",
+   "keywords": [
+    "military",
+    "army",
+    "navy",
+    "marine",
+    "air force",
+    "veteran",
+    "combat engineer"
+   ],
+   "suggestions": [
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Full Performance",
+     "confidence": 0.8
+    },
+    {
+     "skill_id": "crew-management",
+     "level": "Entry",
+     "confidence": 0.7
+    },
+    {
+     "skill_id": "crew-training",
+     "level": "Entry",
+     "confidence": 0.65
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry",
+     "confidence": 0.45
+    },
+    {
+     "skill_id": "communications",
+     "level": "Entry",
+     "confidence": 0.4
+    }
+   ]
+  },
+  {
+   "id": "landscape",
+   "label": "Landscaping or grounds",
+   "keywords": [
+    "landscap",
+    "grounds"
+   ],
+   "suggestions": [
+    {
+     "skill_id": "tread-hardening",
+     "level": "Entry",
+     "confidence": 0.7
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Entry",
+     "confidence": 0.65
+    },
+    {
+     "skill_id": "tread-maintenance-mechanized-equipment",
+     "level": "Entry",
+     "confidence": 0.6
+    },
+    {
+     "skill_id": "water-management-drainage-features",
+     "level": "Entry",
+     "confidence": 0.5
+    }
+   ]
+  },
+  {
+   "id": "construction",
+   "label": "Construction trades",
+   "keywords": [
+    "construction",
+    "carpent",
+    "mason",
+    "excavat",
+    "heavy equipment"
+   ],
+   "suggestions": [
+    {
+     "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+     "level": "Entry",
+     "confidence": 0.7
+    },
+    {
+     "skill_id": "retaining-walls",
+     "level": "Full Performance",
+     "confidence": 0.7
+    },
+    {
+     "skill_id": "mechanized-trail-construction",
+     "level": "Entry",
+     "confidence": 0.65
+    },
+    {
+     "skill_id": "construction-specifications",
+     "level": "Entry",
+     "confidence": 0.6
+    },
+    {
+     "skill_id": "jobsite-safety",
+     "level": "Full Performance",
+     "confidence": 0.6
+    }
+   ]
+  },
+  {
+   "id": "forestry",
+   "label": "Forestry or wildland fire",
+   "keywords": [
+    "forestry",
+    "wildland",
+    "fire crew",
+    "hotshot",
+    "timber",
+    "fuels"
+   ],
+   "suggestions": [
+    {
+     "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance",
+     "confidence": 0.85
+    },
+    {
+     "skill_id": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+     "level": "Full Performance",
+     "confidence": 0.8
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Full Performance",
+     "confidence": 0.7
+    },
+    {
+     "skill_id": "corridor-clearing-material-and-debris-management",
+     "level": "Entry",
+     "confidence": 0.6
+    }
+   ]
+  },
+  {
+   "id": "volunteer",
+   "label": "Trail volunteering",
+   "keywords": [
+    "volunteer",
+    "work day",
+    "chapter",
+    "trail club"
+   ],
+   "suggestions": [
+    {
+     "skill_id": "tread-maintenance-hand-tools",
+     "level": "Entry",
+     "confidence": 0.8
+    },
+    {
+     "skill_id": "corridor-clearing-power-tools",
+     "level": "Entry",
+     "confidence": 0.7
+    },
+    {
+     "skill_id": "safety-site-management-2",
+     "level": "Entry",
+     "confidence": 0.6
+    },
+    {
+     "skill_id": "drainage-features-water-management",
+     "level": "Entry",
+     "confidence": 0.5
+    }
+   ]
+  },
+  {
+   "id": "career-changer",
+   "label": "Career changer",
+   "keywords": [],
+   "suggestions": []
+  },
+  {
+   "id": "none",
+   "label": "No trail experience yet",
+   "keywords": [],
+   "suggestions": []
+  }
+ ],
+ "keyword_rules": [
+  {
+   "match": [
+    "chainsaw",
+    "crosscut",
+    "sawyer",
+    "felling",
+    "bucking"
+   ],
+   "skill_id": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+   "level": "Entry",
+   "confidence": 0.65
+  },
+  {
+   "match": [
+    "brushing",
+    "lopper",
+    "pruning",
+    "side-cut",
+    "brushed"
+   ],
+   "skill_id": "corridor-clearing-pruning-side-cutting-brushing-2",
+   "level": "Entry",
+   "confidence": 0.65
+  },
+  {
+   "match": [
+    "water bar",
+    "waterbar",
+    "drain",
+    "grade dip",
+    "erosion"
+   ],
+   "skill_id": "drainage-features-water-management",
+   "level": "Entry",
+   "confidence": 0.6
+  },
+  {
+   "match": [
+    "built trail",
+    "new trail",
+    "bench cut",
+    "hand-built",
+    "built hiking trails",
+    "trail building"
+   ],
+   "skill_id": "hand-built-trail-construction",
+   "level": "Entry",
+   "confidence": 0.7
+  },
+  {
+   "match": [
+    "tread",
+    "maintained trail",
+    "trail maintenance"
+   ],
+   "skill_id": "tread-maintenance-hand-tools",
+   "level": "Entry",
+   "confidence": 0.6
+  },
+  {
+   "match": [
+    "rock wall",
+    "stone wall",
+    "retaining",
+    "rockwork",
+    "stonework",
+    "steps"
+   ],
+   "skill_id": "retaining-walls",
+   "level": "Entry",
+   "confidence": 0.55
+  },
+  {
+   "match": [
+    "bridge",
+    "boardwalk",
+    "puncheon",
+    "turnpike"
+   ],
+   "skill_id": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+   "level": "Entry",
+   "confidence": 0.55
+  },
+  {
+   "match": [
+    "excavator",
+    "mini-ex",
+    "skid steer",
+    "trail dozer",
+    "machine"
+   ],
+   "skill_id": "mechanized-trail-construction",
+   "level": "Entry",
+   "confidence": 0.55
+  },
+  {
+   "match": [
+    "led a crew",
+    "crew lead",
+    "crew leader",
+    "supervised",
+    "ran a crew"
+   ],
+   "skill_id": "crew-management",
+   "level": "Entry",
+   "confidence": 0.6
+  },
+  {
+   "match": [
+    "trained",
+    "taught",
+    "mentored",
+    "training new"
+   ],
+   "skill_id": "crew-training",
+   "level": "Entry",
+   "confidence": 0.5
+  },
+  {
+   "match": [
+    "first aid",
+    "safety briefing",
+    "hazard"
+   ],
+   "skill_id": "jobsite-safety",
+   "level": "Entry",
+   "confidence": 0.5
+  },
+  {
+   "match": [
+    "assessment",
+    "inventory",
+    "trail condition",
+    "logged conditions"
+   ],
+   "skill_id": "trail-inventory-and-assessment",
+   "level": "Entry",
+   "confidence": 0.5
+  },
+  {
+   "match": [
+    "flagged",
+    "flagging",
+    "layout",
+    "designed a trail",
+    "trail design"
+   ],
+   "skill_id": "design",
+   "level": "Entry",
+   "confidence": 0.5
+  },
+  {
+   "match": [
+    "grant",
+    "fundrais"
+   ],
+   "skill_id": "funding-grants",
+   "level": "Entry",
+   "confidence": 0.5
+  },
+  {
+   "match": [
+    "outreach",
+    "educated",
+    "visitors",
+    "interpretive"
+   ],
+   "skill_id": "education-and-public-outreach",
+   "level": "Entry",
+   "confidence": 0.45
+  }
+ ]
+}
