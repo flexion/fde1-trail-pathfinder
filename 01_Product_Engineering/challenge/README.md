@@ -1090,7 +1090,9 @@ systems" is true. Full row and the counter-argument in
 
 ### Step 7 — the goldens
 
-Six rows in [`use_case/evals/golden.jsonl`](../../use_case/evals/golden.jsonl).
+Six rows in [`use_case/evals/golden-gap.jsonl`](../../use_case/evals/golden-gap.jsonl)
+(renamed 2026-10-29; `golden.jsonl` now holds the AI-1 and AI-2 goldens after the
+scope change recorded in `use_case/decisions.md`, Week 3).
 **Edge case:** row 2, the same skill name in two categories, which must never
 be merged. **Decline:** row 3, no training exists for any gap, so the right
 answer recommends nothing. Row 4 is the *no answer* case (unknown skill sets

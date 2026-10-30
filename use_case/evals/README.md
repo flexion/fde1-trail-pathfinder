@@ -2,17 +2,90 @@
 
 ## `golden.jsonl`
 
-Six authored examples from TC1. The first five establish the initial cases;
-the sixth records an unresolved product question about recommendation ranking.
+**Rewritten 2026-10-29 after the product owner meeting of 2026-10-28** (see
+`use_case/stakeholders.md`, Week 3). The product's P1 AI features are AI-1 and
+AI-2 of the career-explorer repo's `docs/trailskills-2.0/04-ai-integration-spec.md`:
+
+| Capability | In | Out | Rows |
+| --- | --- | --- | --- |
+| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-11` (8 answerable, 3 decline; `ai1-10` is the unresolved row, `ai1-11` tests a rejected id) |
+| AI-2 | a description of her current job, or a pasted posting | the 1 to 3 closest of the 12 roles, each with a one-line reason from the role profile | `ai2-01` … `ai2-09` (7 answerable, 2 decline) |
 
 Each line is one object:
 
 ```json
-{"input": "...", "output": "...", "why": "what makes this the right answer"}
+{"id": "ai1-01", "capability": "AI-1", "status": "...", "input": {...}, "output": {...}, "why": "..."}
 ```
 
-The `why` field is the one that earns its keep. In Week 4 you calibrate an
-LLM judge against these, and "why" is what you calibrate it on.
+AI-2 rows may add `also_acceptable`: role ids a scorer should accept in the
+list without counting them as the top match. The contracts are
+`ExperienceRequest` → `CompetencySuggestions` and `JobTextRequest` →
+`RoleMatches` in `schema.py`. Every competency id, level, role id and quoted
+phrase is checked by `01_Product_Engineering/challenge/check_goldens.py`
+against `data/framework.json`, which `use_case/build_corpus.py` builds from the
+golden role profiles and competency map (dated 2026-10-20) in the
+career-explorer repo.
+
+**Status: draft, written by the course team, not yet validated.** The product
+owner agreed on 2026-10-28 that we generate goldens from the real roles and
+mapping and that she and the project lead validate them. Until that happens,
+`status` on every row says so. The spec's own open question 1 (who writes the
+test sets with partners) is still open; the partner contacts named in the
+meeting are the people to ask for ten real experience descriptions.
+
+Conventions used in the AI-1 rows, ours until validation says otherwise:
+
+- **Confidence.** A competency she named in her words is `likely`; a hedged
+  mention ("only bucked a few logs") is `check`. A background rule keeps the
+  prototype's own buckets on its confidence number (0.75 and up `likely`, 0.55
+  and up `possible`, below that `check`; `core.js` line 125). Every rule of a
+  picked background is merged in (the spec says "merge with background
+  suggestions"); when a quote and a rule name the same competency, the quote
+  wins the reason and confidence and the level is the higher of the two.
+  The prototype's keyword rules fire on her words as well; a hand-made quote
+  for the same competency wins, otherwise the keyword hit is the quote. An id
+  in `rejected` never appears. Over 12, drop `check` first, then `possible`,
+  lowest confidence first.
+- **Level.** A background rule keeps the level the prototype gives it (mostly
+  Entry; jobsite safety from military service and saw work from fire crews are
+  Full). A task she names is `Entry` at one or two seasons or when the time is
+  not stated, `Full Performance` at three seasons or more or when she led
+  others in it. Years in another trade do not raise a trail level. `Expert`
+  only when she used the word herself; the suggestion never goes above what
+  she said. (Team convention. The spec's own rule is that AI may not raise the
+  *kind of evidence*; levels are our reading of it.)
+- **Reasons.** A background-only suggestion uses the prototype's wording
+  ("Common for people with military service experience"), because that is the
+  screen the project lead showed on 2026-10-28. A quoted suggestion carries the
+  quote in `quote` as well as in the reason (spec §6, "quoted source text").
+- **Category names.** The app says "Crew Management" (the trailskills.org URL
+  slug, chosen in TC1); the map and the prototype say "Crew Leadership".
+  Recorded in `decisions.md`; the ids are the same.
+- **AI-2 declines.** The spec's AI-2 fallback is the role list, and "the role
+  library doesn't cover that yet" is AI-3's wording. Declining with the nearest
+  competencies named is our call, pending the product owner (`decisions.md`).
+- **`produced_by` is null in every row.** A golden says what the right answer
+  is, not whether the rules or the model produced it; the Week 4 harness fills
+  it in per run.
+- **Sources.** `framework:competency:<id>`, `framework:background:<id>` and
+  `framework:role:<id>` name entries in `data/framework.json`;
+  `framework_version` names the golden data release (2026-10-20).
+
+Who else reads `golden.jsonl`: the Week 2 session notebook
+(`02_Open_Weights/sessions/S4_Synthetic_Data_Generation.py`) seeds from it and
+expects the gap shape. It is course material, already run, and not changed
+here; point it at `golden-gap.jsonl` if it is run again. `generate_data.py`
+and the retrieval fixtures already point at `golden-gap.jsonl`.
+
+Not covered yet, in the order the product owner is likely to notice: a real
+posting from her (promised 2026-10-28); a long posting full of benefits
+boilerplate; a Trail Crew Member versus Technical Trail Builder split; text
+naming more than 12 competencies; the personal "how close am I" case (AI-3,
+needs consent); text in Spanish; prompt injection (Week 6).
+
+The TC1 gap-and-next-step goldens are kept as `golden-gap.jsonl` (same checker).
+They are still valid for the downstream step (AI-4) but were written against
+invented roles and skills, so they are no longer the bar.
 
 ### Why you write these by hand
 

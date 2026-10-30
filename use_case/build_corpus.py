@@ -33,6 +33,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "01_Product_Engineering" / "challenge" / "data" / "corpus.jsonl"
+FRAMEWORK_OUT = OUT.parent / "framework.json"
 FIXTURES = ROOT / "use_case" / "evals" / "retrieval-corpus.jsonl"
 TC2 = ROOT / "use_case" / "data" / "retrieval_sources.jsonl"
 EXPLORER_DEFAULT = ROOT.parent / "flexion-trailskills2.0-career-explorer"
@@ -145,6 +146,33 @@ def explorer_records(explorer: Path) -> list[dict]:
     return records
 
 
+def framework(explorer: Path) -> dict:
+    """The framework itself, for AI-1 and AI-2 (the pivot of 2026-10-28): the 55
+    competencies with their one-line definitions, each role's requirements by
+    competency id, and the prototype's rule-based experience mapping (the
+    fallback the spec names). Level text per competency is not in the repo; it
+    lives on trailskills.org at each competency's url."""
+    data_path = explorer / "prototype" / "trailskills-org-2" / "src" / "data.json"
+    data = json.loads(data_path.read_text(encoding="utf-8"))
+    fw = data["framework"]
+    return {
+        "source": {"repository": "flexion/flexion-trailskills2.0-career-explorer", "commit": git_head(explorer),
+                   "path": data_path.relative_to(explorer).as_posix()},
+        "categories": [{"id": c["id"], "name": CATEGORY[c["id"]], "prototype_name": c["name"]} for c in fw["categories"]],
+        "competencies": [{"id": s["id"], "category_id": s["categoryId"], "category": CATEGORY[s["categoryId"]],
+                          "name": s["name"], "definition": s["definition"], "url": s["url"]} for s in fw["skills"]],
+        "roles": [{"id": r["id"], "title": r["title"], "volunteer": bool(r.get("volunteer")),
+                   "requirements": [{"skill_id": x["skillId"], "level": LEVEL[x["level"]]} for x in r["requirements"]],
+                   "role_dependent": [{"skill_id": x["skillId"], "level": LEVEL[x["level"]]} for x in r.get("roleDependent", [])]}
+                  for r in data["roles"]],
+        "backgrounds": [{"id": b["id"], "label": b["label"], "keywords": b["keywords"],
+                         "suggestions": [{"skill_id": x["skillId"], "level": LEVEL[x["level"]], "confidence": x.get("confidence")}
+                                         for x in b["suggestions"]]} for b in data["experience"]["backgrounds"]],
+        "keyword_rules": [{"match": k["match"], "skill_id": k["skillId"], "level": LEVEL[k["level"]], "confidence": k.get("confidence")}
+                          for k in data["experience"]["keywordRules"]],
+    }
+
+
 def scenario_records(path: Path, *, fixture: bool) -> list[dict]:
     records = []
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -174,6 +202,8 @@ def main() -> int:
     records: list[dict] = []
     if args.explorer.exists():
         records += explorer_records(args.explorer)
+        FRAMEWORK_OUT.write_text(json.dumps(framework(args.explorer), ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        print(f"wrote {FRAMEWORK_OUT.relative_to(ROOT)}")
     else:
         print(f"warning: {args.explorer} not found; the trailskills scope is left out", file=sys.stderr)
     records += scenario_records(FIXTURES, fixture=True)
