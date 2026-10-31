@@ -224,7 +224,7 @@ class CompetencySuggestions(BaseModel):
 
 
 class JobTextRequest(BaseModel):
-    """AI-2 input: a description of her current job, or a pasted posting."""
+    """AI-2 input: a description of her current job, or the posting for the job she does now."""
 
     text: str
 
