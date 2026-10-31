@@ -33,27 +33,39 @@ mapping and that she and the project lead validate them. Until that happens,
 test sets with partners) is still open; the partner contacts named in the
 meeting are the people to ask for ten real experience descriptions.
 
-Conventions used in the AI-1 rows, ours until validation says otherwise:
+Conventions used in the AI-1 rows, ours until validation says otherwise. The
+level rule below replaced the earlier season convention on 2026-10-31; the
+AI-1 rows still carry levels from the old convention until they are re-judged.
 
-- **Confidence.** A competency she named in her words is `likely`; a hedged
-  mention ("only bucked a few logs") is `check`. A background rule keeps the
-  prototype's own buckets on its confidence number (0.75 and up `likely`, 0.55
-  and up `possible`, below that `check`; `core.js` line 125). Every rule of a
-  picked background is merged in (the spec says "merge with background
-  suggestions"); when a quote and a rule name the same competency, the quote
-  wins the reason and confidence and the level is the higher of the two.
-  The prototype's keyword rules fire on her words as well; a hand-made quote
-  for the same competency wins, otherwise the keyword hit is the quote. An id
-  in `rejected` never appears. Over 12, drop `check` first, then `possible`,
-  lowest confidence first.
-- **Level.** A background rule keeps the level the prototype gives it (mostly
-  Entry; jobsite safety from military service and saw work from fire crews are
-  Full). A task she names is `Entry` at one or two seasons or when the time is
-  not stated, `Full Performance` at three seasons or more or when she led
-  others in it. Years in another trade do not raise a trail level. `Expert`
-  only when she used the word herself; the suggestion never goes above what
-  she said. (Team convention. The spec's own rule is that AI may not raise the
-  *kind of evidence*; levels are our reading of it.)
+- **Where suggestions come from.** Two sources, merged. Her words are the
+  evidence: each competency they describe is assessed against that
+  competency's level descriptions. A picked background adds its own list of
+  competencies typical for that background (`backgrounds[].suggestions` in
+  `framework.json`), whether or not she wrote anything. With no words and no
+  background there is nothing to assess, and the answer is a decline that asks
+  her to describe what she did. An id in `rejected` never appears.
+- **Level** (rubric, decided 2026-10-31). A level comes from American Trails'
+  level descriptions for that competency (trailskills.org; local copy built by
+  `use_case/fetch_trailskills_levels.py`). A suggestion gets a level only when
+  her words match a description line at that level, and it cites the line it
+  matched; if her words match lines at more than one level, the highest wins.
+  Otherwise the level is *can't tell* (`null`) and she sets it when she
+  confirms. That covers every competency that comes from a background alone,
+  and every one her words mention without describing the work. Nothing else is
+  evidence of a level: not a background, not seasons or years ("nine seasons
+  building trail" alone matches no line), and not a self-rating (`Expert` needs
+  a match to an Expert line, not the word "expert"). Work from another trade
+  counts when what she describes matches a line (a landscaper who built stone
+  walls *independently* matches Full Performance on Retaining Walls).
+- **Confidence** (whether she has the competency at all; separate from level).
+  Her words matching a description line: `likely`. Her words naming the area
+  or firing a keyword rule without matching a line: `possible`. A hedged
+  mention ("only bucked a few logs"): `check`. A competency from a background
+  alone keeps the prototype's buckets on its score (0.75 and up `likely`, 0.55
+  and up `possible`, below that `check`; `core.js` line 125). When her words and
+  a background name the same competency, her words win the reason, confidence
+  and level. Over 12, drop `check` first, then `possible`, lowest confidence
+  first.
 - **Reasons.** A background-only suggestion uses the prototype's wording
   ("Common for people with military service experience"), because that is the
   screen the project lead showed on 2026-10-28. A quoted suggestion carries the
