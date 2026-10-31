@@ -225,7 +225,7 @@
    "url": "https://www.trailskills.org/skills/tread-maintenance-mechanized-equipment"
   },
   {
-   "id": "drainage-features-water-management",
+   "id": "water-management-drainage-features-2",
    "category_id": "trail-maintenance",
    "category": "Trail Maintenance",
    "name": "Drainage Features/Water Management",
@@ -544,7 +544,7 @@
      "level": "Entry"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Entry"
     },
     {
@@ -677,7 +677,7 @@
      "level": "Full Performance"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Full Performance"
     },
     {
@@ -846,7 +846,7 @@
      "level": "Full Performance"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Full Performance"
     },
     {
@@ -987,7 +987,7 @@
      "level": "Full Performance"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Full Performance"
     },
     {
@@ -1128,7 +1128,7 @@
      "level": "Full Performance"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Full Performance"
     },
     {
@@ -1277,7 +1277,7 @@
      "level": "Expert"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Expert"
     },
     {
@@ -1470,7 +1470,7 @@
      "level": "Expert"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Expert"
     },
     {
@@ -1719,7 +1719,7 @@
      "level": "Full Performance"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Full Performance"
     },
     {
@@ -1928,7 +1928,7 @@
      "level": "Expert"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Expert"
     },
     {
@@ -2227,7 +2227,7 @@
      "level": "Entry"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Full Performance"
     },
     {
@@ -2382,7 +2382,7 @@
      "level": "Expert"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Expert"
     },
     {
@@ -2595,7 +2595,7 @@
      "level": "Expert"
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Expert"
     },
     {
@@ -2753,7 +2753,7 @@
      "confidence": 0.6
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Entry",
      "confidence": 0.6
     }
@@ -2927,17 +2927,11 @@
      "confidence": 0.6
     },
     {
-     "skill_id": "drainage-features-water-management",
+     "skill_id": "water-management-drainage-features-2",
      "level": "Entry",
      "confidence": 0.5
     }
    ]
-  },
-  {
-   "id": "career-changer",
-   "label": "Career changer",
-   "keywords": [],
-   "suggestions": []
   },
   {
    "id": "none",
@@ -2979,7 +2973,7 @@
     "grade dip",
     "erosion"
    ],
-   "skill_id": "drainage-features-water-management",
+   "skill_id": "water-management-drainage-features-2",
    "level": "Entry",
    "confidence": 0.6
   },

@@ -8,7 +8,7 @@ AI-2 of the career-explorer repo's `docs/trailskills-2.0/04-ai-integration-spec.
 
 | Capability | In | Out | Rows |
 | --- | --- | --- | --- |
-| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-11` (8 answerable, 3 decline; `ai1-10` is the unresolved row, `ai1-11` tests a rejected id) |
+| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-11`, no `ai1-10` (8 answerable, 2 decline; `ai1-10` was the career-changer row, deleted 2026-10-31 with the background; `ai1-11` tests a rejected id) |
 | AI-2 | a description of her current job, or a pasted posting | the 1 to 3 closest of the 12 roles, each with a one-line reason from the role profile | `ai2-01` … `ai2-09` (7 answerable, 2 decline) |
 
 Each line is one object:
