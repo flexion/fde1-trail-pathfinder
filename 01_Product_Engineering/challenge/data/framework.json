@@ -2788,11 +2788,6 @@
      "confidence": 0.65
     },
     {
-     "skill_id": "mechanized-trail-construction",
-     "level": "Entry",
-     "confidence": 0.45
-    },
-    {
      "skill_id": "communications",
      "level": "Entry",
      "confidence": 0.4

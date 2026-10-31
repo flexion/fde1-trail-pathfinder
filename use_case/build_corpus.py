@@ -51,6 +51,20 @@ CATEGORY = {
     "program-administration": "Program Administration",
 }
 
+# Fixes to the prototype's data, applied every time framework.json is generated,
+# so a re-run cannot undo them. From the golden review of 2026-10-30; candidates
+# to send upstream to the career-explorer prototype.
+# The only Construction/Maintenance twin without the -2 suffix every other twin uses.
+RENAME_SKILL = {"drainage-features-water-management": "water-management-drainage-features-2"}
+# No suggestions of its own, and being removed from the screen.
+DROP_BACKGROUNDS = {"career-changer"}
+# A chip alone says nothing about trail construction.
+DROP_SUGGESTIONS = {("military", "mechanized-trail-construction")}
+
+
+def skill_id(prototype_id: str) -> str:
+    return RENAME_SKILL.get(prototype_id, prototype_id)
+
 
 def git_head(repo: Path) -> str:
     try:
@@ -159,16 +173,18 @@ def framework(explorer: Path) -> dict:
         "source": {"repository": "flexion/flexion-trailskills2.0-career-explorer", "commit": git_head(explorer),
                    "path": data_path.relative_to(explorer).as_posix()},
         "categories": [{"id": c["id"], "name": CATEGORY[c["id"]], "prototype_name": c["name"]} for c in fw["categories"]],
-        "competencies": [{"id": s["id"], "category_id": s["categoryId"], "category": CATEGORY[s["categoryId"]],
+        "competencies": [{"id": skill_id(s["id"]), "category_id": s["categoryId"], "category": CATEGORY[s["categoryId"]],
                           "name": s["name"], "definition": s["definition"], "url": s["url"]} for s in fw["skills"]],
         "roles": [{"id": r["id"], "title": r["title"], "volunteer": bool(r.get("volunteer")),
-                   "requirements": [{"skill_id": x["skillId"], "level": LEVEL[x["level"]]} for x in r["requirements"]],
-                   "role_dependent": [{"skill_id": x["skillId"], "level": LEVEL[x["level"]]} for x in r.get("roleDependent", [])]}
+                   "requirements": [{"skill_id": skill_id(x["skillId"]), "level": LEVEL[x["level"]]} for x in r["requirements"]],
+                   "role_dependent": [{"skill_id": skill_id(x["skillId"]), "level": LEVEL[x["level"]]}
+                                      for x in r.get("roleDependent", [])]}
                   for r in data["roles"]],
         "backgrounds": [{"id": b["id"], "label": b["label"], "keywords": b["keywords"],
-                         "suggestions": [{"skill_id": x["skillId"], "level": LEVEL[x["level"]], "confidence": x.get("confidence")}
-                                         for x in b["suggestions"]]} for b in data["experience"]["backgrounds"]],
-        "keyword_rules": [{"match": k["match"], "skill_id": k["skillId"], "level": LEVEL[k["level"]], "confidence": k.get("confidence")}
+                         "suggestions": [{"skill_id": skill_id(x["skillId"]), "level": LEVEL[x["level"]], "confidence": x.get("confidence")}
+                                         for x in b["suggestions"] if (b["id"], x["skillId"]) not in DROP_SUGGESTIONS]}
+                        for b in data["experience"]["backgrounds"] if b["id"] not in DROP_BACKGROUNDS],
+        "keyword_rules": [{"match": k["match"], "skill_id": skill_id(k["skillId"]), "level": LEVEL[k["level"]], "confidence": k.get("confidence")}
                           for k in data["experience"]["keywordRules"]],
     }
 
