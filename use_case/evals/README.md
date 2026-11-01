@@ -8,7 +8,7 @@ AI-2 of the career-explorer repo's `docs/trailskills-2.0/04-ai-integration-spec.
 
 | Capability | In | Out | Rows |
 | --- | --- | --- | --- |
-| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-11`, no `ai1-10` (8 answerable, 2 decline; `ai1-10` was the career-changer row, deleted 2026-10-31 with the background; `ai1-11` tests a rejected id) |
+| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-12`, no `ai1-10` (9 answerable, 2 decline; `ai1-10` was the career-changer row, deleted 2026-10-31 with the background; `ai1-11` tests a rejected id; `ai1-12` is "No trail experience yet" plus another trade, a placeholder description) |
 | AI-2 | a description of her current job, or the posting for the job she does now | the 1 to 3 closest of the 12 roles, each with a one-line reason from the role profile | `ai2-01` … `ai2-09` (7 answerable, 2 decline) |
 
 Each line is one object:
@@ -18,7 +18,10 @@ Each line is one object:
 ```
 
 AI-2 rows may add `also_acceptable`: role ids a scorer should accept in the
-list without counting them as the top match. The contracts are
+list without counting them as the top match. AI-1 rows may add
+`also_acceptable_levels`: for a borderline level, other levels a scorer should
+accept, e.g. `{"crew-management": ["Entry"]}` when "a six-person crew" could be
+read as a small crew (Entry) or a larger one (Full Performance). The contracts are
 `ExperienceRequest` → `CompetencySuggestions` and `JobTextRequest` →
 `RoleMatches` in `schema.py`. Every competency id, level, role id and quoted
 phrase is checked by `01_Product_Engineering/challenge/check_goldens.py`
@@ -35,7 +38,7 @@ meeting are the people to ask for ten real experience descriptions.
 
 Conventions used in the AI-1 rows, ours until validation says otherwise. The
 level rule below replaced the earlier season convention on 2026-10-31; the
-AI-1 rows still carry levels from the old convention until they are re-judged.
+AI-1 rows were re-judged under it on 2026-11-01.
 
 - **Where suggestions come from.** Two sources, merged. Her words are the
   evidence: each competency they describe is assessed against that
@@ -130,9 +133,43 @@ wrong thing.
   know"* or *"escalate this"*. A system that never declines is not calibrated.
 - Keep them short enough to read in full during review.
 
-## `retrieval.jsonl`
+## `retrieval.jsonl` (AI-1, after the pivot)
 
-The current set contains **ten questions adapted from the existing golden
+Labels for step 1 of AI-1: given what she wrote, which competency pages in the
+skills wiki (`use_case/data/wiki/`, one page per competency id) should
+retrieval find. **Eight questions, generated from the AI-1 goldens** so the two
+cannot drift:
+
+| Question | Golden | Gold pages | Kind |
+| --- | --- | --- | --- |
+| retrieval-01 | ai1-01 | 4 | multi-hop |
+| retrieval-02 | ai1-03 | 4 | multi-hop |
+| retrieval-03 | ai1-04 | 4 | multi-hop |
+| retrieval-04 | ai1-05 | 5 | multi-hop |
+| retrieval-05 | ai1-08 | 1 | lookup |
+| retrieval-06 | ai1-12 | 5 | multi-hop |
+| retrieval-07 | ai1-06 | 0 | decline |
+| retrieval-08 | ai1-07 | 0 | decline |
+
+- **Gold** is the competencies her words support: the golden's suggestions that
+  carry a quote. Background-only suggestions are a fixed lookup, not retrieval,
+  so they are not in the gold.
+- **Left out:** `ai1-02` and `ai1-09` (background only, no text to search) and
+  `ai1-11` (the same text as `ai1-01`).
+- **Five of the six answerable questions need four or five pages**, so top-1
+  retrieval cannot pass them; the top-*k* floor is 5.
+- **Short of ten, and not all real.** `ai1-08` is the project lead's own demo
+  input; the others were written by the course team from the role profiles,
+  and `ai1-12` is a placeholder. Two more, from real people, are still needed.
+
+`context.backgrounds` is passed along for the merge step but is not a search
+input. Never pass `gold` or the golden's output to the retriever or the model.
+
+## `retrieval-gap.jsonl` (pre-pivot, AI-4)
+
+The pre-pivot set, kept as `golden-gap.jsonl` is, for the gap step it was
+written against. `retrieval_compare.py` and the `retrieval_results*` files use
+it. It contains **ten questions adapted from the existing golden
 fixtures**. A [readable question list](retrieval-questions.md) is also available.
 These are assistant-authored
 test questions, not collected user utterances or stakeholder-approved questions.
