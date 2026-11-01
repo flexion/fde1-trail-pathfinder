@@ -1,7 +1,7 @@
 # TC3 question candidates from the Cairn knowledge base
 
 **Superseded as the working question set on 2026-10-27:** the user requested
-ten questions based on `golden.jsonl` instead. See [retrieval.jsonl](retrieval.jsonl)
+ten questions based on `golden.jsonl` instead. See [retrieval-gap.jsonl](retrieval-gap.jsonl)
 and [the evaluation README](README.md). This source-backed candidate list is
 retained for later stakeholder review; it is not the active labelled suite.
 
@@ -69,7 +69,7 @@ not resolve that integration blocker. See [TC3_DATA_REVIEW.md](../TC3_DATA_REVIE
    `data/retrieval_sources.jsonl`. Keep each fictional profile's facts together;
    do not join conflicting role definitions merely because names match.
 4. Review the expected answer and required citations, then assign `lookup`,
-   `multi-hop`, or `decline` and write the final `retrieval.jsonl`.
+   `multi-hop`, or `decline` and write the final `retrieval-gap.jsonl`.
 5. Record how many finalized cases need multiple source records. That count
    is not yet known; neither a technique nor a top-k value has been chosen.
 
