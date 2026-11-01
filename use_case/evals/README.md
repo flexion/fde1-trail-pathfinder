@@ -44,19 +44,22 @@ AI-1 rows still carry levels from the old convention until they are re-judged.
   `framework.json`), whether or not she wrote anything. With no words and no
   background there is nothing to assess, and the answer is a decline that asks
   her to describe what she did. An id in `rejected` never appears.
-- **Level** (rubric, decided 2026-10-31). A level comes from American Trails'
-  level descriptions for that competency (trailskills.org; local copy built by
-  `use_case/fetch_trailskills_levels.py`). A suggestion gets a level only when
-  her words match a description line at that level, and it cites the line it
-  matched; if her words match lines at more than one level, the highest wins.
-  Otherwise the level is *can't tell* (`null`) and she sets it when she
-  confirms. That covers every competency that comes from a background alone,
-  and every one her words mention without describing the work. Nothing else is
-  evidence of a level: not a background, not seasons or years ("nine seasons
-  building trail" alone matches no line), and not a self-rating (`Expert` needs
-  a match to an Expert line, not the word "expert"). Work from another trade
-  counts when what she describes matches a line (a landscaper who built stone
-  walls *independently* matches Full Performance on Retaining Walls).
+- **Level** (rubric, decided 2026-10-31; Entry by default, 2026-11-01). Every
+  suggestion starts at `Entry`, the framework's beginner level (its lines say
+  "demonstrate understanding" and "with supervision"). That covers every
+  competency from a background alone, and every one her words mention without
+  describing more. A higher level comes only from American Trails' level
+  descriptions for that competency (trailskills.org; local copy built by
+  `use_case/fetch_trailskills_levels.py`): `Full Performance` or `Expert` only
+  when her words match a description line at that level, citing the line in
+  `level_basis`; if her words match lines at more than one level, the highest
+  wins. Nothing else raises a level: not a background, not seasons or years
+  ("nine seasons building trail" alone matches no line), and not a self-rating
+  (`Expert` needs a match to an Expert line, not the word "expert"). Work from
+  another trade counts when what she describes matches a line (a landscaper
+  who built stone walls *independently* matches Full Performance on Retaining
+  Walls). An `Entry` with a `level_basis` was judged from her words; one
+  without is the default.
 - **Confidence** (whether she has the competency at all; separate from level).
   Her words matching a description line: `likely`. Her words naming the area
   or firing a keyword rule without matching a line: `possible`. A hedged
