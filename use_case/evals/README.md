@@ -62,7 +62,11 @@ AI-1 rows were re-judged under it on 2026-11-01.
   another trade counts when what she describes matches a line (a landscaper
   who built stone walls *independently* matches Full Performance on Retaining
   Walls). An `Entry` with a `level_basis` was judged from her words; one
-  without is the default.
+  without is the default. "Match" means meaning, not exact text: the model
+  judges whether her words describe the work in a line ("I train the new
+  hires" matches "Conduct training for new crew members"). Only the two ends
+  are exact, and code checks them: `quote` is her words copied verbatim, and
+  `level_basis` is a rubric line copied verbatim.
 - **Confidence** (whether she has the competency at all; separate from level).
   Her words matching a description line: `likely`. Her words naming the area
   or firing a keyword rule without matching a line: `possible`. A hedged
