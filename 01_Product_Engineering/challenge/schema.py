@@ -199,12 +199,18 @@ class CompetencySuggestion(BaseModel):
     skill_id: str = Field(description="Competency id from data/framework.json")
     category: Category
     skill: str = Field(description="Competency name, as the framework spells it")
-    level: SkillLevel
+    level: SkillLevel = Field(
+        description="Entry by default. Full Performance or Expert only when her quote matches that level's description (level_basis).",
+    )
     confidence: Confidence
     reason: str = Field(description="One line. Quotes her words, or names the background it came from.")
     quote: str | None = Field(
         default=None,
         description="The exact words of hers this rests on (spec §6, 'quoted source text'). None when it came from a background rule.",
+    )
+    level_basis: str | None = Field(
+        default=None,
+        description="The trailskills.org level description line her quote matched, verbatim. Required above Entry; None on a default Entry.",
     )
 
 

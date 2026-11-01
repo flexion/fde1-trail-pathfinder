@@ -18,7 +18,10 @@ Each line is one object:
 ```
 
 AI-2 rows may add `also_acceptable`: role ids a scorer should accept in the
-list without counting them as the top match. The contracts are
+list without counting them as the top match. AI-1 rows may add
+`also_acceptable_levels`: for a borderline level, other levels a scorer should
+accept, e.g. `{"crew-management": ["Entry"]}` when "a six-person crew" could be
+read as a small crew (Entry) or a larger one (Full Performance). The contracts are
 `ExperienceRequest` → `CompetencySuggestions` and `JobTextRequest` →
 `RoleMatches` in `schema.py`. Every competency id, level, role id and quoted
 phrase is checked by `01_Product_Engineering/challenge/check_goldens.py`
@@ -35,7 +38,7 @@ meeting are the people to ask for ten real experience descriptions.
 
 Conventions used in the AI-1 rows, ours until validation says otherwise. The
 level rule below replaced the earlier season convention on 2026-10-31; the
-AI-1 rows still carry levels from the old convention until they are re-judged.
+AI-1 rows were re-judged under it on 2026-11-01.
 
 - **Where suggestions come from.** Two sources, merged. Her words are the
   evidence: each competency they describe is assessed against that
