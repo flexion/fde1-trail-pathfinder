@@ -2,7 +2,7 @@
 
 Ten questions derived from the existing `golden.jsonl` test fixtures.
 Each runs with the matching scenario context and self-ratings in
-[retrieval.jsonl](retrieval.jsonl). These are fixture-derived questions,
+[retrieval-gap.jsonl](retrieval-gap.jsonl). These are fixture-derived questions,
 not collected user utterances.
 
 1. For the Trail Crew Member role in this scenario, which skills are required, in which categories, and at what levels?

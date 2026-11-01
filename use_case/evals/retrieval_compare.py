@@ -47,7 +47,7 @@ from ask import SYSTEM, TRAINING_WORDS, facts_for, invented_number, model_answer
 from corpus import load, render  # noqa: E402
 from schema import SelfRating  # noqa: E402
 
-CASES = ROOT / "use_case" / "evals" / "retrieval.jsonl"
+CASES = ROOT / "use_case" / "evals" / "retrieval-gap.jsonl"
 # retrieval_results.md is the canonical run (scoped, with the model). Other modes
 # get a suffix so a retrieval-only or unscoped run never overwrites it.
 OUT_DIR = ROOT / "use_case" / "evals"
@@ -479,7 +479,7 @@ def main() -> int:
               f"- Embedding model: {embedder.model_id if embedder else 'n/a'} ({embedder.backend if embedder else 'no dense technique run'}); RRF k={RRF_K}",
               f"- Embedding tokens: " + (f"{embedder.tokens} (measured, API)" if embedder and embedder.backend == "api"
                                           else ("n/a (local ONNX model, no token accounting)" if embedder else "n/a (nothing embedded)")),
-              "- Scoring: `expected_terms` / `must_not` in retrieval.jsonl; cited = every gold id appears in square brackets in the answer; recall = every gold id was retrieved before the answer call",
+              "- Scoring: `expected_terms` / `must_not` in retrieval-gap.jsonl; cited = every gold id appears in square brackets in the answer; recall = every gold id was retrieved before the answer call",
               f"- Raw answers and traces: `{OUT_JSONL.name}`", ""]
     OUT_MD.write_text("\n".join(lines), encoding="utf-8")
     print(f"\nwrote {OUT_MD.relative_to(ROOT)} and {OUT_JSONL.relative_to(ROOT)}")

@@ -9,7 +9,10 @@ Two files, two contracts:
   Every competency id, level and role id is checked against
   `data/framework.json`, which is built from the golden role profiles and
   mapping in the career-explorer repo. A reason that quotes the person must
-  quote words that are actually in the text.
+  quote words that are actually in the text. Levels are Entry by default; a
+  higher level must rest on her quote and cite a trailskills.org level line
+  (`level_basis`), checked against `use_case/data/trailskills_levels.json`
+  when that local file exists.
 - `golden-gap.jsonl` (TC1): the gap-and-next-step rows, checked as before.
 
 Checks shape and the rules the goldens promise, not whether the app agrees
@@ -30,6 +33,8 @@ EVALS = Path(__file__).resolve().parents[2] / "use_case" / "evals"
 GOLDENS = EVALS / "golden.jsonl"
 GAP_GOLDENS = EVALS / "golden-gap.jsonl"
 FRAMEWORK = Path(__file__).resolve().parent / "data" / "framework.json"
+# American Trails' level descriptions, git-ignored (use_case/fetch_trailskills_levels.py).
+LEVELS = Path(__file__).resolve().parents[2] / "use_case" / "data" / "trailskills_levels.json"
 STATUS_ORDER = {GapStatus.HAS: 0, GapStatus.CLOSE: 1, GapStatus.MISSING: 2}
 MAX_ROLES = 3
 
@@ -59,7 +64,7 @@ def gap_problems(row: dict) -> list[str]:
     return found
 
 
-def pivot_problems(row: dict, fw: dict) -> list[str]:
+def pivot_problems(row: dict, fw: dict, rubric: dict | None) -> list[str]:
     competencies = {c["id"]: c for c in fw["competencies"]}
     roles = {r["id"]: r for r in fw["roles"]}
     backgrounds = {b["id"]: b for b in fw["backgrounds"]}
@@ -97,8 +102,6 @@ def pivot_problems(row: dict, fw: dict) -> list[str]:
             found.append("answered without a framework_version")
         seen = set()
         text = request.text.casefold()
-        # "I'm no expert" must not pass as her saying expert.
-        said_expert = bool(re.search(r"\bexpert\b", text)) and not re.search(r"\b(no|not an?|never an?|hardly an?)\s+expert", text)
         for sug in output.suggestions:
             comp = competencies.get(sug.skill_id)
             if comp is None:
@@ -123,13 +126,32 @@ def pivot_problems(row: dict, fw: dict) -> list[str]:
                 label_hit = any(backgrounds[b]["label"].casefold() in sug.reason.casefold() for b in request.backgrounds)
                 if not label_hit:
                     found.append(f"reason for '{sug.skill_id}' neither quotes the text nor names a picked background")
-            # Expert is never the model's idea (team convention, evals/README.md).
-            if sug.level == SkillLevel.EXPERT and not said_expert:
-                found.append(f"'{sug.skill_id}' is Expert but she never said expert")
+            # Entry by default; above Entry needs her words matching a level line (evals/README.md).
+            if sug.level != SkillLevel.ENTRY:
+                if not sug.quote:
+                    found.append(f"'{sug.skill_id}' is {sug.level} with no quote: a background alone stays Entry")
+                if not sug.level_basis:
+                    found.append(f"'{sug.skill_id}' is {sug.level} but cites no level line (level_basis)")
+            if sug.level_basis:
+                if not sug.quote:
+                    found.append(f"'{sug.skill_id}' cites a level line but has no quote of hers")
+                elif rubric and sug.level_basis not in rubric[sug.skill_id]["levels"][sug.level]:
+                    found.append(f"'{sug.skill_id}' level_basis is not a {sug.level} line for this competency")
             if sug.confidence == Confidence.LIKELY and not quoted and sug.skill_id not in {
                 x["skill_id"] for b in request.backgrounds for x in backgrounds[b]["suggestions"]
             }:
                 found.append(f"'{sug.skill_id}' is likely with no quote and no background rule behind it")
+        # A borderline level may name others a scorer should also accept.
+        expected = {sug.skill_id: sug.level for sug in output.suggestions}
+        for sid, levels in row.get("also_acceptable_levels", {}).items():
+            if sid not in expected:
+                found.append(f"also_acceptable_levels names '{sid}', which is not suggested")
+                continue
+            for level in levels:
+                if level not in set(SkillLevel):
+                    found.append(f"also_acceptable_levels '{sid}': '{level}' is not a level")
+                elif level == expected[sid]:
+                    found.append(f"also_acceptable_levels '{sid}': '{level}' is already the expected level")
 
     elif capability == "AI-2":
         try:
@@ -181,7 +203,13 @@ def check(path: Path, problems) -> int:
 
 def main() -> int:
     fw = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
-    failed = check(GOLDENS, lambda row: pivot_problems(row, fw))
+    rubric = None
+    if LEVELS.exists():
+        rubric = json.loads(LEVELS.read_text(encoding="utf-8"))["skills"]
+    else:
+        print(f"note: {LEVELS.name} not found, so level_basis lines are not checked against the rubric; "
+              "run use_case/fetch_trailskills_levels.py")
+    failed = check(GOLDENS, lambda row: pivot_problems(row, fw, rubric))
     if GAP_GOLDENS.exists():
         failed += check(GAP_GOLDENS, gap_problems)
     return 1 if failed else 0
