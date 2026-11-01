@@ -33,5 +33,5 @@ Per question (✓ pass · ✗ fail · · not applicable):
 - Corpus per scope: golden-01=3, golden-02=2, golden-03=1, golden-05=2 records
 - Embedding model: BAAI/bge-small-en-v1.5 (local); RRF k=60
 - Embedding tokens: n/a (local ONNX model, no token accounting)
-- Scoring: `expected_terms` / `must_not` in retrieval.jsonl; cited = every gold id appears in square brackets in the answer; recall = every gold id was retrieved before the answer call
+- Scoring: `expected_terms` / `must_not` in retrieval-gap.jsonl; cited = every gold id appears in square brackets in the answer; recall = every gold id was retrieved before the answer call
 - Raw answers and traces: `retrieval_results.jsonl`
