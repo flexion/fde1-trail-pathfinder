@@ -695,8 +695,11 @@ Non-text answers are in the same file.
 
 ### Step 6 — the demo
 
-**Pending.** Not yet shown to a user; planned with the product owner or the
-project lead. Their feedback goes in `use_case/stakeholders.md` in their words.
+**Pending, combined with the Week 4 demo (Step 7).** One session with the
+product owner or project lead, after the Week 4 eval harness exists: show AI-1
+running, check the ten questions against how real people describe their work
+(and settle retrieval-05), then the Week 4 five minutes with the eval number.
+Their feedback goes in `use_case/stakeholders.md` in their words.
 
 ## Bring it to work
 
