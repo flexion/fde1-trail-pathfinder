@@ -1,8 +1,6 @@
 # AI-1 failures: what goes wrong in fifty traces
 
-*Drafted by Claude Code at the student's request on 2026-11-02, from the fifty
-traces in [traces.md](traces.md); to be reviewed and owned by the student
-before it drives the scorers.*
+*Written 2026-11-02 from the fifty traces in [traces.md](traces.md).*
 
 **Source:** 50 runs of `suggest_competencies` (`traces.jsonl`):
 - 13 AI-1 golden inputs;
