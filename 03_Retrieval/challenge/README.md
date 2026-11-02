@@ -568,17 +568,17 @@ is going to ask you for.
 This is the graded part. Every item comes from a numbered step in the technical
 challenge, which carries the full detail.
 
-- [ ] **Ten labelled questions** in `use_case/evals/retrieval.jsonl` — real ones, each naming the record(s) that should answer it
-- [ ] Your `Request`/`Response` schema from Week 1 **implemented, not redesigned** — or the charter updated and the reason written down
-- [ ] **At least three techniques measured** against those labels, with the results table — pass, cited source, calls, evidence read, latency — in your repo
-- [ ] A new `@app.api` endpoint that retrieves over **your** TC2 data and **names its sources** in every answer
-- [ ] `use_case/decisions.md` has the retrieval decision — what shipped, what you rejected, why, and what would change your mind — plus the four non-text answers
-- [ ] It still runs in Docker
+- [x] **Ten labelled questions** in `use_case/evals/retrieval.jsonl` — real ones, each naming the record(s) that should answer it
+- [x] Your `Request`/`Response` schema from Week 1 **implemented, not redesigned** — or the charter updated and the reason written down
+- [x] **At least three techniques measured** against those labels, with the results table — pass, cited source, calls, evidence read, latency — in your repo
+- [x] A new `@app.api` endpoint that retrieves over **your** TC2 data and **names its sources** in every answer
+- [x] `use_case/decisions.md` has the retrieval decision — what shipped, what you rejected, why, and what would change your mind — plus the four non-text answers
+- [x] It still runs in Docker
 
 ### 📤 Share
 
 - [ ] **A demo to a real user, with their feedback recorded in your own words** — graded, and the one people skip
-- [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
+- [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->
