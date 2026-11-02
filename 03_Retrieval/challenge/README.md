@@ -708,9 +708,9 @@ project lead. Their feedback goes in `use_case/stakeholders.md` in their words.
   Titan v2, both on AWS Bedrock through Flexion's Bifrost gateway, so the
   corpus and her text leave our network for Bedrock. Embedding tokens:
   **12,671 to index the wiki (measured)**, plus one short embedding per search.
-- **Access or approval:** to ask, not confirmed: American Trails' permission
-  to store and serve their skill pages inside the product, and whether her
-  free text may go to Bedrock.
+- **Access or approval:** none new needed (confirmed by the team, 2026-11-02):
+  the project already has the access it needs to use American Trails' skill
+  pages and to send text through Flexion's gateway to Bedrock.
 
 ### Before the pivot (kept for the record)
 
