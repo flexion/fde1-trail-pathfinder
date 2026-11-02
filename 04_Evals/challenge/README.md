@@ -852,8 +852,15 @@ This is noted in the decision row.
 project lead. It will:
 - show AI-1 running;
 - check the generated inputs against how real people describe their work;
-- settle the open questions: may a chip alone pre-check, does transferable work count,
-  should twins show as one, and which skill retrieval-05 should name;
+- settle the open questions:
+  - may a chip alone pre-check;
+  - does transferable work count;
+  - should twins show as one;
+  - which skill retrieval-05 should name;
+  - should a chip stay a fixed list from `framework.json` (the prototype's, instant and
+    the same every time), or should the AI decide a chip's skills from the wiki together
+    with her words (one judgment for both, but slower, a model call even for chip-only,
+    and 10 of the 13 AI-1 goldens would need re-deciding);
 - give the five minutes with the number.
 
 Their questions go in `use_case/stakeholders.md`, in my words.
