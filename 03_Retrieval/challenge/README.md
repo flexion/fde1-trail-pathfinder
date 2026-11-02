@@ -611,19 +611,21 @@ at the end of this section.*
 
 ### Step 1 — the labels
 
-`use_case/evals/retrieval.jsonl`: **eight AI-1 questions, generated from the
+`use_case/evals/retrieval.jsonl`: **ten AI-1 questions, generated from the
 AI-1 goldens** so the two cannot drift. Gold is the skill pages her words
 support (the golden's suggestions with a quote); background chips are a fixed
-lookup, not retrieval. Five of the six answerable questions need four or five
+lookup, not retrieval. Six of the eight answerable questions need four or five
 pages, so the top-*k* floor is 5. Two are declines ("I worked on trails", a
 barista). Twins, the same skill under Construction and Maintenance, count as
 one: finding either passes.
 
-**Short of ten, and not all real:** `ai1-08` is the project lead's own demo
-input; the rest were written from the role profiles and `ai1-12` is a
-placeholder. Two more real questions, and a decision on retrieval-05 (all
-three techniques name Maintenance Specifications for "helped maintain about
-three miles of trail"), are pending, with the Step 6 demo.
+**Not yet real:** `ai1-08` is the project lead's own demo input; the rest were
+written by the team from the role profiles, `ai1-12` is a placeholder, and
+`ai1-13` / `ai1-14` (a volunteer coordinator; a volunteer who built a puncheon
+bridge) were added on 2026-11-02 to reach ten. All are to be checked against
+real people's words at the Step 6 demo, along with retrieval-05 (all three
+techniques name Maintenance Specifications for "helped maintain about three
+miles of trail").
 
 ### Step 2 — the schema
 
@@ -649,11 +651,11 @@ American Trails' content, so it stays out of git.
   same prompt and loop, only the tools change: BM25 Agentic RAG, dense Agentic
   RAG, DCI (`list_pages`, `grep_wiki`, `read_page`).
 
-| | all gold found (of 6) | gold recall | wrong named | declines | calls | evidence chars | s |
+| | all gold found (of 8) | gold recall | wrong named | declines | calls | evidence chars | s |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| BM25 agent | 2.7 (2–3) | 78% | 1.3 | 2/2 | 3.7 | 6.6K | 3.3 |
-| **dense agent** | 2.7 (2–3) | **82%** | **1.0** | 2/2 | 3.4 | 6.6K | 4.5 |
-| DCI | 2.3 (2–3) | 75% | 1.3 | 2/2 | 4.5 | 11.2K | 3.6 |
+| BM25 agent | 3.0 (2–4) | 75% | 2.3 | 2/2 | 4.0 | 7.2K | 3.5 |
+| **dense agent** | **4.3 (4–5)** | **87%** | 2.7 | 1.7 (1–2) | 3.9 | 7.1K | 4.7 |
+| DCI | 3.7 (3–4) | 76% | 2.7 | 2/2 | 4.7 | 13.4K | 3.6 |
 
 "Cited source" here is the skill id the model names, checked against the gold
 pages; every quote is checked against her text. Embedding tokens to index the
@@ -671,7 +673,7 @@ re-offers a rejected id, lets her words win over a chip, and caps at 12.
 step exists. If the wiki or the model is unavailable it falls back to the
 prototype's keyword rules and says so (`produced_by: "rules"`).
 
-Run against the 11 AI-1 golden inputs: every output passes the golden checks
+Run against the 11 AI-1 golden inputs that existed then (before `ai1-13`, `ai1-14`): every output passes the golden checks
 (ids, quotes, sources); the two declines decline; the barista case suggests
 Crew Management from "assistant manager", which Week 4 will score.
 
