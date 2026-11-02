@@ -19,9 +19,14 @@ COPY pyproject.toml uv.lock ./
 RUN uv export --frozen --no-dev --no-emit-project -o requirements.txt \
  && uv pip install --system --no-cache -r requirements.txt
 
-COPY llm.py app.py schema.py pathfinder.py corpus.py ask.py ./
+COPY llm.py app.py schema.py pathfinder.py corpus.py ask.py suggest.py ./
 COPY data/ ./data/
 COPY frontend/ ./frontend/
+
+# The trailskills.org skills wiki is American Trails' content: it is not in git
+# and not in this image. Mount use_case/data at /data when you run it (README);
+# without it, suggest_competencies falls back to the keyword rules.
+ENV WIKI_DIR=/data/wiki EMBED_CACHE=/data/embeddings_cache.json
 
 # Don't run as root. Your security review will ask about this.
 RUN useradd --create-home appuser

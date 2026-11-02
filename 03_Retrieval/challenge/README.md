@@ -604,61 +604,123 @@ where the answer came from.
 
 ## 📝 My answers
 
+*Rewritten 2026-11-02 after the 2026-10-28 scope pivot (`use_case/CHARTER.md`):
+the product is now AI-1 (her words → competencies) and AI-2 (job text → roles).
+The pre-pivot work (exact lookup over 136 records for the gap feature) is kept
+at the end of this section.*
+
 ### Step 1 — the labels
 
-`use_case/evals/retrieval.jsonl`: ten questions adapted from the goldens, each
-with `gold` record ids, `kind`, and Session 5's scoring fields (`expected_terms`,
-`must_not`). **Five of the ten need two records**, so top-1 is ruled out; top-k
-is 4 in the comparison. Two are declines (08: empty catalog; 10: a field no
-record has).
+`use_case/evals/retrieval.jsonl`: **ten AI-1 questions, generated from the
+AI-1 goldens** so the two cannot drift. Gold is the skill pages her words
+support (the golden's suggestions with a quote); background chips are a fixed
+lookup, not retrieval. Six of the eight answerable questions need four or five
+pages, so the top-*k* floor is 5. Two are declines ("I worked on trails", a
+barista). Twins, the same skill under Construction and Maintenance, count as
+one: finding either passes.
+
+**Not yet real:** `ai1-08` is the project lead's own demo input; the rest were
+written by the team from the role profiles, `ai1-12` is a placeholder, and
+`ai1-13` / `ai1-14` (a volunteer coordinator; a volunteer who built a puncheon
+bridge) were added on 2026-11-02 to reach ten. All are to be checked against
+real people's words at the Step 6 demo, along with retrieval-05 (all three
+techniques name Maintenance Specifications for "helped maintain about three
+miles of trail").
 
 ### Step 2 — the schema
 
-Implemented, not redesigned. `Request.required_skills` and `trainings` are now
-optional: empty means the app looks the role and its catalog slice up in its
-stored corpus by exact name within a `scope`. `Response` gained `sources`.
-`Answer` is the new contract for the question endpoint. Recorded in
-`use_case/decisions.md` (Week 3, second row).
+Implemented, not redesigned: `ExperienceRequest` → `CompetencySuggestions` in
+`01_Product_Engineering/challenge/schema.py`, written at the pivot, with
+`sources`, `framework_version`, `produced_by` and a decline. The charter's
+In → Out row was amended for the pivot (`use_case/CHARTER.md`, `decisions.md`
+Week 3 pivot row). The TC1 gap contract is unchanged as the downstream step.
 
 ### Step 3 — the measurement
 
-Script: `use_case/evals/retrieval_compare.py`. Five techniques over the same
-136 stored records (real role library + sample listings, the golden fixtures,
-the TC2 scenarios), one chunk per record: `lookup` (shipped), `bm25_rag`,
-`dci_wiki`, `dense`, `hybrid`. Settings are written at the bottom of every
-results file.
+Corpus: the trailskills.org skills wiki, one page per competency (55 pages,
+Definition / Entry / Full Performance / Expert), built by
+`use_case/fetch_trailskills_levels.py` and `use_case/build_wiki.py`. It is
+American Trails' content, so it stays out of git.
 
-- `use_case/evals/retrieval_results.md` — the canonical run (scoped, model
-  `openai/bedrock/gpt-5.6-luna` via Bifrost). All five techniques pass 10/10
-  and cite 8/8; the lookup does it in 0.9 model calls and 885 chars of
-  evidence per question, the DCI wiki loop in 3.2 calls, the rankers in 2.0.
-- `use_case/evals/retrieval_results_unscoped.md` — no scope key, ranked over
-  all 136 records: recall falls to 6–7/8 for DCI, dense and hybrid, citation
-  to 5–7/8 for every ranker, because three records are titled "Trail Crew
-  Member". The lookup keeps 8/8 recall but returns all three.
-- Embedding tokens: *n/a* (the dense runs used the local ONNX
-  `BAAI/bge-small-en-v1.5`; the gateway's Titan embedder is configured for
-  the next run and the script prints the measured count when it is used).
+- `use_case/evals/ai1_find_skill.py` → `ai1_find_skill_results.md`: pure
+  ranking, no model. BM25 and dense rank all 55 pages for her text; recall at
+  5, 8 and 12, wrong pages, declines by score threshold, latency.
+- `use_case/evals/ai1_find_skill_agent.py` → `ai1_find_skill_agent_results.md`
+  (and `.jsonl`, every answer and trace): Session 5's loop, the model names
+  the skills with her exact words. **Three techniques, three runs per case**,
+  same prompt and loop, only the tools change: BM25 Agentic RAG, dense Agentic
+  RAG, DCI (`list_pages`, `grep_wiki`, `read_page`).
+
+| | all gold found (of 8) | gold recall | wrong named | declines | calls | evidence chars | s |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| BM25 agent | 3.0 (2–4) | 75% | 2.3 | 2/2 | 4.0 | 7.2K | 3.5 |
+| **dense agent** | **4.3 (4–5)** | **87%** | 2.7 | 1.7 (1–2) | 3.9 | 7.1K | 4.7 |
+| DCI | 3.7 (3–4) | 76% | 2.7 | 2/2 | 4.7 | 13.4K | 3.6 |
+
+"Cited source" here is the skill id the model names, checked against the gold
+pages; every quote is checked against her text. Embedding tokens to index the
+wiki: **12,671 (measured, 220 chunks, Titan v2 through the gateway)**.
 
 ### Step 4 — the endpoint
 
-`ask_pathfinder(question, scope="trailskills", role=None, self_ratings=None)`
-in `01_Product_Engineering/challenge/app.py`. Lookup by exact role, training
-or skill name → SQL join → the records, rendered with their ids → one model
-call → `Answer{answer, sources, declined, reason, trace}`. Every answer names
-its record ids in square brackets.
+`suggest_competencies(text, backgrounds=None, rejected=None)` in
+`01_Product_Engineering/challenge/app.py`, logic in `suggest.py`. A chip is a
+lookup in `framework.json`; her text goes to the dense agent over the wiki.
+Code drops any id not in the framework and any quote not in her text, never
+re-offers a rejected id, lets her words win over a chip, and caps at 12.
+`sources` names every competency and background used
+(`framework:competency:<id>`). Every level is Entry until the Week 4 rubric
+step exists. If the wiki or the model is unavailable it falls back to the
+prototype's keyword rules and says so (`produced_by: "rules"`).
 
-**On the decline questions:** 08 is declined in code before any model call
-(the question asks for a course; the scope has no training record), and 10 is
-declined by the model because the training record has no delivery mode or
-session date, with any invented number rejected by a check against the
-records. A question that names nothing in scope is declined in code too.
-Both verified in the container (`docker run --env-file .env`): 08 and 10 come
-back `declined: true`, 03 answers with both its sources.
+Run against the 11 AI-1 golden inputs that existed then (before `ai1-13`, `ai1-14`): every output passes the golden checks
+(ids, quotes, sources); the two declines decline; the barista case suggests
+Crew Management from "assistant manager", which Week 4 will score.
+
+**Docker:** the wiki is not in the image. Mount it at run time:
+
+```bash
+docker run -p 7860:7860 --env-file ../../.env -v "$PWD/../../use_case/data":/data trail-pathfinder
+```
+
+Without the mount the endpoint still answers, from the keyword rules.
 
 ### Step 5 — the decision
 
-`use_case/decisions.md`, Week 3: direct SQL lookup, the three rejected
-techniques, the measured numbers, and the empty-result rate (0 of 371 required
-skills with an approved alignment; 26% with a draft one, on 11 sample listings).
+`use_case/decisions.md`, Week 3: **dense Agentic RAG, by a small margin**,
+with BM25 Agentic RAG, DCI and pure ranking rejected, the measured numbers,
+and what would switch it (BM25 if it matches dense on more real questions;
+the shared misses are a prompt and label problem, not a retrieval one).
 Non-text answers are in the same file.
+
+### Step 6 — the demo
+
+**Pending, combined with the Week 4 demo (Step 7).** One session with the
+product owner or project lead, after the Week 4 eval harness exists: show AI-1
+running, check the ten questions against how real people describe their work
+(and settle retrieval-05), then the Week 4 five minutes with the eval number.
+Their feedback goes in `use_case/stakeholders.md` in their words.
+
+## Bring it to work
+
+- **The search this is for:** TrailSkills 1.0's self-assessment, where people
+  rate themselves expert at everything and browse the skills library alone
+  (`use_case/CHARTER.md`); AI-1 replaces it with suggestions she checks.
+- **Data:** the 55 trailskills.org skill pages (text only, no scans or
+  recordings), plus the competency map and role profiles from the
+  career-explorer repo.
+- **Model or endpoint:** answers from `gpt-5.6-luna` and embeddings from
+  Titan v2, both on AWS Bedrock through Flexion's Bifrost gateway, so the
+  corpus and her text leave our network for Bedrock. Embedding tokens:
+  **12,671 to index the wiki (measured)**, plus one short embedding per search.
+- **Access or approval:** none new needed (confirmed by the team, 2026-11-02):
+  the project already has the access it needs to use American Trails' skill
+  pages and to send text through Flexion's gateway to Bedrock.
+
+### Before the pivot (kept for the record)
+
+`use_case/evals/retrieval_compare.py` measured an exact SQL lookup against
+BM25 Agentic RAG, DCI, dense and hybrid over 136 stored records for the gap
+feature (`retrieval-gap.jsonl`, `retrieval_results.md`,
+`retrieval_results_unscoped.md`). Scoped, all five passed 10/10; the lookup
+was cheapest. `ask_pathfinder` in `app.py` is that endpoint and still runs.

@@ -8,7 +8,7 @@ AI-2 of the career-explorer repo's `docs/trailskills-2.0/04-ai-integration-spec.
 
 | Capability | In | Out | Rows |
 | --- | --- | --- | --- |
-| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-12`, no `ai1-10` (9 answerable, 2 decline; `ai1-10` was the career-changer row, deleted 2026-10-31 with the background; `ai1-11` tests a rejected id; `ai1-12` is "No trail experience yet" plus another trade, a placeholder description) |
+| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-14`, no `ai1-10` (11 answerable, 2 decline; `ai1-10` was the career-changer row, deleted 2026-10-31 with the background; `ai1-11` tests a rejected id; `ai1-12` is "No trail experience yet" plus another trade, a placeholder description; `ai1-13` (volunteer coordinator: outreach, grants) and `ai1-14` (volunteer chip, water crossing) were written by the team on 2026-11-02, to verify at the demo) |
 | AI-2 | a description of her current job, or the posting for the job she does now | the 1 to 3 closest of the 12 roles, each with a one-line reason from the role profile | `ai2-01` … `ai2-09` (7 answerable, 2 decline) |
 
 Each line is one object:
@@ -137,7 +137,7 @@ wrong thing.
 
 Labels for step 1 of AI-1: given what she wrote, which competency pages in the
 skills wiki (`use_case/data/wiki/`, one page per competency id) should
-retrieval find. **Eight questions, generated from the AI-1 goldens** so the two
+retrieval find. **Ten questions, generated from the AI-1 goldens** so the two
 cannot drift:
 
 | Question | Golden | Gold pages | Kind |
@@ -150,17 +150,26 @@ cannot drift:
 | retrieval-06 | ai1-12 | 5 | multi-hop |
 | retrieval-07 | ai1-06 | 0 | decline |
 | retrieval-08 | ai1-07 | 0 | decline |
+| retrieval-09 | ai1-13 | 5 | multi-hop |
+| retrieval-10 | ai1-14 | 3 | multi-hop |
 
 - **Gold** is the competencies her words support: the golden's suggestions that
   carry a quote. Background-only suggestions are a fixed lookup, not retrieval,
   so they are not in the gold.
 - **Left out:** `ai1-02` and `ai1-09` (background only, no text to search) and
   `ai1-11` (the same text as `ai1-01`).
-- **Five of the six answerable questions need four or five pages**, so top-1
+- **Six of the eight answerable questions need four or five pages**, so top-1
   retrieval cannot pass them; the top-*k* floor is 5.
-- **Short of ten, and not all real.** `ai1-08` is the project lead's own demo
-  input; the others were written by the course team from the role profiles,
-  and `ai1-12` is a placeholder. Two more, from real people, are still needed.
+- **Twins count as one.** The framework lists some skills twice, under
+  Construction and Maintenance (and Planning for Trail Sustainability
+  Principles): the same title, or for drainage and chainsaw felling nearly so.
+  Finding either twin passes; step 2 and the category on screen decide which
+  she has. The scorer (`ai1_find_skill.py`, `twin_groups`) groups them, so a
+  label naming both twins needs only one found.
+- **Ten, but not yet real.** `ai1-08` is the project lead's own demo input;
+  the others were written by the course team from the role profiles, `ai1-12`
+  is a placeholder, and `ai1-13` and `ai1-14` were written by the team on
+  2026-11-02. All are to be checked against real people's words at the demo.
 
 `context.backgrounds` is passed along for the merge step but is not a search
 input. Never pass `gold` or the golden's output to the retriever or the model.
