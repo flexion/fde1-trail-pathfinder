@@ -136,13 +136,14 @@ def run() -> None:
 
 
 # Twenty traces to score by hand, stratified so at least a third should fail (Step 1's
-# rule): 9 from the substantive lines of failures.md (3, 4, 5, 7, 9), 3 from the display
-# and label lines (1, 2), 8 that read as fine, including declines and a chip-only row.
+# rule), re-picked 2026-11-02 for the easy rule (transferable work counts): the 12 that
+# passed the first, stricter scoring, plus 8 most likely to fail under the easy rule
+# (her words point away from a chip skill, no relation, wrong decline wording).
 # The order is mixed so the likely failures do not sit together.
 HAND_SCORE_IDS = [
-    "t-ai1-04", "t-gen-08", "t-ai1-06", "t-gen-01", "t-ai1-13", "t-gen-23", "t-gen-18",
-    "t-ai1-14", "t-ai1-03", "t-gen-31", "t-gen-20", "t-gen-11", "t-gen-13", "t-ai1-12",
-    "t-gen-28", "t-gen-26", "t-ai1-07", "t-gen-15", "t-gen-17", "t-ai1-08",
+    "t-ai1-04", "t-gen-26", "t-ai1-06", "t-gen-32", "t-ai1-13", "t-gen-23", "t-gen-25",
+    "t-ai1-14", "t-ai1-03", "t-gen-30", "t-gen-31", "t-gen-20", "t-gen-10", "t-gen-13",
+    "t-ai1-12", "t-gen-37", "t-gen-28", "t-gen-08", "t-ai1-07", "t-gen-12",
 ]
 HAND_SCORES = EVALS / "human_scores.jsonl"
 

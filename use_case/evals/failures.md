@@ -11,7 +11,13 @@ There are no real user traces yet, because AI-1 has not been in front of anyone.
 
 **43 of the 50 traces had at least one failure under the first bar.** Line 1 was then dropped (a chip alone may give `likely`), which leaves the lines below it. Five traces declined, all correctly; three of them with the wrong wording (line 10).
 
-**The bar, from the twenty hand scores** (`human_scores.jsonl`, 8 fail), revised 2026-11-02: a pre-checked skill must not go against her words. A chip's skill may be `likely` on the chip alone, because the chip matches are right; it fails when what she wrote points away from it (line 5), or when the model names a skill her words do not describe (line 6). A skill she described but the output missed is not a fail, because she can add it herself (line 7).
+**The bar for now: the easy rule** (decided 2026-11-02, until the product owner decides).
+- A suggested skill **passes** when her words relate to it, including transferable work from another job ("led small teams in the Army" → Crew Management).
+- It **fails** when it has no relation to what she wrote, or her words say the opposite ("never had a formal trail job" → Tread Maintenance).
+- A skill she described that the output missed is not a fail; she can add it herself.
+- A chip alone may give `likely`: the chip matches are right.
+
+The twenty hand scores (`human_scores.jsonl`) use this rule. The 12 that passed the first, stricter scoring are kept; 8 more were picked for re-scoring.
 
 ## Ranked by how many traces show it
 
