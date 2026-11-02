@@ -1,0 +1,833 @@
+{
+  "name": "endpoint",
+  "fingerprint": "085da127e12cb034",
+  "n": 50,
+  "means": {
+    "valid_output": 1.0,
+    "declines_when_it_should": 0.98,
+    "decline_wording": 0.94,
+    "quote_is_a_phrase": 0.84,
+    "labelled_by_source": 0.8,
+    "judge_related": 0.84
+  },
+  "errors": 0,
+  "seconds": 649.2935336669907,
+  "meta": {
+    "scorers": [
+      "decline_wording",
+      "declines_when_it_should",
+      "judge_related",
+      "labelled_by_source",
+      "quote_is_a_phrase",
+      "valid_output"
+    ],
+    "headline": "judge_related",
+    "system": "endpoint",
+    "headline_ci": [
+      0.74,
+      0.94
+    ]
+  },
+  "results": [
+    {
+      "index": 0,
+      "input": "{'backgrounds': ['corps'], 'text': 'Two seasons on a conservation corps crew. Mostly brushing and lopping, dug a lot of water bars and grade dips, some bench cut on new trail. Took the chainsaw class but only bucked a few logs.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'corridor-clearing-pruning-side-cutting-brushing-2', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing: Pruning/ Side-Cutting/ Brushing', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"brushing and lopping\"', 'quote': 'brushing and lopping'}, {'skill_id': 'water-management-drainage-features-2', 'category': 'Trail Maintenance', 'skill': 'Drainage Features/Water Management', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"water bars and grade dips\"', 'quote': 'water bars and grade dips'}, {'skill_id': 'hand-built-trail-construction', 'category': 'Trail Construction', 'skill': 'Hand-Built Trail Construction', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"bench cut on new trail\"', 'quote': 'bench cut on new trail'}, {'skill_id': 'corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut', 'level': 'Entry', 'confidence': 'check', 'reason': 'You wrote \"only bucked a few logs\"', 'quote': 'only bucked a few logs'}, {'skill_id': 'tread-maintenance-hand-tools', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Hand tools', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with conservation corps experience', 'quote': None}, {'skill_id': 'corridor-clearing-power-tools', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing/Site Preparation', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with conservation corps experience', 'quote': None}, {'skill_id': 'safety-site-management-2', 'category': 'Trail Maintenance', 'skill': 'Safety/Site Management', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with conservation corps experience', 'quote': None}, {'skill_id': 'corridor-clearing-pruning-side-cutting-brushing', 'category': 'Trail Construction', 'skill",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Mostly brushing and lopping\\\"\",\"quote\":\"Mostly brushing and lopping\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"dug a lot of water bars and grade dips\\\"\",\"quote\":\"dug a lot of water bars and grade dips\",\"level_basis\":null},{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"some bench cut on new trail\\\"\",\"quote\":\"some bench cut on new trail\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"only bucked a few logs\\\"\",\"quote\":\"only bucked a few logs\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"trail-sustainability",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 15.319311208004365
+    },
+    {
+      "index": 1,
+      "input": "{'backgrounds': ['military'], 'text': ''}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'jobsite-safety', 'category': 'Crew Management', 'skill': 'Jobsite Safety', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with military service experience', 'quote': None}, {'skill_id': 'crew-management', 'category': 'Crew Management', 'skill': 'Crew Management', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with military service experience', 'quote': None}, {'skill_id': 'crew-training', 'category': 'Crew Management', 'skill': 'Crew Training', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with military service experience', 'quote': None}, {'skill_id': 'communications', 'category': 'Program Administration', 'skill': 'Communications', 'level': 'Entry', 'confidence': 'check', 'reason': 'Common for people with military service experience', 'quote': None}], 'sources': ['framework:competency:jobsite-safety', 'framework:competency:crew-management', 'framework:competency:crew-training', 'framework:competency:communications', 'framework:background:military'], 'framework_version': 'role profiles and competency map 2026-10-20'}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"crew-management\",\"category\":\"Crew Management\",\"skill\":\"Crew Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"crew-training\",\"category\":\"Crew Management\",\"skill\":\"Crew Training\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:jobsite-safety\",\"framework:competency:crew-management\",\"framework:competency:crew-training\",\"framework:competency:communications\",\"framework:background:military\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 0.00011108300532214344
+    },
+    {
+      "index": 2,
+      "input": "{'backgrounds': ['forestry'], 'text': 'Four seasons on a hotshot crew. Certified sawyer, ran saw on fuels reduction and hazard trees. Squad boss the last season, ran the morning briefing.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut', 'level': 'Full Performance', 'confidence': 'likely', 'reason': 'You wrote \"certified sawyer\" and four seasons of saw work', 'quote': 'certified sawyer', 'level_basis': 'Demonstrate industry standards of safety, PPE use, and implementation for all chainsaw and crosscut activities for non-complex felling and bucking'}, {'skill_id': 'corridor-clearing-felling-tree-removal-chainsaw-crosscut', 'category': 'Trail Construction', 'skill': 'Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut', 'level': 'Full Performance', 'confidence': 'likely', 'reason': 'You wrote \"certified sawyer\"', 'quote': 'certified sawyer', 'level_basis': 'Demonstrate industry standards of safety, PPE use, and implementation for all chainsaw and crosscut activities for non-complex felling and bucking'}, {'skill_id': 'crew-management', 'category': 'Crew Management', 'skill': 'Crew Management', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"squad boss the last season\"', 'quote': 'squad boss the last season'}, {'skill_id': 'jobsite-safety', 'category': 'Crew Management', 'skill': 'Jobsite Safety', 'level': 'Full Performance', 'confidence': 'likely', 'reason': 'You wrote \"ran the morning briefing\"', 'quote': 'ran the morning briefing', 'level_basis': 'Ensure that all crew members understand the safety plan with consistent safety discussions'}, {'skill_id': 'safety-site-management-2', 'category': 'Trail Maintenance', 'skill': 'Safety/Site Management', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with forestry or wildland fire experience', 'quote': None}, {'skill_id': 'corridor-clearing-material-and-debris-management', 'category': 'Trail Construction', 'skill': 'Corridor Clearing: Material and Debris Management',",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Certified sawyer, ran saw on fuels reduction and hazard trees.\\\"\",\"quote\":\"Certified sawyer, ran saw on fuels reduction and hazard trees.\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Certified sawyer, ran saw on fuels reduction and hazard trees.\\\"\",\"quote\":\"Certified sawyer, ran saw on fuels reduction and hazard trees.\",\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-material-and-debris-management\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Material and Debris Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"framework:competency:corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"framework:competency:safety-site-management-2\",\"framework:competency:corridor-clearing-material-and-debris-management\",\"framework:background:forestry\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 8.029948999988846
+    },
+    {
+      "index": 3,
+      "input": "{'backgrounds': ['landscape'], 'text': 'Eight years in landscaping and grounds. Built dry-stack stone walls and flagstone steps, ran a mini-ex and skid steer, put in French drains.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'retaining-walls', 'category': 'Trail Construction', 'skill': 'Retaining Walls', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"dry-stack stone walls and flagstone steps\"', 'quote': 'dry-stack stone walls and flagstone steps'}, {'skill_id': 'mechanized-trail-construction', 'category': 'Trail Construction', 'skill': 'Mechanized Trail Construction', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"mini-ex and skid steer\"', 'quote': 'mini-ex and skid steer'}, {'skill_id': 'water-management-drainage-features', 'category': 'Trail Construction', 'skill': 'Water Management/Drainage Features', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"French drains\"', 'quote': 'French drains'}, {'skill_id': 'water-management-drainage-features-2', 'category': 'Trail Maintenance', 'skill': 'Drainage Features/Water Management', 'level': 'Entry', 'confidence': 'possible', 'reason': 'You wrote \"drain\"', 'quote': 'drain'}, {'skill_id': 'tread-hardening', 'category': 'Trail Construction', 'skill': 'Tread Hardening and Surfacing', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with landscaping or grounds experience', 'quote': None}, {'skill_id': 'tread-maintenance-mechanized-equipment', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Mechanized Equipment', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with landscaping or grounds experience', 'quote': None}], 'sources': ['framework:competency:retaining-walls', 'framework:competency:mechanized-trail-construction', 'framework:competency:water-management-drainage-features', 'framework:competency:water-management-drainage-features-2', 'framework:competency:tread-hardening', 'framework:competency:tread-maintenance-mechanized-equipment', 'framework:background:landscape'], 'framework_version': 'role profiles and competency map 2026-10-20'}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Built dry-stack stone walls and flagstone steps\\\"\",\"quote\":\"Built dry-stack stone walls and flagstone steps\",\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Built dry-stack stone walls\\\"\",\"quote\":\"Built dry-stack stone walls\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"ran a mini-ex and skid steer\\\"\",\"quote\":\"ran a mini-ex and skid steer\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"put in French drains\\\"\",\"quote\":\"put in French drains\",\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:tread-hardening\",\"framework:competency:retaining-walls\",\"framework:competency:tread-maintenance-mechanized-equipment\",\"framework:competency:water-management-drainage-features\",\"framework:background:landscape\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 10.90000045800116
+    },
+    {
+      "index": 4,
+      "input": "{'backgrounds': ['volunteer'], 'text': 'Nine seasons building trail, the last four as crew lead for a six-person crew. Expert at dry-stone retaining walls and rock steps. I train the new hires on tool safety every spring.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'retaining-walls', 'category': 'Trail Construction', 'skill': 'Retaining Walls', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"expert at dry-stone retaining walls and rock steps\"', 'quote': 'expert at dry-stone retaining walls and rock steps', 'level_basis': None}, {'skill_id': 'hand-built-trail-construction', 'category': 'Trail Construction', 'skill': 'Hand-Built Trail Construction', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"nine seasons building trail\"', 'quote': 'nine seasons building trail', 'level_basis': None}, {'skill_id': 'crew-management', 'category': 'Crew Management', 'skill': 'Crew Management', 'level': 'Full Performance', 'confidence': 'likely', 'reason': 'You wrote \"crew lead for a six-person crew\" for four seasons', 'quote': 'crew lead for a six-person crew', 'level_basis': 'Manage a larger crew or multiple smaller crews, including members with limited experience'}, {'skill_id': 'crew-training', 'category': 'Crew Management', 'skill': 'Crew Training', 'level': 'Full Performance', 'confidence': 'likely', 'reason': 'You wrote \"train the new hires\"', 'quote': 'train the new hires', 'level_basis': 'Conduct training for new crew members that embodies DEI principles (Diversity, Equity, and Inclusion)'}, {'skill_id': 'jobsite-safety', 'category': 'Crew Management', 'skill': 'Jobsite Safety', 'level': 'Full Performance', 'confidence': 'likely', 'reason': 'You wrote \"tool safety every spring\"', 'quote': 'tool safety every spring', 'level_basis': 'Ensure that all crew members understand the safety plan with consistent safety discussions'}, {'skill_id': 'tread-maintenance-hand-tools', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Hand tools', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with trail volunteering experience', 'quote': None}, {'skill_id': 'corridor-clearing-power-tools', 'category': 'Trail Maintenance', 'skill': 'Corrid",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Nine seasons building trail\\\"\",\"quote\":\"Nine seasons building trail\",\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Expert at dry-stone retaining walls\\\"\",\"quote\":\"Expert at dry-stone retaining walls\",\"level_basis\":null},{\"skill_id\":\"crew-management\",\"category\":\"Crew Management\",\"skill\":\"Crew Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"the last four as crew lead for a six-person crew\\\"\",\"quote\":\"the last four as crew lead for a six-person crew\",\"level_basis\":null},{\"skill_id\":\"crew-training\",\"category\":\"Crew Management\",\"skill\":\"Crew Training\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I train the new hires on tool safety every spring\\\"\",\"quote\":\"I train the new hires on tool safety every spring\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reas",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 12.817640541994479
+    },
+    {
+      "index": 5,
+      "input": "{'backgrounds': [], 'text': 'I worked on trails.'}",
+      "expected": "{'declined': True, 'suggestions': [], 'reason': 'Not enough to go on: no task, tool or feature is named. Ask for what the work involved.'}",
+      "actual": "{\"suggestions\":[],\"declined\":true,\"reason\":\"Not enough to go on: no task, tool or feature is named. Ask for what the work involved.\",\"sources\":[],\"framework_version\":null,\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 3.2954398329893593
+    },
+    {
+      "index": 6,
+      "input": "{'backgrounds': [], 'text': 'Five years as a barista, then two years as an assistant manager at a retail store.'}",
+      "expected": "{'declined': True, 'suggestions': [], 'reason': 'Nothing here maps to a trail competency. Pick a background or describe any outdoor, construction or crew work.'}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"crew-management\",\"category\":\"Crew Management\",\"skill\":\"Crew Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"two years as an assistant manager at a retail store\\\"\",\"quote\":\"two years as an assistant manager at a retail store\",\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:crew-management\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 0.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 5.95499483300955
+    },
+    {
+      "index": 7,
+      "input": "{'backgrounds': ['volunteer', 'landscape'], 'text': 'I helped plant trees and bushes and mowed lawns. Through scouts I helped maintain about three miles of trail.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'tread-maintenance-hand-tools', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Hand tools', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"maintain about three miles of trail\"', 'quote': 'maintain about three miles of trail'}, {'skill_id': 'corridor-clearing-power-tools', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing/Site Preparation', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with trail volunteering experience', 'quote': None}, {'skill_id': 'safety-site-management-2', 'category': 'Trail Maintenance', 'skill': 'Safety/Site Management', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with trail volunteering experience', 'quote': None}, {'skill_id': 'tread-hardening', 'category': 'Trail Construction', 'skill': 'Tread Hardening and Surfacing', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with landscaping or grounds experience', 'quote': None}, {'skill_id': 'retaining-walls', 'category': 'Trail Construction', 'skill': 'Retaining Walls', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with landscaping or grounds experience', 'quote': None}, {'skill_id': 'tread-maintenance-mechanized-equipment', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Mechanized Equipment', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with landscaping or grounds experience', 'quote': None}, {'skill_id': 'water-management-drainage-features-2', 'category': 'Trail Maintenance', 'skill': 'Drainage Features/Water Management', 'level': 'Entry', 'confidence': 'check', 'reason': 'Common for people with trail volunteering experience', 'quote': None}, {'skill_id': 'water-management-drainage-features', 'category': 'Trail Construction', 'skill': 'Water Management/Drainage Features', 'level': 'Entry', 'confidence': 'check', 'reason': 'Common for people with landscap",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experienc",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 13.015111750020878
+    },
+    {
+      "index": 8,
+      "input": "{'backgrounds': ['landscape', 'construction'], 'text': ''}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'tread-hardening', 'category': 'Trail Construction', 'skill': 'Tread Hardening and Surfacing', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with landscaping or grounds experience', 'quote': None}, {'skill_id': 'retaining-walls', 'category': 'Trail Construction', 'skill': 'Retaining Walls', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with construction trades experience', 'quote': None}, {'skill_id': 'tread-maintenance-mechanized-equipment', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Mechanized Equipment', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with landscaping or grounds experience', 'quote': None}, {'skill_id': 'water-crossing-structures-boardwalk-puncheon-turnpike-ford', 'category': 'Trail Construction', 'skill': 'Water Crossing Structures', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with construction trades experience', 'quote': None}, {'skill_id': 'mechanized-trail-construction', 'category': 'Trail Construction', 'skill': 'Mechanized Trail Construction', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with construction trades experience', 'quote': None}, {'skill_id': 'construction-specifications', 'category': 'Trail Construction', 'skill': 'Construction Specifications', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with construction trades experience', 'quote': None}, {'skill_id': 'jobsite-safety', 'category': 'Crew Management', 'skill': 'Jobsite Safety', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with construction trades experience', 'quote': None}, {'skill_id': 'water-management-drainage-features', 'category': 'Trail Construction', 'skill': 'Water Management/Drainage Features', 'level': 'Entry', 'confidence': 'check', 'reason': 'Common for people with landscaping or grounds experience', 'quote'",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 0.0001408749958500266
+    },
+    {
+      "index": 9,
+      "input": "{'backgrounds': ['corps'], 'text': 'Two seasons on a conservation corps crew. Mostly brushing and lopping, dug a lot of water bars and grade dips, some bench cut on new trail. Took the chainsaw class but only bucked a few logs.', 'rejected': ['corridor-clearing-pruning-side-cutting-brushing-2']}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'water-management-drainage-features-2', 'category': 'Trail Maintenance', 'skill': 'Drainage Features/Water Management', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"water bars and grade dips\"', 'quote': 'water bars and grade dips'}, {'skill_id': 'hand-built-trail-construction', 'category': 'Trail Construction', 'skill': 'Hand-Built Trail Construction', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"bench cut on new trail\"', 'quote': 'bench cut on new trail'}, {'skill_id': 'corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut', 'level': 'Entry', 'confidence': 'check', 'reason': 'You wrote \"only bucked a few logs\"', 'quote': 'only bucked a few logs'}, {'skill_id': 'tread-maintenance-hand-tools', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Hand tools', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with conservation corps experience', 'quote': None}, {'skill_id': 'corridor-clearing-power-tools', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing/Site Preparation', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with conservation corps experience', 'quote': None}, {'skill_id': 'safety-site-management-2', 'category': 'Trail Maintenance', 'skill': 'Safety/Site Management', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with conservation corps experience', 'quote': None}, {'skill_id': 'corridor-clearing-pruning-side-cutting-brushing', 'category': 'Trail Construction', 'skill': 'Corridor Clearing: Pruning/ Side-Cutting/ Brushing', 'level': 'Entry', 'confidence': 'likely', 'reason': 'Common for people with conservation corps experience', 'quote': None}, {'skill_id': 'trail-sustainability-principles', 'category': 'Trail Construction', 'skill': 'Trail Susta",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Mostly brushing and lopping\\\"\",\"quote\":\"Mostly brushing and lopping\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"dug a lot of water bars and grade dips\\\"\",\"quote\":\"dug a lot of water bars and grade dips\",\"level_basis\":null},{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"some bench cut on new trail\\\"\",\"quote\":\"some bench cut on new trail\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"only bucked a few logs\\\"\",\"quote\":\"only bucked a few logs\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"trail-sustainability",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 13.784863332984969
+    },
+    {
+      "index": 10,
+      "input": "{'backgrounds': ['none'], 'text': 'Five years in landscaping. I built dry-stack stone walls on my own, laid flagstone paths, and ran a mini excavator to dig drainage trenches.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'retaining-walls', 'category': 'Trail Construction', 'skill': 'Retaining Walls', 'level': 'Full Performance', 'confidence': 'likely', 'reason': 'You wrote \"built dry-stack stone walls on my own\"', 'quote': 'built dry-stack stone walls on my own', 'level_basis': 'Safely work to construct a stone or wood retaining wall in an identified location, to construction specifications independently'}, {'skill_id': 'mechanized-trail-construction', 'category': 'Trail Construction', 'skill': 'Mechanized Trail Construction', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"ran a mini excavator\"', 'quote': 'ran a mini excavator'}, {'skill_id': 'tread-hardening', 'category': 'Trail Construction', 'skill': 'Tread Hardening and Surfacing', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"laid flagstone paths\"', 'quote': 'laid flagstone paths'}, {'skill_id': 'water-management-drainage-features', 'category': 'Trail Construction', 'skill': 'Water Management/Drainage Features', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"dig drainage trenches\"', 'quote': 'dig drainage trenches'}, {'skill_id': 'water-management-drainage-features-2', 'category': 'Trail Maintenance', 'skill': 'Drainage Features/Water Management', 'level': 'Entry', 'confidence': 'possible', 'reason': 'You wrote \"dig drainage trenches\"', 'quote': 'dig drainage trenches'}], 'sources': ['framework:competency:retaining-walls', 'framework:competency:mechanized-trail-construction', 'framework:competency:tread-hardening', 'framework:competency:water-management-drainage-features', 'framework:competency:water-management-drainage-features-2'], 'framework_version': 'role profiles and competency map 2026-10-20'}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I built dry-stack stone walls on my own\\\"\",\"quote\":\"I built dry-stack stone walls on my own\",\"level_basis\":null},{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"laid flagstone paths\\\"\",\"quote\":\"laid flagstone paths\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"ran a mini excavator to dig drainage trenches\\\"\",\"quote\":\"ran a mini excavator to dig drainage trenches\",\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:retaining-walls\",\"framework:competency:tread-hardening\",\"framework:competency:water-management-drainage-features\",\"framework:background:none\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 8.065944292000495
+    },
+    {
+      "index": 11,
+      "input": "{'backgrounds': [], 'text': 'For three years I coordinated volunteers for our local trail club. I ran the work-day sign-ups, wrote the monthly newsletter, and helped write a state grant for new trail signs. On work days I showed new volunteers how to clear drains and brush the trail.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'communications', 'category': 'Program Administration', 'skill': 'Communications', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"wrote the monthly newsletter\"', 'quote': 'wrote the monthly newsletter'}, {'skill_id': 'education-and-public-outreach', 'category': 'Program Administration', 'skill': 'Education and Public Outreach', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"showed new volunteers how to clear drains and brush the trail\"', 'quote': 'showed new volunteers how to clear drains and brush the trail'}, {'skill_id': 'funding-grants', 'category': 'Program Administration', 'skill': 'Funding/Grants', 'level': 'Entry', 'confidence': 'check', 'reason': 'You wrote \"helped write a state grant\"', 'quote': 'helped write a state grant'}, {'skill_id': 'water-management-drainage-features-2', 'category': 'Trail Maintenance', 'skill': 'Drainage Features/Water Management', 'level': 'Entry', 'confidence': 'possible', 'reason': 'You wrote \"clear drains\"', 'quote': 'clear drains'}, {'skill_id': 'corridor-clearing-pruning-side-cutting-brushing-2', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing: Pruning/ Side-Cutting/ Brushing', 'level': 'Entry', 'confidence': 'possible', 'reason': 'You wrote \"brush the trail\"', 'quote': 'brush the trail'}], 'sources': ['framework:competency:communications', 'framework:competency:education-and-public-outreach', 'framework:competency:funding-grants', 'framework:competency:water-management-drainage-features-2', 'framework:competency:corridor-clearing-pruning-side-cutting-brushing-2'], 'framework_version': 'role profiles and competency map 2026-10-20'}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"education-and-public-outreach\",\"category\":\"Program Administration\",\"skill\":\"Education and Public Outreach\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"On work days I showed new volunteers how to clear drains and brush the trail.\\\"\",\"quote\":\"On work days I showed new volunteers how to clear drains and brush the trail.\",\"level_basis\":null},{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I ran the work-day sign-ups, wrote the monthly newsletter\\\"\",\"quote\":\"I ran the work-day sign-ups, wrote the monthly newsletter\",\"level_basis\":null},{\"skill_id\":\"funding-grants\",\"category\":\"Program Administration\",\"skill\":\"Funding/Grants\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"helped write a state grant for new trail signs\\\"\",\"quote\":\"helped write a state grant for new trail signs\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"showed new volunteers how to clear drains\\\"\",\"quote\":\"showed new volunteers how to clear drains\",\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:education-and-public-outreach\",\"framework:competency:communications\",\"framework:competency:funding-grants\",\"framework:competency:water-management-drainage-features-2\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 10.678570083982777
+    },
+    {
+      "index": 12,
+      "input": "{'backgrounds': ['volunteer'], 'text': 'Weekend volunteer with a trail club for six years. We built a puncheon bridge across a wet meadow, rebuilt washed-out tread with hand tools, and I cleared blowdowns with a crosscut saw.'}",
+      "expected": "{'declined': False, 'suggestions': [{'skill_id': 'water-crossing-structures-boardwalk-puncheon-turnpike-ford', 'category': 'Trail Construction', 'skill': 'Water Crossing Structures', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"built a puncheon bridge across a wet meadow\"', 'quote': 'built a puncheon bridge across a wet meadow'}, {'skill_id': 'tread-maintenance-hand-tools', 'category': 'Trail Maintenance', 'skill': 'Tread Maintenance - Hand tools', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"rebuilt washed-out tread with hand tools\"', 'quote': 'rebuilt washed-out tread with hand tools'}, {'skill_id': 'corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut', 'level': 'Entry', 'confidence': 'likely', 'reason': 'You wrote \"cleared blowdowns with a crosscut saw\"', 'quote': 'cleared blowdowns with a crosscut saw'}, {'skill_id': 'corridor-clearing-power-tools', 'category': 'Trail Maintenance', 'skill': 'Corridor Clearing/Site Preparation', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with trail volunteering experience'}, {'skill_id': 'safety-site-management-2', 'category': 'Trail Maintenance', 'skill': 'Safety/Site Management', 'level': 'Entry', 'confidence': 'possible', 'reason': 'Common for people with trail volunteering experience'}, {'skill_id': 'water-management-drainage-features-2', 'category': 'Trail Maintenance', 'skill': 'Drainage Features/Water Management', 'level': 'Entry', 'confidence': 'check', 'reason': 'Common for people with trail volunteering experience'}], 'sources': ['framework:competency:water-crossing-structures-boardwalk-puncheon-turnpike-ford', 'framework:competency:tread-maintenance-hand-tools', 'framework:competency:corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut', 'framework:competency:corridor-clearing-power-tools', 'fr",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"We built a puncheon bridge across a wet meadow\\\"\",\"quote\":\"We built a puncheon bridge across a wet meadow\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"rebuilt washed-out tread with hand tools\\\"\",\"quote\":\"rebuilt washed-out tread with hand tools\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I cleared blowdowns with a crosscut saw\\\"\",\"quote\":\"I cleared blowdowns with a crosscut saw\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"framework:competency:tread-maintenance-hand-tools\",\"framework:competency:corridor-clearing-felling",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 9.325519292004174
+    },
+    {
+      "index": 13,
+      "input": "{'backgrounds': ['corps'], 'text': 'I did one season with a conservation corps clearing brush, digging drainage, and fixing muddy spots on trails. Got pretty good with hand tools and hauling stuff all day.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Got pretty good with hand tools and hauling stuff all day.\\\"\",\"quote\":\"Got pretty good with hand tools and hauling stuff all day.\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"clearing brush\\\"\",\"quote\":\"clearing brush\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"digging drainage\\\"\",\"quote\":\"digging drainage\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with conservation corps experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"trail-sustainability-principles\",\"category\":\"Trail Construction\",\"skill\":\"Trail Sustainability Principles\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:tread-maintenance-ha",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 7.0991998329991475
+    },
+    {
+      "index": 14,
+      "input": "{'backgrounds': ['corps', 'forestry'], 'text': 'Spent two seasons doing trail work and invasive plant removal. We planted trees, used a brush cutter, and helped with some small bridge repairs. I learned a lot but was still pretty new at the start.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Spent two seasons doing trail work and invasive plant removal. We planted trees, used a brush cutter\\\"\",\"quote\":\"Spent two seasons doing trail work and invasive plant removal. We planted trees, used a brush cutter\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"invasive plant removal\\\"\",\"quote\":\"invasive plant removal\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"invasive plant removal\\\"\",\"quote\":\"invasive plant removal\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"trail-sustainability-principles\",\"category\":\"Trail Construction\",\"skill\":\"Trail Sustainability Principles\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"lev",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 13.636513167002704
+    },
+    {
+      "index": 15,
+      "input": "{'backgrounds': ['corps', 'construction'], 'text': 'I worked one season building rock steps, moving gravel, and putting in culverts. I had done some home construction before, so the tools and measuring part wasnt totally new to me.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I worked one season building rock steps\\\"\",\"quote\":\"I worked one season building rock steps\",\"level_basis\":null},{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"building rock steps, moving gravel\\\"\",\"quote\":\"building rock steps, moving gravel\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"putting in culverts\\\"\",\"quote\":\"putting in culverts\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with conservation corps experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"trail-sustainability-principles\",\"category\":\"Trail Construction\",\"skill\":\"Trail Sust",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 18.006858000007924
+    },
+    {
+      "index": 16,
+      "input": "{'backgrounds': ['corps', 'military'], 'text': 'Did a season on a corps crew after getting out of the military. Mostly clearing storm damage, carrying logs, and working long days outside. I liked the team part of it.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Mostly clearing storm damage, carrying logs\\\"\",\"quote\":\"Mostly clearing storm damage, carrying logs\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"trail-sustainability-principles\",\"category\":\"Trail Construction\",\"skill\":\"Trail Sustainability Principles\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with conservation corps experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Co",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 12.51520008398802
+    },
+    {
+      "index": 17,
+      "input": "{'backgrounds': ['none'], 'text': 'I spent one summer on a trail crew. We cut back overgrown plants, painted signs, and picked up trash. I didnt know much going in but got the hang of it.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"We cut back overgrown plants\\\"\",\"quote\":\"We cut back overgrown plants\",\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-pruning-side-cutting-brushing-2\",\"framework:background:none\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 7.70929741699365
+    },
+    {
+      "index": 18,
+      "input": "{'backgrounds': ['landscape', 'volunteer'], 'text': 'I helped with trail projects for two seasons and also volunteered on weekend park work days. Did planting, weeding, and some basic trail repairs. Not an expert, but I show up and work hard.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"Did planting, weeding, and some basic trail repairs.\\\"\",\"quote\":\"Did planting, weeding, and some basic trail repairs.\",\"level_basis\":null},{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 11.413879166997503
+    },
+    {
+      "index": 19,
+      "input": "{'backgrounds': ['forestry'], 'text': 'I worked on a hotshot crew for 3 seasons. Did fireline, burnout, saw work, and long hikes with a heavy pack.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Did fireline, burnout, saw work\\\"\",\"quote\":\"Did fireline, burnout, saw work\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Did fireline, burnout, saw work\\\"\",\"quote\":\"Did fireline, burnout, saw work\",\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-material-and-debris-management\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Material and Debris Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"framework:competency:corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"framework:competency:safety-site-management-2\",\"framework:competency:corridor-clearing-material-and-debris-management\",\"framework:background:forestry\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 12.625533583021024
+    },
+    {
+      "index": 20,
+      "input": "{'backgrounds': ['forestry', 'volunteer'], 'text': 'Ran an engine on wildfires and did structure protection, hose lays, and mop up. Also helped with prescribed burns in the off season.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-material-and-debris-management\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Material and Debris Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null}],\"decline",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 8.262661790999118
+    },
+    {
+      "index": 21,
+      "input": "{'backgrounds': ['forestry', 'construction'], 'text': 'I was a sawyer on trail and fuels projects, mostly clearing down trees and brushing in rough country. Pretty comfortable with chainsaws and hard work.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I was a sawyer on trail and fuels projects, mostly clearing down trees\\\"\",\"quote\":\"I was a sawyer on trail and fuels projects, mostly clearing down trees\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I was a sawyer on trail and fuels projects, mostly clearing down trees\\\"\",\"quote\":\"I was a sawyer on trail and fuels projects, mostly clearing down trees\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"mostly clearing down trees and brushing in rough country\\\"\",\"quote\":\"mostly clearing down trees and brushing in rough country\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"mostly clearing down trees and brushing in rough country\\\"\",\"quote\":\"mostly clearing down trees and brushing in rough country\",\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-material-and-debris-management\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Material and Debris Management\",\"level\":\"E",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 15.842221540980972
+    },
+    {
+      "index": 22,
+      "input": "{'backgrounds': ['forestry'], 'text': 'Did timber cruising for a couple summers, measuring trees and marking units. Wasnt fancy work but I learned the woods and got good at working on my own.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with forestry or wildland fire experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with forestry or wildland fire experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-material-and-debris-management\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Material and Debris Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with forestry or wildland fire experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"framework:competency:corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"framework:competency:safety-site-management-2\",\"framework:competency:corridor-clearing-material-and-debris-management\",\"framework:background:forestry\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 9.981838416017126
+    },
+    {
+      "index": 23,
+      "input": "{'backgrounds': ['landscape'], 'text': 'I’ve done lawn care and landscaping for about 4 years. Lots of planting, trimming, hauling mulch, and using small equipment.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Lots of planting, trimming, hauling mulch, and using small equipment.\\\"\",\"quote\":\"Lots of planting, trimming, hauling mulch, and using small equipment.\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Lots of planting, trimming, hauling mulch, and using small equipment.\\\"\",\"quote\":\"Lots of planting, trimming, hauling mulch, and using small equipment.\",\"level_basis\":null},{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-pruning-side-cutting-brushing\",\"framework:competency:corridor-clearing-pruning-side-cutting-brushing-2\",\"framewo",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 14.448346791992662
+    },
+    {
+      "index": 24,
+      "input": "{'backgrounds': ['landscape'], 'text': 'Worked with a nursery crew loading trees, watering, and keeping plants organized. I’m used to being outside all day and doing the hard lifting.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:tread-hardening\",\"framework:competency:retaining-walls\",\"framework:competency:tread-maintenance-mechanized-equipment\",\"framework:competency:water-management-drainage-features\",\"framework:background:landscape\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 7.038237832981395
+    },
+    {
+      "index": 25,
+      "input": "{'backgrounds': ['construction'], 'text': 'I helped on a few patio and retaining wall jobs, mixing materials and moving rock. Never worked on trails before but I learn fast.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"I helped on a few patio and retaining wall jobs, mixing materials and moving rock.\\\"\",\"quote\":\"I helped on a few patio and retaining wall jobs, mixing materials and moving rock.\",\"level_basis\":null},{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with construction trades experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:retaining-walls\",\"framework:competency:water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"framework:competency:mechanized-trail-construction\",\"framework:competency:construction-specifications\",\"framework:competency:jobsite-safety\",\"framework:background:construction\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 9.901875750016188
+    },
+    {
+      "index": 26,
+      "input": "{'backgrounds': ['volunteer'], 'text': 'Did volunteer cleanups at a local park and some brush clearing with my neighbor. Not a ton of experience but I dont mind dirty work.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"some brush clearing with my neighbor\\\"\",\"quote\":\"some brush clearing with my neighbor\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-power-tools\",\"framework:competency:tread-maintenance-hand-tools\",\"framework:competency:safety-site-management-2\",\"framework:competency:water-management-drainage-features-2\",\"framework:background:volunteer\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 6.616259708011057
+    },
+    {
+      "index": 27,
+      "input": "{'backgrounds': ['military'], 'text': 'I spent 8 years in the Army doing field work, vehicle maintenance, and leading small teams. Used to long days outside and figuring things out with limited tools.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"vehicle maintenance\\\"\",\"quote\":\"vehicle maintenance\",\"level_basis\":null},{\"skill_id\":\"crew-management\",\"category\":\"Crew Management\",\"skill\":\"Crew Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"leading small teams\\\"\",\"quote\":\"leading small teams\",\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"crew-training\",\"category\":\"Crew Management\",\"skill\":\"Crew Training\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:tread-maintenance-mechanized-equipment\",\"framework:competency:crew-management\",\"framework:competency:jobsite-safety\",\"framework:competency:crew-training\",\"framework:competency:communications\",\"framework:background:military\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 10.432814250001684
+    },
+    {
+      "index": 28,
+      "input": "{'backgrounds': ['military', 'construction'], 'text': 'Worked as a combat engineer building roads, clearing sites, and running equipment. Not much trail work yet but I’m comfortable with hard physical work and safety procedures.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"clearing sites\\\"\",\"quote\":\"clearing sites\",\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"safety procedures\\\"\",\"quote\":\"safety procedures\",\"level_basis\":null},{\"skill_id\":\"crew-management\",\"category\":\"Crew Management\",\"skill\":\"Crew Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"crew-training\",\"category\":\"Crew Management\",\"skill\":\"Crew Training\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"En",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 9.42238437497872
+    },
+    {
+      "index": 29,
+      "input": "{'backgrounds': ['military', 'volunteer'], 'text': 'I led crews on different projects and handled planning, training, and daily task assignments. Also did some volunteer cleanup work at local parks, nothing fancy.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"crew-management\",\"category\":\"Crew Management\",\"skill\":\"Crew Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I led crews on different projects and handled planning, training, and daily task assignments.\\\"\",\"quote\":\"I led crews on different projects and handled planning, training, and daily task assignments.\",\"level_basis\":null},{\"skill_id\":\"crew-training\",\"category\":\"Crew Management\",\"skill\":\"Crew Training\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I led crews on different projects and handled planning, training, and daily task assignments.\\\"\",\"quote\":\"I led crews on different projects and handled planning, training, and daily task assignments.\",\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Ma",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 11.215671750018373
+    },
+    {
+      "index": 30,
+      "input": "{'backgrounds': ['volunteer'], 'text': 'Helped with a local trail cleanup a few times, mostly picking up trash and moving small branches. It was good work outside.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"mostly picking up trash and moving small branches\\\"\",\"quote\":\"mostly picking up trash and moving small branches\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-power-tools\",\"framework:competency:tread-maintenance-hand-tools\",\"framework:competency:safety-site-management-2\",\"framework:competency:water-management-drainage-features-2\",\"framework:background:volunteer\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 7.239737916999729
+    },
+    {
+      "index": 31,
+      "input": "{'backgrounds': ['volunteer', 'construction'], 'text': 'I spent two weekends with the trail club clearing brush and fixing a couple muddy spots. Used hand tools and worked with a small crew.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"fixing a couple muddy spots. Used hand tools\\\"\",\"quote\":\"fixing a couple muddy spots. Used hand tools\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"clearing brush\\\"\",\"quote\":\"clearing brush\",\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people wit",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 10.75047366702347
+    },
+    {
+      "index": 32,
+      "input": "{'backgrounds': ['landscape'], 'text': 'Did some seasonal landscaping work, including spreading mulch, trimming plants, and hauling materials. A little hard on the back but I liked being outdoors.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-pruning-side-cutting-brushing-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Pruning/ Side-Cutting/ Brushing\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"trimming plants\\\"\",\"quote\":\"trimming plants\",\"level_basis\":null},{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-pruning-side-cutting-brushing-2\",\"framework:competency:tread-hardening\",\"framework:competency:retaining-walls\",\"framework:competency:tread-maintenance-mechanized-equipment\",\"framework:competency:water-management-drainage-features\",\"framework:background:landscape\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 6.0643687910051085
+    },
+    {
+      "index": 33,
+      "input": "{'backgrounds': ['volunteer', 'forestry'], 'text': 'I volunteered on trail days for about a year. Cleared fallen trees, dug drainage ditches, and helped build steps. Not an expert but I learned as I went.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"Cleared fallen trees\\\"\",\"quote\":\"Cleared fallen trees\",\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"dug drainage ditches\\\"\",\"quote\":\"dug drainage ditches\",\"level_basis\":null},{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"helped build steps\\\"\",\"quote\":\"helped build steps\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-material-and-debris-management\",\"catego",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 14.410215791023802
+    },
+    {
+      "index": 34,
+      "input": "{'backgrounds': ['construction'], 'text': 'I did framing and trim work on houses for about 5 years. Also built decks and fixed whatever needed fixing.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"framework:competency:retaining-walls\",\"framework:competency:mechanized-trail-construction\",\"framework:competency:construction-specifications\",\"framework:competency:jobsite-safety\",\"framework:background:construction\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 6.95986487501068
+    },
+    {
+      "index": 35,
+      "input": "{'backgrounds': ['construction'], 'text': 'Ran skid steer and mini excavator on site prep and utility jobs. Did some grading, trenching, and loading trucks.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with construction trades experience, but what you wrote points to other work\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"framework:competency:retaining-walls\",\"framework:competency:mechanized-trail-construction\",\"framework:competency:construction-specifications\",\"framework:competency:jobsite-safety\",\"framework:background:construction\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 5.794938209000975
+    },
+    {
+      "index": 36,
+      "input": "{'backgrounds': ['construction', 'volunteer'], 'text': 'Ive done general labor on road crews, moving materials, cleanup, and flagging. Helped a volunteer group clear brush and fallen trees too.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"You wrote \\\"Helped a volunteer group clear brush and fallen trees too.\\\"\",\"quote\":\"Helped a volunteer group clear brush and fallen trees too.\",\"level_basis\":null},{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people wit",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 0.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 8.140612334012985
+    },
+    {
+      "index": 37,
+      "input": "{'backgrounds': ['forestry'], 'text': 'I worked for the parks department doing basic map updates, site checks, and helping with permits. Mostly office work but I got out in the field some too.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-material-and-debris-management\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Material and Debris Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"framework:competency:corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"framework:competency:safety-site-management-2\",\"framework:competency:corridor-clearing-material-and-debris-management\",\"framework:background:forestry\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 13.419652833021246
+    },
+    {
+      "index": 38,
+      "input": "{'backgrounds': ['volunteer'], 'text': 'I helped a nonprofit write grants and organize volunteer days. I kept track of sign-ups, sent emails, and made sure people had what they needed. never had a formal trail job.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"I kept track of sign-ups, sent emails\\\"\",\"quote\":\"I kept track of sign-ups, sent emails\",\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:communications\",\"framework:competency:tread-maintenance-hand-tools\",\"framework:competency:corridor-clearing-power-tools\",\"framework:competency:safety-site-management-2\",\"framework:competency:water-management-drainage-features-2\",\"framework:background:volunteer\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 0.0
+      },
+      "error": null,
+      "seconds": 6.541434040991589
+    },
+    {
+      "index": 39,
+      "input": "{'backgrounds': ['none'], 'text': 'I did planning work with GIS and reviewed permits for small projects. I’m comfortable learning new systems and talking with the public, but I havent done much hands-on construction.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"permitting\",\"category\":\"Project Planning and Design\",\"skill\":\"Compliance and Permitting\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"reviewed permits for small projects\\\"\",\"quote\":\"reviewed permits for small projects\",\"level_basis\":null},{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"talking with the public\\\"\",\"quote\":\"talking with the public\",\"level_basis\":null},{\"skill_id\":\"corridor-planning\",\"category\":\"Project Planning and Design\",\"skill\":\"Corridor Planning\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"planning work with GIS\\\"\",\"quote\":\"planning work with GIS\",\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:permitting\",\"framework:competency:communications\",\"framework:competency:corridor-planning\",\"framework:background:none\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 10.40791700000409
+    },
+    {
+      "index": 40,
+      "input": "{'backgrounds': ['landscape'], 'text': 'I’ve mostly done outdoor work and didn’t mind being out in bad weather. It was pretty physical and I liked staying busy.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:tread-hardening\",\"framework:competency:retaining-walls\",\"framework:competency:tread-maintenance-mechanized-equipment\",\"framework:competency:water-management-drainage-features\",\"framework:background:landscape\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 6.384423375013284
+    },
+    {
+      "index": 41,
+      "input": "{'backgrounds': ['volunteer'], 'text': 'I helped out with some community projects for a while. Just showed up, worked hard, and did whatever needed doing.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:tread-maintenance-hand-tools\",\"framework:competency:corridor-clearing-power-tools\",\"framework:competency:safety-site-management-2\",\"framework:competency:water-management-drainage-features-2\",\"framework:background:volunteer\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 6.075711165991379
+    },
+    {
+      "index": 42,
+      "input": "{'backgrounds': ['none'], 'text': 'I’ve had a few different jobs, mostly hands-on stuff. Nothing fancy, but I’m used to long days and working with other people.', 'rejected': []}",
+      "expected": "{'declined': True}",
+      "actual": "{\"suggestions\":[],\"declined\":true,\"reason\":\"Nothing here maps to a trail competency. Pick a background or describe any outdoor, construction or crew work.\",\"sources\":[],\"framework_version\":null,\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 0.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 2.7607436250254977
+    },
+    {
+      "index": 43,
+      "input": "{'backgrounds': ['none'], 'text': 'I worked retail for about three years. I helped customers, stocked shelves, and opened and closed the store. I’m used to being on my feet and getting stuff done even when it’s busy.', 'rejected': []}",
+      "expected": "{'declined': True}",
+      "actual": "{\"suggestions\":[],\"declined\":true,\"reason\":\"Nothing here maps to a trail competency. Pick a background or describe any outdoor, construction or crew work.\",\"sources\":[],\"framework_version\":null,\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 0.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 3.648860290995799
+    },
+    {
+      "index": 44,
+      "input": "{'backgrounds': ['volunteer'], 'text': 'I’ve mostly worked in restaurants, taking orders and helping prep food. I also volunteer at a community garden sometimes, so I don’t mind physical work or getting dirty.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Drainage Features/Water Management\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:tread-maintenance-hand-tools\",\"framework:competency:corridor-clearing-power-tools\",\"framework:competency:safety-site-management-2\",\"framework:competency:water-management-drainage-features-2\",\"framework:background:volunteer\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 0.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 6.524987458018586
+    },
+    {
+      "index": 45,
+      "input": "{'backgrounds': ['construction', 'volunteer'], 'text': 'I’ve done a bit of everything over the years, building trails, clearing brush, fixing things and helping crews get jobs done. I’m good with tools and can figure stuff out as I go.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"hand-built-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Hand-Built Trail Construction\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"building trails\\\"\",\"quote\":\"building trails\",\"level_basis\":null},{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"clearing brush\\\"\",\"quote\":\"clearing brush\",\"level_basis\":null},{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-hand-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Hand tools\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with trail volunteering experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 11.84910408401629
+    },
+    {
+      "index": 46,
+      "input": "{'backgrounds': ['landscape'], 'text': 'Worked on trails and outdoor projects for a long time. I’ve done crew work, repairs, cleanup, and some landscaping, pretty comfortable with most jobs.', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"corridor-clearing-power-tools\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing/Site Preparation\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"You wrote \\\"cleanup\\\"\",\"quote\":\"cleanup\",\"level_basis\":null},{\"skill_id\":\"tread-hardening\",\"category\":\"Trail Construction\",\"skill\":\"Tread Hardening and Surfacing\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"tread-maintenance-mechanized-equipment\",\"category\":\"Trail Maintenance\",\"skill\":\"Tread Maintenance - Mechanized Equipment\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"water-management-drainage-features\",\"category\":\"Trail Construction\",\"skill\":\"Water Management/Drainage Features\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with landscaping or grounds experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:corridor-clearing-power-tools\",\"framework:competency:tread-hardening\",\"framework:competency:retaining-walls\",\"framework:competency:tread-maintenance-mechanized-equipment\",\"framework:competency:water-management-drainage-features\",\"framework:background:landscape\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"model\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 17.14492579200305
+    },
+    {
+      "index": 47,
+      "input": "{'backgrounds': ['military'], 'text': '', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"crew-management\",\"category\":\"Crew Management\",\"skill\":\"Crew Management\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"crew-training\",\"category\":\"Crew Management\",\"skill\":\"Crew Training\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"communications\",\"category\":\"Program Administration\",\"skill\":\"Communications\",\"level\":\"Entry\",\"confidence\":\"check\",\"reason\":\"Common for people with military service experience\",\"quote\":null,\"level_basis\":null}],\"declined\":false,\"reason\":null,\"sources\":[\"framework:competency:jobsite-safety\",\"framework:competency:crew-management\",\"framework:competency:crew-training\",\"framework:competency:communications\",\"framework:background:military\"],\"framework_version\":\"role profiles and competency map 2026-10-20; trailskills.org skill pages\",\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 7.404200732707977e-05
+    },
+    {
+      "index": 48,
+      "input": "{'backgrounds': ['construction', 'forestry'], 'text': '', 'rejected': []}",
+      "expected": "{'declined': False}",
+      "actual": "{\"suggestions\":[{\"skill_id\":\"water-crossing-structures-boardwalk-puncheon-turnpike-ford\",\"category\":\"Trail Construction\",\"skill\":\"Water Crossing Structures\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"retaining-walls\",\"category\":\"Trail Construction\",\"skill\":\"Retaining Walls\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"mechanized-trail-construction\",\"category\":\"Trail Construction\",\"skill\":\"Mechanized Trail Construction\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"construction-specifications\",\"category\":\"Trail Construction\",\"skill\":\"Construction Specifications\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"jobsite-safety\",\"category\":\"Crew Management\",\"skill\":\"Jobsite Safety\",\"level\":\"Entry\",\"confidence\":\"possible\",\"reason\":\"Common for people with construction trades experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Maintenance\",\"skill\":\"Corridor Clearing: Bucking, Felling/ Hazard Tree Removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"corridor-clearing-felling-tree-removal-chainsaw-crosscut\",\"category\":\"Trail Construction\",\"skill\":\"Corridor Clearing: Felling/tree removal; Chainsaw/ Crosscut\",\"level\":\"Entry\",\"confidence\":\"likely\",\"reason\":\"Common for people with forestry or wildland fire experience\",\"quote\":null,\"level_basis\":null},{\"skill_id\":\"safety-site-management-2\",\"category\":\"Trail Maintenance\",\"skill\":\"Safety/Site Ma",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 1.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 0.0002271670091431588
+    },
+    {
+      "index": 49,
+      "input": "{'backgrounds': ['none'], 'text': '', 'rejected': []}",
+      "expected": "{'declined': True}",
+      "actual": "{\"suggestions\":[],\"declined\":true,\"reason\":\"Nothing here maps to a trail competency. Pick a background or describe any outdoor, construction or crew work.\",\"sources\":[],\"framework_version\":null,\"produced_by\":\"rules\"}",
+      "scores": {
+        "valid_output": 1.0,
+        "declines_when_it_should": 1.0,
+        "decline_wording": 0.0,
+        "quote_is_a_phrase": 1.0,
+        "labelled_by_source": 1.0,
+        "judge_related": 1.0
+      },
+      "error": null,
+      "seconds": 6.42079976387322e-05
+    }
+  ]
+}

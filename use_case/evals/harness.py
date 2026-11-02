@@ -253,3 +253,39 @@ KNOWN_BAD = json.dumps({"declined": False, "produced_by": "model", "suggestions"
     {"skill_id": "permitting", "category": "Project Planning and Design", "skill": "Compliance and Permitting",
      "level": "Entry", "confidence": "possible", "reason": "Common for people with construction trades experience", "quote": None},
 ]})
+
+
+_judge = None
+
+
+def judge_related(actual: str, case: dict) -> float:
+    """failures.md lines 5 and 6: every pre-checked suggestion is related to what she did
+    (the easy rule). The judge passed separation (0.92) and agreement (0.90 alone, 0.95
+    with decline_wording, floor 0.60) in check_judge.py; its calibration is read from
+    judge_results.json, so the scorer refuses to run if that check did not pass."""
+    global _judge
+    if _judge is None:
+        from helpers import config
+        from helpers.judge import Calibration
+
+        result = json.loads((EVALS / "judge_results.json").read_text(encoding="utf-8"))["separation"]
+        _judge = make_judge(config.from_env(ROOT))
+        _judge.calibration = Calibration(accepted=result["good"], wrong=result["known_bad"],
+                                         n=len(result["detail"]), passed=result["passed"])
+    return _judge.score(actual, {"input": json.dumps(case["input"])})
+
+
+# The headline: the judge, because it is the scorer that agrees with the human verdict
+# (failures.md lines 5 and 6, the high-severity lines left under the easy rule).
+HEADLINE = "judge_related"
+
+
+def bootstrap_ci(scores: list[float], n_resamples: int = 5000, level: float = 0.95, seed: int = 0) -> tuple[float, float]:
+    """Session 7's interval for a mean, by resampling the per-case scores with replacement."""
+    import random
+
+    rng = random.Random(seed)
+    n = len(scores)
+    means = sorted(sum(rng.choice(scores) for _ in range(n)) / n for _ in range(n_resamples))
+    tail = (1 - level) / 2
+    return means[int(tail * n_resamples)], means[int((1 - tail) * n_resamples) - 1]
