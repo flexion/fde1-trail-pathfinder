@@ -2,6 +2,7 @@
 
     uv run python use_case/evals/make_traces.py inputs   # write trace_inputs.jsonl (13 golden + 37 generated)
     uv run python use_case/evals/make_traces.py run      # run suggest_competencies over them -> traces.jsonl, traces.md
+    uv run python use_case/evals/make_traces.py pick     # twenty of them -> human_scores.jsonl, pass/why blank
 
 There are no real traces yet: AI-1 has not been in front of users. So the fifty
 are the 13 golden inputs plus 37 inputs a model wrote to a spread of people
@@ -134,5 +135,28 @@ def run() -> None:
     print(f"-> {TRACES.relative_to(ROOT)}, {TRACES_MD.relative_to(ROOT)}")
 
 
+# Twenty traces to score by hand, stratified so at least a third should fail (Step 1's
+# rule): 9 from the substantive lines of failures.md (3, 4, 5, 7, 9), 3 from the display
+# and label lines (1, 2), 8 that read as fine, including declines and a chip-only row.
+# The order is mixed so the likely failures do not sit together.
+HAND_SCORE_IDS = [
+    "t-ai1-04", "t-gen-08", "t-ai1-06", "t-gen-01", "t-ai1-13", "t-gen-23", "t-gen-18",
+    "t-ai1-14", "t-ai1-03", "t-gen-31", "t-gen-20", "t-gen-11", "t-gen-13", "t-ai1-12",
+    "t-gen-28", "t-gen-26", "t-ai1-07", "t-gen-15", "t-gen-17", "t-ai1-08",
+]
+HAND_SCORES = EVALS / "human_scores.jsonl"
+
+
+def pick() -> None:
+    """Write human_scores.jsonl with `pass` and `why` blank, for scoring by hand."""
+    if HAND_SCORES.exists():
+        sys.exit(f"{HAND_SCORES.relative_to(ROOT)} exists; not overwriting your scores")
+    traces = {t["id"]: t for t in map(json.loads, TRACES.read_text(encoding="utf-8").splitlines())}
+    rows = [{"id": tid, "input": traces[tid]["input"], "actual": traces[tid]["output"], "pass": None, "why": ""}
+            for tid in HAND_SCORE_IDS]
+    HAND_SCORES.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+    print(f"{len(rows)} rows -> {HAND_SCORES.relative_to(ROOT)}; read each id in traces.md, then set pass and why")
+
+
 if __name__ == "__main__":
-    {"inputs": make_inputs, "run": run}[sys.argv[1] if len(sys.argv) > 1 else "run"]()
+    {"inputs": make_inputs, "run": run, "pick": pick}[sys.argv[1] if len(sys.argv) > 1 else "run"]()
