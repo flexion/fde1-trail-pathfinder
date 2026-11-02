@@ -199,3 +199,57 @@ def make_replay(path: Path):
     rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
     answers = {key(r["input"]): json.dumps(r["output"]) for r in rows}
     return lambda case_input: answers[key(case_input)]
+
+
+# --- the judge (Step 3) ----------------------------------------------------------------
+# failures.md lines 5 and 6, under the easy rule: a pre-checked suggestion that has
+# nothing to do with what she wrote, or that her words point away from. Code cannot read
+# that; a judge can, once it passes separation and agreement (check_judge.py).
+
+JUDGE_MODEL = "openai/bedrock/claude-sonnet-5-5"   # a different family from the endpoint's gpt-5.6-luna
+
+JUDGE_RUBRIC = """You check one answer from a trail-careers tool. A person picked background chips
+and wrote about work she has done. The tool suggested trail skills. Suggestions marked
+"likely" or "possible" are pre-checked on her screen; "check" ones are not.
+
+Her input:
+{input}
+
+The tool's answer:
+{actual}
+
+The question: is every pre-checked suggestion related to what she did?
+- Related means her words describe that work, or work that transfers to it from another
+  job. Example: "ran a forklift in a warehouse" relates to operating trail machinery.
+- A suggestion that comes from a chip ("Common for people with ... experience") is fine
+  when her words show she did the kind of work that chip stands for, even if she does not
+  name that skill. Example: a corps chip, she wrote "built trail and cleared brush", and
+  Drainage is suggested: fine.
+- It is NOT fine when her words show she did a different kind of work in that field, with
+  nothing that relates to the skill, or she says she did not do it. Example: a landscaping
+  chip, she wrote "I only answered phones at a landscaping office", and Retaining Walls is
+  pre-checked: not fine.
+- A decline, or an answer with no pre-checked suggestions, passes. Ignore the wording of
+  a decline. Ignore skills she did describe but the tool missed. Ignore levels.
+- If the answer is not a list of suggestions or a decline, it fails.
+
+Score 1 if every pre-checked suggestion is related, 0 if any is not.
+Reply with JSON only: {{"score": 0 or 1, "why": "<one sentence naming the suggestion that fails, if any>"}}"""
+
+
+def make_judge(cfg, stats=None):
+    from helpers.judge import Judge
+
+    return Judge(cfg, rubric=JUDGE_RUBRIC, model=JUDGE_MODEL, stats=stats)
+
+
+# A plausible-looking wrong answer for separation: well-formed, pre-checked, and unrelated
+# to almost anything a trail applicant writes.
+KNOWN_BAD = json.dumps({"declined": False, "produced_by": "model", "suggestions": [
+    {"skill_id": "budgeting", "category": "Program Administration", "skill": "Program and Project Budgeting", "level": "Entry",
+     "confidence": "likely", "reason": "Common for people with construction trades experience", "quote": None},
+    {"skill_id": "contract-administration", "category": "Program Administration", "skill": "Contract Administration",
+     "level": "Entry", "confidence": "likely", "reason": "Common for people with construction trades experience", "quote": None},
+    {"skill_id": "permitting", "category": "Project Planning and Design", "skill": "Compliance and Permitting",
+     "level": "Entry", "confidence": "possible", "reason": "Common for people with construction trades experience", "quote": None},
+]})
