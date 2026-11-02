@@ -734,3 +734,143 @@ challenge, which carries the full detail.
 
 Everything after this week assumes your app has a number, an interval, and a
 saved run to be measured against.
+
+---
+
+## 📝 My answers
+
+AI-1 (`suggest_competencies`: her words and background chips → competency
+suggestions), scored on 2026-11-02. Everything below is in `use_case/evals/`.
+`python use_case/evals/run.py` produces the report.
+
+### Step 1: traces, taxonomy, hand scores
+
+- **50 traces** (`traces.md`, `traces.jsonl`, made by `make_traces.py`). AI-1 has had no
+  real users yet, so the traces come from three sources, each marked in the file:
+  - the 13 AI-1 golden inputs;
+  - 34 inputs a model wrote across corps, fire, landscaping, veterans, volunteers, trades,
+    office jobs, vague, off-topic and exaggerated answers;
+  - 3 chip-only inputs.
+- **`failures.md`**: 10 failure lines, ranked by trace count, with ids. Under the first
+  bar, 43 of the 50 traces had at least one failure. One line (a chip `likely` with
+  nothing she wrote behind it) was later dropped: the chip matches are right.
+- **The bar for now: the easy rule.**
+  - A suggestion passes when her words relate to it, including transferable work from
+    another job.
+  - It fails when it has no relation to what she wrote, or her words say the opposite.
+  - A missed skill is not a fail.
+  - One verdict per trace: any wrong pre-checked (`likely` or `possible`) suggestion
+    fails it.
+- **`human_scores.jsonl`**: 20 traces scored by hand under that rule, **8 fail**, each
+  with a why. Six fail on a chip skill her words do not support: an engine crew or a
+  timber cruiser given chainsaw skills, a nursery worker given walls. Two fail on a
+  decline that asks her to "pick a background" she already picked.
+
+### Step 2: model-free scorers, echo and oracle
+
+Five scorers in `harness.py`, each naming the `failures.md` line it catches:
+- `valid_output`: ids real, quotes verbatim, rejected ids never re-offered, nothing above
+  Entry without a cited line.
+- `declines_when_it_should`.
+- `decline_wording` (line 10).
+- `quote_is_a_phrase` (line 3).
+- `labelled_by_source` (line 4).
+
+The live run, 2026-11-02, n = 50:
+
+| system | valid_output | declines_when_it_should | decline_wording | quote_is_a_phrase | labelled_by_source | judge_related |
+| --- | --- | --- | --- | --- | --- | --- |
+| echo | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 * |
+| oracle | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 * |
+| endpoint | 1.00 | 0.98 | 0.94 | 0.84 | 0.80 | 0.84 |
+
+\* The judge's echo and oracle numbers are its separation check (Step 3), on the 13 goldens.
+
+The two baselines caught two scorer bugs before any number was reported:
+- Echo first scored 1.00 on `valid_output`, because her input parsed as an empty answer.
+  The parser now requires `declined` and `suggestions`.
+- The oracle first scored 0.98 on `quote_is_a_phrase`, because a good eight-word,
+  one-skill golden quote failed the rule. The rule now applies above eight words.
+
+### Step 3: the judge
+
+- **Rubric:** `JUDGE_RUBRIC` in `harness.py`, for `failures.md` lines 5 and 6. It asks one
+  yes/no question: "is every pre-checked suggestion related to what she did?" Its
+  examples are invented, not taken from the traces it is tested on.
+- **Judge model:** Claude Sonnet 5.5. The endpoint is `gpt-5.6-luna`, a different family.
+- **Separation** (13 goldens): golden 1.00, a well-formed answer of unrelated pre-checked
+  skills 0.08, echo 0.00. `helpers.judge` rates it USABLE, separation 0.92.
+- **Agreement** (the 20 hand scores): 0.90 for the judge alone and 0.95 with
+  `decline_wording`, against a chance floor of 0.60. The judge alone misses the two
+  wording fails, which it is told to ignore. The one remaining disagreement is gen-31, a
+  borderline decline (`judge_results.md`).
+- **Used: separation 0.08 / 1.00, agreement 0.95 on 20. It is the headline.** It varies
+  between runs: 2 of its 8 fails on the baseline run flipped to pass when it was asked
+  again.
+
+### Step 4: generated failures
+
+- **Natural vs generated.** The 50 traces showed 31 failures of these kinds, and 5 of the
+  10 modes never happened. Generated: **129** broken outputs from 16 known-correct ones
+  (`synthetic.jsonl`, `make_synthetic.py`).
+- **Detection** (share caught; full table in `synthetic_results.md`):
+
+| failure made | easy | hard | caught by |
+| --- | --- | --- | --- |
+| unrelated chip skill pre-checked | 1.00 | 0.57 | judge |
+| wrong skill for her quote | 1.00 | 0.67 | judge |
+| whole long sentence as quote | 1.00 | | `quote_is_a_phrase` |
+| "rules" label when she wrote text | 1.00 | | `labelled_by_source` |
+| decline asks for a picked background | 1.00 | | `decline_wording` |
+| invented quote, fake id, level raised with no rubric line | 1.00 | 1.00 | `valid_output` |
+| declines when she said enough / answers when it should decline | 1.00 | 1.00 | `declines_when_it_should` |
+| *false alarms on the 16 unbroken originals* | | | code scorers 0 of 16; judge 1 of 16 |
+
+- The code scorers are exact. The judge is weaker on the quiet, plausible cases, and that
+  gap is how much the easy cases flatter it.
+- A first version of the chip mode added trail skills to trail builders. The judge passed
+  those as transferable, which is right under the easy rule, so the mode now adds office
+  and planning skills to field workers.
+
+### Step 5: scenarios
+
+Skipped. AI-1 answers once and stops, so there is no conversation or tool loop to score.
+This is noted in the decision row.
+
+### Step 6: the baseline
+
+- **Headline:** `judge_related` **0.84, 95% CI [0.74, 0.94], n = 50**, by bootstrap.
+- **The saved run:** `baseline.json`, compared against itself:
+  `PASS  endpoint → endpoint  [decline_wording +0.000  declines_when_it_should +0.000  judge_related +0.000  labelled_by_source +0.000  quote_is_a_phrase +0.000  valid_output +0.000]`
+- **The decision:** the `use_case/decisions.md` Week 4 row. It also records what the
+  number does not cover: missed skills, levels, latency, real users, the judge's weakness
+  on subtle cases and its flips, and the ±0.10 width.
+
+### Step 7: the demo
+
+**Pending**, combined with the Week 3 demo: one session with the product owner or the
+project lead. It will:
+- show AI-1 running;
+- check the generated inputs against how real people describe their work;
+- settle the open questions: may a chip alone pre-check, does transferable work count,
+  should twins show as one, and which skill retrieval-05 should name;
+- give the five minutes with the number.
+
+Their questions go in `use_case/stakeholders.md`, in my words.
+
+## Bring it to work
+
+- **What this harness is for:** AI-1's suggestions. Today the prototype pre-checks skills
+  from background chips and keyword rules, and nobody has measured how often a pre-checked
+  skill is wrong for the person who sees it.
+- **Data:** real TrailSkills sessions once AI-1 is in front of users: what people type,
+  which chips they pick, which suggestions they untick. Nobody has judged these yet. The
+  first fifty to score would be from the demo and the first pilot users.
+- **Model or endpoint:** Claude Sonnet 5.5 judges and `gpt-5.6-luna` answers, both on AWS
+  Bedrock through Flexion's Bifrost gateway. Her text leaves our network for Bedrock, the
+  same as the endpoint's. **Judge calls per `run.py`: 50 (measured), about 1,350 tokens
+  each** (measured in `check_judge.py`: 79,857 tokens over 59 calls). That makes it cheap
+  enough for every commit, at about 3–4 minutes of judge time.
+- **Access or approval:** none new. The project already has the access it needs to use
+  American Trails' skill pages and to send text through the gateway (confirmed by the
+  team, 2026-11-02). The judge model is on the same gateway.
