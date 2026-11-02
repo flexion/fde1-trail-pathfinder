@@ -30,7 +30,7 @@ If you cannot name what you did not do, you did not choose.
 
 ### Week 3: non-text content
 
-Pathfinder compares skill ratings to a role and suggests trainings. Every record is a structured text row, so there is no non-text content to retrieve.
+Pathfinder compares skill ratings to a role and suggests trainings. Every record is a structured text row, so there is no non-text content to retrieve. *Rechecked after the pivot (2026-11-02):* AI-1 retrieves over the trailskills.org skill pages, which are headings and bullet text, and her input is typed text, so the four answers below still hold.
 
 1. **Is the information visual?** No. Roles, skills, levels, costs and training proof are text fields.
 2. **Does a number live only in pixels?** No. Every value we use is a field in a row.

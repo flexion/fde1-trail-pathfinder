@@ -18,7 +18,8 @@ from ask import answer_question
 from corpus import DEFAULT_SCOPE, load as load_corpus
 from llm import stream_reply
 from pathfinder import NO_SCORE_SUMMARY, solve
-from schema import Answer, Request, Response, SelfRating
+from schema import Answer, CompetencySuggestions, ExperienceRequest, Request, Response, SelfRating
+from suggest import suggest
 
 app = Server()
 
@@ -128,6 +129,44 @@ def ask_pathfinder(
                       answer="I can't answer that: the self-ratings are malformed.",
                       reason=f"invalid self_ratings: {'.'.join(str(p) for p in first['loc'])}: {first['msg']}").model_dump_json()
     return answer_question(question, scope, role=role, self_ratings=ratings).model_dump_json()
+
+
+@app.api(name="suggest_competencies")
+def suggest_competencies(text: str = "", backgrounds: list | None = None, rejected: list | None = None) -> str:
+    """Suggest which trail competencies a person likely has, from her own words and any backgrounds she picked.
+
+    Use this when someone describes past work ("Two seasons on a corps crew,
+    mostly brushing and dug water bars") or picks a background such as
+    "corps" or "landscape". Her words are matched to the 55 trailskills.org
+    competencies by searching the skills wiki; a background adds that
+    background's usual competencies from the framework. Every suggestion names
+    the competency, its category, a level, a confidence (likely and possible
+    are pre-checked on screen, check is not) and a one-line reason that quotes
+    her words or names the background. At most 12.
+
+    Levels are Entry until a rubric-matching step exists: a background, years,
+    or calling herself expert never raises one. Every competency id is checked
+    against the framework and every quote against her text before it is
+    returned. Text that names no task, tool or trail feature, with no
+    background, is declined with a reason that asks for more. Nothing is
+    recorded; she confirms every suggestion herself.
+
+    Args:
+        text: Her own words about work she has done. May be empty when a background is picked.
+        backgrounds: Optional background ids: corps, military, landscape, construction, forestry, volunteer, none.
+        rejected: Optional competency ids she already rejected this session; they are never suggested again.
+
+    Returns:
+        A JSON-encoded CompetencySuggestions: suggestions, declined, reason, sources, framework_version, produced_by.
+    """
+    try:
+        request = ExperienceRequest(text=text or "", backgrounds=backgrounds or [], rejected=rejected or [])
+    except ValidationError as exc:
+        first = exc.errors()[0]
+        return CompetencySuggestions(declined=True, reason=f"Invalid request: {'.'.join(str(p) for p in first['loc'])}: {first['msg']}").model_dump_json()
+    if not request.text.strip() and not request.backgrounds:
+        return CompetencySuggestions(declined=True, reason="Pick a background or describe work you have done.").model_dump_json()
+    return suggest(request).model_dump_json()
 
 
 # --- The frontend ------------------------------------------------------------
