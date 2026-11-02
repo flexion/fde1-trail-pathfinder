@@ -158,6 +158,12 @@ cannot drift:
   `ai1-11` (the same text as `ai1-01`).
 - **Five of the six answerable questions need four or five pages**, so top-1
   retrieval cannot pass them; the top-*k* floor is 5.
+- **Twins count as one.** The framework lists some skills twice, under
+  Construction and Maintenance (and Planning for Trail Sustainability
+  Principles): the same title, or for drainage and chainsaw felling nearly so.
+  Finding either twin passes; step 2 and the category on screen decide which
+  she has. The scorer (`ai1_find_skill.py`, `twin_groups`) groups them, so a
+  label naming both twins needs only one found.
 - **Short of ten, and not all real.** `ai1-08` is the project lead's own demo
   input; the others were written by the course team from the role profiles,
   and `ai1-12` is a placeholder. Two more, from real people, are still needed.
