@@ -1,13 +1,17 @@
-"""AI-1 step 1 as Session 5's Agentic RAG: the model searches the wiki and names the skills.
+"""AI-1 step 1 as Session 5's agent loop: the model searches the wiki and names the skills.
 
     uv run --group week3 python use_case/evals/ai1_find_skill_agent.py
     uv run --group week3 python use_case/evals/ai1_find_skill_agent.py --techniques dense --only retrieval-03
 
 ai1_find_skill.py scores the ranked pages with no model. This one gives the model
-Session 5's `search_chunks` tool over the same wiki and asks it which skills her
-words support, each with the words of hers it rests on. Levels are step 2.
-The loop and prompt are the same for every technique; only the ranking behind
-`search_chunks` changes (bm25 or dense, from ai1_find_skill.py).
+tools over the same wiki and asks it which skills her words support, each with
+the words of hers it rests on. Levels are step 2. The loop and prompt are the
+same for every technique; only the tools change:
+
+    bm25   Agentic RAG: `search_chunks`, ranked by BM25 (ai1_find_skill.py)
+    dense  Agentic RAG: `search_chunks`, ranked by embeddings (ai1_find_skill.py)
+    dci    Session 5's direct corpus interaction: `list_pages` (the wiki index, one
+           line per skill), `grep_wiki` (regex with line provenance), `read_page`
 
 Chunks: each page split at `##` (Definition, Entry, Full Performance, Expert),
 id `<skill-id>#<section>`, with the skill name and category kept on every chunk so a level
@@ -19,6 +23,8 @@ Scored on retrieval.jsonl, Session 5's columns adapted to skill ids:
     quotes   its quotes that are really in her text
     decline  a decline case passes when it declines and names nothing
     calls, evidence chars, latency, how the loop stopped
+
+Each case runs --runs times (default 3); the table gives the mean and the range.
 
 Needs a model in .env. Writes ai1_find_skill_agent_results.md and .jsonl (every answer and trace).
 """
@@ -46,8 +52,9 @@ MAX_K = 8
 
 SYSTEM = (
     "You find which trail skills a person's own words support, using only the skills wiki. "
-    "Search the wiki with search_chunks before answering; search again with different words "
-    "when a task she names has no match yet. A chunk id is <skill-id>#<section>.\n"
+    "Use your tools to look in the wiki before answering; look again with different words "
+    "when a task she names has no match yet. A page name is a skill id; a chunk id is "
+    "<skill-id>#<section>.\n"
     "Name a skill only when her words describe doing that work. Do not judge levels.\n"
     "If her text names no task, tool or trail feature, decline.\n"
     'Reply with JSON only: {"skills": [{"skill_id": "...", "quote": "her exact words"}], '
@@ -76,14 +83,48 @@ def make_search(chunks: list[dict], technique: str):
     return search_chunks
 
 
-TOOLS = [{"type": "function", "function": {
-    "name": "search_chunks",
-    "description": "Search ranked skill-wiki chunks. Search again with a new query when evidence is incomplete.",
-    "parameters": {"type": "object", "properties": {"query": {"type": "string"}, "k": {"type": "integer"}},
-                   "required": ["query"]}}}]
+def make_dci(pages: dict[str, str]) -> dict:
+    index = (ROOT / "use_case" / "data" / "wiki" / "index.md").read_text(encoding="utf-8")
+
+    def list_pages() -> str:
+        return index
+
+    def grep_wiki(pattern: str) -> str:
+        try:
+            rx = re.compile(pattern, re.I)
+        except re.error:
+            rx = re.compile(re.escape(pattern), re.I)
+        hits = [f"{sid}:{n}: {line}" for sid, text in pages.items()
+                for n, line in enumerate(text.splitlines(), 1) if rx.search(line)]
+        return "\n".join(hits[:40]) or "(no matches)"
+
+    def read_page(page: str) -> str:
+        page = page.removesuffix(".md")
+        return pages.get(page, f"(unknown page: {page})")
+
+    return {"list_pages": list_pages, "grep_wiki": grep_wiki, "read_page": read_page}
 
 
-def run_agent(cfg, question: str, funcs: dict) -> dict:
+def schema(name: str, description: str, properties: dict, required: tuple = ()) -> dict:
+    return {"type": "function", "function": {"name": name, "description": description,
+            "parameters": {"type": "object", "properties": properties, "required": list(required)}}}
+
+
+SEARCH_TOOLS = [schema("search_chunks", "Search ranked skill-wiki chunks. Search again with a new query when evidence is incomplete.",
+                       {"query": {"type": "string"}, "k": {"type": "integer"}}, ("query",))]
+
+
+def dci_tools(pages: dict[str, str]) -> list[dict]:
+    return [
+        schema("list_pages", "Read the wiki index: every skill page by category, with its one-line definition.", {}),
+        schema("grep_wiki", "Search exact text or a regular expression across wiki pages, with line provenance.",
+               {"pattern": {"type": "string"}}, ("pattern",)),
+        schema("read_page", "Read one complete skill page by its name (the skill id).",
+               {"page": {"type": "string", "enum": sorted(pages)}}, ("page",)),
+    ]
+
+
+def run_agent(cfg, question: str, tools: list[dict], funcs: dict) -> dict:
     """Session 5's loop: call tools until the model answers, at most MAX_TURNS turns."""
     import litellm
     from helpers.llm import complete
@@ -95,7 +136,7 @@ def run_agent(cfg, question: str, funcs: dict) -> dict:
     chars = 0
     started = time.perf_counter()
     for _ in range(MAX_TURNS):
-        msg = complete(cfg, messages, tools=TOOLS, timeout=120).choices[0].message
+        msg = complete(cfg, messages, tools=tools, timeout=120).choices[0].message
         calls = msg.tool_calls or []
         if not calls:
             return {"answer": (msg.content or "").strip(), "trace": trace, "evidence_chars": chars,
@@ -152,9 +193,44 @@ def score(case: dict, result: dict, twins: dict[str, frozenset[str]]) -> dict:
     return row
 
 
+def run_summary(rows: list[dict]) -> dict:
+    """One run of one technique over every case."""
+    answerable = [r for r in rows if r["kind"] != "decline"]
+    declines = [r for r in rows if r["kind"] == "decline"]
+    quotes = [r["quotes_ok"].split("/") for r in rows]
+    n = len(rows)
+    return {
+        "all_found": sum(r["pass"] for r in answerable),
+        "recall": sum(int(r["found"].split("/")[0]) for r in answerable)
+        / max(1, sum(int(r["found"].split("/")[1]) for r in answerable)),
+        "wrong": sum(len(r["wrong"]) for r in rows),
+        "declines": sum(r["pass"] for r in declines),
+        "quotes_bad": sum(int(b) - int(a) for a, b in quotes),
+        "calls": sum(r["calls"] for r in rows) / n,
+        "chars": sum(r["evidence_chars"] for r in rows) / n,
+        "s": sum(r["latency_s"] for r in rows) / n,
+    }
+
+
+def spread(values: list[float], fmt: str) -> str:
+    """Mean, and the range across runs when there is more than one."""
+    mean = sum(values) / len(values)
+    if len(values) == 1 or min(values) == max(values):
+        return format(mean, fmt)
+    return f"{format(mean, fmt)} ({format(min(values), fmt)}–{format(max(values), fmt)})"
+
+
+def counted(names: list[str]) -> str:
+    tally: dict[str, int] = {}
+    for name in names:
+        tally[name] = tally.get(name, 0) + 1
+    return ", ".join(f"{n} ×{c}" if c > 1 else n for n, c in sorted(tally.items(), key=lambda kv: -kv[1])) or "-"
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--techniques", default="bm25,dense")
+    ap.add_argument("--techniques", default="bm25,dense,dci")
+    ap.add_argument("--runs", type=int, default=3, help="runs per case; the model does not answer the same way twice")
     ap.add_argument("--only", help="run one case id")
     args = ap.parse_args()
 
@@ -169,53 +245,64 @@ def main() -> None:
         cases = [c for c in cases if c["id"] == args.only]
 
     twins = twin_groups(pages)
-    results, details = {}, []
+    results: dict[str, list[list[dict]]] = {}   # technique -> runs -> rows
+    details = []
     for technique in args.techniques.split(","):
-        funcs = {"search_chunks": make_search(chunks, technique)}
-        rows = results[technique] = []
-        for case in cases:
-            result = run_agent(cfg, case["question"], funcs)
-            row = score(case, result, twins)
-            rows.append(row)
-            details.append({"technique": technique, **row, "question": case["question"], "gold": case["gold"], **result})
-            print(f"{technique} {row['id']}: {'pass' if row['pass'] else 'FAIL'}  found {row['found']}  "
-                  f"wrong {len(row['wrong'])}  calls {row['calls']}  {row['latency_s']}s")
+        if technique == "dci":
+            tools, funcs = dci_tools(pages), make_dci(pages)
+        else:
+            tools, funcs = SEARCH_TOOLS, {"search_chunks": make_search(chunks, technique)}
+        results[technique] = []
+        for run in range(1, args.runs + 1):
+            rows = []
+            for case in cases:
+                result = run_agent(cfg, case["question"], tools, funcs)
+                row = score(case, result, twins)
+                rows.append(row)
+                details.append({"technique": technique, "run": run, **row, "question": case["question"],
+                                "gold": case["gold"], **result})
+                print(f"{technique} run {run} {row['id']}: {'pass' if row['pass'] else 'FAIL'}  found {row['found']}  "
+                      f"wrong {len(row['wrong'])}  calls {row['calls']}  {row['latency_s']}s")
+            results[technique].append(rows)
 
+    n_answerable = sum(c["kind"] != "decline" for c in cases)
+    n_declines = len(cases) - n_answerable
     lines = [
-        "# AI-1 step 1, Agentic RAG (search_chunks + model)",
+        "# AI-1 step 1, model + tools (Agentic RAG and DCI)",
         "",
-        f"Model: `{cfg.llm_model}`. {len(chunks)} chunks from {len(pages)} wiki pages (split at `##`). "
-        f"Max {MAX_TURNS} turns, k capped at {MAX_K}. One run per case. "
+        f"Model: `{cfg.llm_model}`. bm25/dense: {len(chunks)} chunks from {len(pages)} wiki pages (split at `##`); "
+        f"dci: the {len(pages)} pages and the index. Max {MAX_TURNS} turns, k capped at {MAX_K}. "
+        f"**{args.runs} runs per case**: each cell is the mean, with the range across runs in brackets. "
         "Twins (the same skill under two categories) count as one gold skill: either passes.",
         "",
-        "| technique | all gold found | gold recall | wrong named | declines correct | quotes ok | avg calls | avg evidence chars | avg s |",
+        f"| technique | all gold found (of {n_answerable}) | gold recall | wrong named | declines correct (of {n_declines}) "
+        "| quotes not in her text | calls | evidence chars | s |",
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
-    for technique, rows in results.items():
-        answerable = [r for r in rows if r["kind"] != "decline"]
-        declines = [r for r in rows if r["kind"] == "decline"]
-        found = sum(int(r["found"].split("/")[0]) for r in answerable)
-        gold = sum(int(r["found"].split("/")[1]) for r in answerable)
-        quotes = [r["quotes_ok"].split("/") for r in rows]
-        n = len(rows)
+    for technique, runs in results.items():
+        sums = [run_summary(rows) for rows in runs]
+        col = lambda key: [x[key] for x in sums]  # noqa: E731
         lines.append(
-            f"| {technique} | {sum(r['pass'] for r in answerable)}/{len(answerable)} | {found / max(1, gold):.0%} | "
-            f"{sum(len(r['wrong']) for r in rows)} | {sum(r['pass'] for r in declines)}/{len(declines)} | "
-            f"{sum(int(a) for a, _ in quotes)}/{sum(int(b) for _, b in quotes)} | "
-            f"{sum(r['calls'] for r in rows) / n:.1f} | {sum(r['evidence_chars'] for r in rows) / n:,.0f} | "
-            f"{sum(r['latency_s'] for r in rows) / n:.1f} |")
-    for technique, rows in results.items():
+            f"| {technique} | {spread(col('all_found'), '.1f')} | {spread(col('recall'), '.0%')} | "
+            f"{spread(col('wrong'), '.1f')} | {spread(col('declines'), '.1f')} | {spread(col('quotes_bad'), '.1f')} | "
+            f"{spread(col('calls'), '.1f')} | {spread(col('chars'), ',.0f')} | {spread(col('s'), '.1f')} |")
+    for technique, runs in results.items():
         lines += [
             "",
             f"## {technique}",
             "",
-            "| id | kind | pass | found | missed | wrong | quotes ok | calls | evidence chars | s | stopped |",
-            "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+            "| id | kind | passed | missed (times) | wrong (times) | avg calls | avg evidence chars | avg s |",
+            "| --- | --- | --- | --- | --- | --- | --- | --- |",
         ]
-        for r in rows:
-            lines.append(f"| {r['id']} | {r['kind']} | {'pass' if r['pass'] else 'FAIL'} | {r['found']} | "
-                         f"{', '.join(r['missed']) or '-'} | {', '.join(r['wrong']) or '-'} | {r['quotes_ok']} | "
-                         f"{r['calls']} | {r['evidence_chars']:,} | {r['latency_s']} | {r['stopped']} |")
+        for i, case in enumerate(cases):
+            per_case = [rows[i] for rows in runs]
+            k = len(per_case)
+            lines.append(
+                f"| {case['id']} | {case['kind']} | {sum(r['pass'] for r in per_case)}/{k} | "
+                f"{counted([m for r in per_case for m in r['missed']])} | "
+                f"{counted([w for r in per_case for w in r['wrong']])} | "
+                f"{sum(r['calls'] for r in per_case) / k:.1f} | "
+                f"{sum(r['evidence_chars'] for r in per_case) / k:,.0f} | {sum(r['latency_s'] for r in per_case) / k:.1f} |")
     if not args.only:
         OUT_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
         OUT_JSONL.write_text("".join(json.dumps(d) + "\n" for d in details), encoding="utf-8")
