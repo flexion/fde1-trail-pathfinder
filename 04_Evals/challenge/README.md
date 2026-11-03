@@ -850,18 +850,18 @@ This is noted in the decision row.
 
 **Done 2026-11-03**, a 16-minute recorded call with the product owner. It was the call I
 planned, but shorter:
-- I showed AI-1 running on one input (a corps crew description) and how a background-only
+- We showed AI-1 running on one input (a corps crew description) and how a background-only
   pick works. She found the output reasonable.
-- I asked about three open questions. She answered one and left two for real user data:
+- We asked about three open questions. She answered one and left two for real user data:
   - which wins when a background and her words disagree: open (she wants real user data, and
     leans toward trusting the person's own words);
   - whether a chip alone may pre-check: open (she wants a fuller description of each background);
   - how much transferable work counts: answered (she said give suggestions at Entry level, marked
     `check`, which is the rule the baseline already uses).
-- I did not show the other three examples, the failure, or the number. They still need a
+- We did not show the other three examples, the failure, or the number. They still need a
   reviewer.
 
-Her answers are in the Week 4 row of `use_case/stakeholders.md`, in my words.
+Her answers are in the Week 4 row of `use_case/stakeholders.md`, in our words.
 
 ## Bring it to work
 
