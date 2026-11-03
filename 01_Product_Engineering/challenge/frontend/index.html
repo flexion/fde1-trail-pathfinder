@@ -23,7 +23,7 @@
         font-family: system-ui, sans-serif;
         color: var(--ink);
         background: var(--bg);
-        max-width: 60rem;
+        max-width: 44rem;
         margin: 0 auto;
         padding: 1rem;
         line-height: 1.5;
@@ -113,42 +113,62 @@
       .who { font-weight: 600; }
       form.chat { display: flex; gap: 0.5rem; }
       form.chat input { flex: 1; min-width: 0; }
-
-      /* --- AI-1: Tell us what you've done ------------------------------------ */
-      .eyebrow { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); margin: 1rem 0 0; }
-      .hero h2 { font-size: 2rem; margin: 0.2rem 0 0.4rem; }
-      .hero p { color: var(--muted); margin: 0; max-width: 42rem; }
-      .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0 1rem; }
-      .chip {
-        background: var(--card); color: var(--ink); border: 1px solid var(--line);
-        border-radius: 999px; padding: 0.45rem 1rem; font-weight: 500;
+      /* --- AI-1: what have you done? --- */
+      fieldset { border: 0; padding: 0; margin: 0 0 1rem; min-width: 0; }
+      legend { font-weight: 600; padding: 0; margin-bottom: 0.4rem; }
+      .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+      .chips label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-weight: 400;
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.25rem 0.75rem;
+        background: var(--card);
+        cursor: pointer;
       }
-      .chip[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
-      textarea { font: inherit; width: 100%; min-height: 6rem; padding: 0.6rem; border: 1px solid var(--line); border-radius: 8px; }
-      .run { margin-top: 0.75rem; border-radius: 999px; padding: 0.6rem 1.4rem; font-weight: 600; }
-      #suggestions { margin-top: 1rem; }
-      .results-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
-      .results-head h3 { font-size: 1.3rem; margin: 0; }
-      .sugg {
-        display: grid; grid-template-columns: auto 1fr auto; gap: 0.2rem 0.8rem; align-items: start;
-        border-top: 1px solid var(--line); padding: 0.8rem 0;
+      .chips label:has(input:checked) { border-color: var(--accent); background: #e8f1ec; }
+      .chips input { margin: 0; padding: 0; }
+      textarea {
+        font: inherit;
+        width: 100%;
+        min-height: 6rem;
+        padding: 0.5rem;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        resize: vertical;
       }
-      .sugg input[type=checkbox] { width: 1.2rem; height: 1.2rem; margin-top: 0.25rem; accent-color: var(--accent); }
-      .sugg .name { font-weight: 700; font-size: 1.05rem; }
-      .sugg .line2 { grid-column: 2; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; color: var(--muted); font-size: 0.92rem; }
-      .level { font-size: 0.75rem; font-weight: 600; background: #e8f1ea; color: var(--accent); border-radius: 6px; padding: 0.05rem 0.45rem; margin-left: 0.35rem; vertical-align: middle; }
-      .cat { font-size: 0.78rem; font-weight: 600; border-radius: 6px; padding: 0.1rem 0.5rem; }
-      .cat-trail-construction { background: #fbe9e3; color: #b0472a; }
-      .cat-trail-maintenance { background: #e5f2e8; color: #2f6b4f; }
-      .cat-crew-management { background: #e4ecf7; color: #2b5797; }
-      .cat-program-administration { background: #efe7f6; color: #6b3fa0; }
-      .cat-project-planning-and-design { background: #e2f3f3; color: #1f6f6f; }
-      .conf { font-size: 0.8rem; font-weight: 700; border-radius: 999px; padding: 0.15rem 0.6rem; background: #e8f1ea; color: var(--accent); }
-      .conf.possible { background: #eef0f4; color: #34415a; }
-      .conf.check { background: var(--warn-bg); color: var(--close); }
-      .quote { font-style: italic; }
-      .footnote { color: var(--muted); font-size: 0.85rem; margin-top: 0.75rem; }
-      details.earlier summary { cursor: pointer; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+      .suggestion {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0.6rem 0.75rem;
+        margin: 0.5rem 0;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 0.25rem 0.6rem;
+        align-items: start;
+      }
+      .suggestion input[type="checkbox"] { margin: 0.3rem 0 0; padding: 0; }
+      .suggestion .name { font-weight: 600; margin: 0; display: inline; }
+      .suggestion .body { min-width: 0; overflow-wrap: anywhere; }
+      button.remove {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        padding: 0.15rem 0.6rem;
+        font-size: 0.85rem;
+      }
+      .tag.likely { background: var(--has); }
+      .tag.possible { background: var(--close); }
+      .tag.check { background: var(--muted); }
+      .note {
+        background: var(--warn-bg);
+        border: 1px solid var(--close);
+        border-radius: 6px;
+        padding: 0.75rem;
+      }
     </style>
   </head>
   <body>
@@ -158,26 +178,34 @@
     </header>
     <div id="errors" aria-live="polite"></div>
 
-    <section class="hero">
-      <p class="eyebrow">TRAIL CAREER EXPLORER</p>
-      <h2>Tell us what you've done</h2>
-      <p>
-        Pick your background, describe your work in your own words, or both. We
-        suggest trail competencies; you decide what's true. Nothing is saved.
+    <section class="card" id="experience">
+      <h2>What have you done?</h2>
+      <p class="muted">
+        Pick any backgrounds that fit and say what the work involved, in your own
+        words. You confirm every suggestion yourself; nothing you enter is saved.
       </p>
-    </section>
-
-    <section class="card" id="ai1">
-      <h3>Your experience</h3>
-      <div class="chips" id="chips"><span class="muted">Loading backgrounds...</span></div>
-      <label for="experience">In your own words</label>
-      <textarea id="experience" placeholder="e.g. Two seasons on a corps crew: brushing, water bars, some chainsaw work."></textarea>
-      <button id="suggest" class="run" type="button" disabled>Suggest competencies</button>
+      <fieldset>
+        <legend>Your background (pick any)</legend>
+        <!-- ids and labels from data/framework.json backgrounds[]; the API takes the ids. -->
+        <div class="chips" id="backgrounds">
+          <label><input type="checkbox" value="corps" /> Conservation corps</label>
+          <label><input type="checkbox" value="military" /> Military service</label>
+          <label><input type="checkbox" value="landscape" /> Landscaping or grounds</label>
+          <label><input type="checkbox" value="construction" /> Construction trades</label>
+          <label><input type="checkbox" value="forestry" /> Forestry or wildland fire</label>
+          <label><input type="checkbox" value="volunteer" /> Trail volunteering</label>
+          <label><input type="checkbox" value="none" /> No trail experience yet</label>
+        </div>
+      </fieldset>
+      <label for="experience-text">In your own words</label>
+      <textarea
+        id="experience-text"
+        placeholder="For example: Two seasons on a conservation corps crew. We brushed corridors, dug water bars and set rock steps."
+      ></textarea>
+      <p><button id="suggest" type="button" disabled>Suggest</button></p>
       <div id="suggestions" aria-live="polite"></div>
     </section>
 
-    <details class="earlier">
-      <summary>Earlier features (Week 1: compare to a role, chat)</summary>
     <section class="card" id="pathfinder">
       <h2>Compare yourself to a role</h2>
       <p class="muted">
@@ -199,7 +227,6 @@
         <button type="submit">Send</button>
       </form>
     </section>
-    </details>
 
     <script>
       // Plain script, so it runs even when the CDN import below fails.
@@ -224,7 +251,7 @@
         if (!window.gradioClientLoaded) {
           // Kept so a slow-but-successful load can take the warning back down.
           window.cdnWarning = showError(
-            "The Gradio client did not load from cdn.jsdelivr.net. Suggest, Chat and Compare " +
+            "The Gradio client did not load from cdn.jsdelivr.net. Suggest, Compare and Chat " +
               "will not work on this network until that request is allowed."
           );
         }
@@ -248,6 +275,99 @@
         showError(`Could not connect to the API: ${e.message || e}`);
       }
 
+      // --- What have you done? (AI-1) -----------------------------------------
+
+      const CONFIDENCE = { likely: "Likely", possible: "Possible", check: "Needs a check" };
+      const suggestBtn = document.getElementById("suggest");
+      const experienceText = document.getElementById("experience-text");
+      const suggestionsBox = document.getElementById("suggestions");
+      // Ids she removed this page session. Sent on every request, so they never come back.
+      const rejected = [];
+      // Her own ticks, by id, so a re-run after Remove keeps what she chose.
+      const ticked = new Map();
+      let lastAsk = null;
+
+      function chosenBackgrounds() {
+        return [...document.querySelectorAll("#backgrounds input:checked")].map((x) => x.value);
+      }
+
+      function suggestionCard(s) {
+        const card = el("div", undefined, "suggestion");
+        const box = el("input");
+        box.type = "checkbox";
+        box.id = `suggestion-${s.skill_id}`;
+        // likely and possible start ticked, check does not (use_case/evals/README.md, AI-1).
+        box.checked = ticked.has(s.skill_id) ? ticked.get(s.skill_id) : s.confidence !== "check";
+        box.addEventListener("change", () => ticked.set(s.skill_id, box.checked));
+
+        const body = el("div", undefined, "body");
+        const head = el("div");
+        head.appendChild(el("span", CONFIDENCE[s.confidence] || s.confidence, `tag ${s.confidence}`));
+        const name = el("label", s.skill, "name");
+        name.htmlFor = box.id;
+        head.appendChild(name);
+        body.appendChild(head);
+        body.appendChild(el("div", `${s.category} - ${s.level}`, "muted"));
+        body.appendChild(el("div", s.reason));
+
+        const remove = el("button", "Remove", "remove");
+        remove.type = "button";
+        remove.setAttribute("aria-label", `Remove ${s.skill}`);
+        remove.addEventListener("click", () => removeSuggestion(s.skill_id, card));
+
+        card.append(box, body, remove);
+        return card;
+      }
+
+      function renderSuggestions(res) {
+        suggestionsBox.replaceChildren();
+        if (res.declined) {
+          const note = el("div", undefined, "note");
+          note.appendChild(el("p", res.reason || "Nothing to suggest yet. Pick a background or describe work you have done."));
+          suggestionsBox.appendChild(note);
+        } else {
+          suggestionsBox.appendChild(el("h3", `Suggested competencies (${res.suggestions.length})`));
+          suggestionsBox.appendChild(
+            el("p", "Untick anything that isn't you. Remove one and it won't be suggested again.", "muted")
+          );
+          for (const s of res.suggestions) suggestionsBox.appendChild(suggestionCard(s));
+        }
+        const footer = [];
+        if (res.produced_by) footer.push(`Produced by: ${res.produced_by}`);
+        if (res.framework_version) footer.push(`Framework: ${res.framework_version}`);
+        if (rejected.length) footer.push(`${rejected.length} removed`);
+        if (footer.length) suggestionsBox.appendChild(el("p", footer.join(" · "), "muted"));
+      }
+
+      async function runSuggest(ask, showLoading = true) {
+        suggestBtn.disabled = true;
+        suggestionsBox.querySelectorAll("button").forEach((b) => (b.disabled = true));
+        if (showLoading) suggestionsBox.replaceChildren(el("p", "Looking...", "muted"));
+        try {
+          const out = await client.predict("/suggest_competencies", { ...ask, rejected: [...rejected] });
+          lastAsk = ask;
+          renderSuggestions(JSON.parse(out.data[0]));
+        } catch (e) {
+          suggestionsBox.replaceChildren();
+          showError(`Suggest failed: ${e.message || JSON.stringify(e)}`);
+        } finally {
+          suggestBtn.disabled = false;
+        }
+      }
+
+      function removeSuggestion(id, card) {
+        if (!rejected.includes(id)) rejected.push(id);
+        ticked.delete(id);
+        card.remove();
+        runSuggest(lastAsk, false);
+      }
+
+      suggestBtn.addEventListener("click", () => {
+        ticked.clear();
+        runSuggest({ text: experienceText.value.trim(), backgrounds: chosenBackgrounds() });
+      });
+      suggestBtn.disabled = !client;
+
       // --- Pathfinder ----------------------------------------------------------
 
       const LEVELS = ["Entry", "Full Performance", "Expert"];
@@ -262,107 +382,6 @@
         if (text !== undefined) node.textContent = text;
         if (className) node.className = className;
         return node;
-      }
-
-      // --- AI-1: suggest competencies -------------------------------------------
-
-      const chipsBox = document.getElementById("chips");
-      const experience = document.getElementById("experience");
-      const suggestBtn = document.getElementById("suggest");
-      const suggestions = document.getElementById("suggestions");
-
-      function slug(text) {
-        return text.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
-      }
-
-      function picked() {
-        return [...chipsBox.querySelectorAll(".chip[aria-pressed=true]")].map((b) => b.dataset.id);
-      }
-
-      function renderSuggestions(res, seconds) {
-        suggestions.replaceChildren();
-        if (res.declined) {
-          const box = el("div", undefined, "review");
-          box.appendChild(el("strong", "We need a bit more to go on."));
-          box.appendChild(el("p", res.reason || "Nothing here maps to a trail competency yet."));
-          suggestions.appendChild(box);
-          return;
-        }
-        const head = el("div", undefined, "results-head");
-        head.appendChild(el("h3", `${res.suggestions.length} suggestions`));
-        head.appendChild(el("span", "Uncheck anything that isn't true", "muted"));
-        suggestions.appendChild(head);
-
-        for (const s of res.suggestions) {
-          const row = el("div", undefined, "sugg");
-          const box = document.createElement("input");
-          box.type = "checkbox";
-          // likely and possible are pre-checked; check is hers to tick.
-          box.checked = s.confidence !== "check";
-          box.setAttribute("aria-label", s.skill);
-          row.appendChild(box);
-          const name = el("div", s.skill, "name");
-          name.appendChild(el("span", s.level, "level"));
-          row.appendChild(name);
-          row.appendChild(el("span", s.confidence, `conf ${s.confidence}`));
-          const line2 = el("div", undefined, "line2");
-          line2.appendChild(el("span", s.category, `cat cat-${slug(s.category)}`));
-          line2.appendChild(el("span", s.reason, s.quote ? "quote" : ""));
-          row.appendChild(line2);
-          suggestions.appendChild(row);
-        }
-        const by = res.produced_by === "model" ? "Suggested by AI from your words and backgrounds"
-                                               : "Rule-based suggestions from your backgrounds";
-        suggestions.appendChild(el("p", `${by} · ${res.framework_version || ""} · ${seconds.toFixed(1)} s`, "footnote"));
-      }
-
-      async function suggest() {
-        const text = experience.value.trim();
-        const backgrounds = picked();
-        if (!text && !backgrounds.length) {
-          suggestions.replaceChildren(el("p", "Pick a background or describe work you have done.", "muted"));
-          return;
-        }
-        suggestBtn.disabled = true;
-        suggestions.replaceChildren(el("p", "Finding competencies... (this can take 10 to 20 seconds)", "muted"));
-        const started = performance.now();
-        try {
-          const out = await client.predict("/suggest_competencies", { text, backgrounds, rejected: [] });
-          renderSuggestions(JSON.parse(out.data[0]), (performance.now() - started) / 1000);
-        } catch (e) {
-          suggestions.replaceChildren();
-          showError(`Suggest failed: ${e.message || JSON.stringify(e)}`);
-        } finally {
-          suggestBtn.disabled = false;
-        }
-      }
-
-      try {
-        const r = await fetch("/backgrounds");
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const chips = await r.json();
-        chipsBox.replaceChildren(...chips.map((b) => {
-          const chip = el("button", b.label, "chip");
-          chip.type = "button";
-          chip.dataset.id = b.id;
-          chip.setAttribute("aria-pressed", "false");
-          chip.addEventListener("click", () =>
-            chip.setAttribute("aria-pressed", chip.getAttribute("aria-pressed") === "true" ? "false" : "true"));
-          return chip;
-        }));
-        suggestBtn.disabled = !client;
-        suggestBtn.addEventListener("click", suggest);
-
-        // A shareable demo link: ?bg=corps,forestry&text=... fills the form and runs it.
-        const params = new URLSearchParams(window.location.search);
-        if (params.has("text") || params.has("bg")) {
-          experience.value = params.get("text") || "";
-          const want = (params.get("bg") || "").split(",").filter(Boolean);
-          chipsBox.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", want.includes(c.dataset.id) ? "true" : "false"));
-          if (client) suggest();
-        }
-      } catch (e) {
-        showError(`Could not load backgrounds from /backgrounds: ${e.message}`);
       }
 
       function costText(cost) {

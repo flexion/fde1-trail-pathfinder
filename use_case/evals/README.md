@@ -187,7 +187,7 @@ fixtures**. A [readable question list](retrieval-questions.md) is also available
 These are assistant-authored
 test questions, not collected user utterances or stakeholder-approved questions.
 They do not by themselves satisfy the assignment's real-question provenance
-requirement, and no new user-demo questions have been collected.
+requirement. `retrieval-11` and `retrieval-12` are the product owner's own words from the 2026-11-02 demo, with draft labels to confirm with her.
 
 This set uses `retrieval-corpus.jsonl`, derived from golden inputs, **not** the
 35-row TC2 `synthetic_v1.jsonl`. It is a small fixture-based development suite,
