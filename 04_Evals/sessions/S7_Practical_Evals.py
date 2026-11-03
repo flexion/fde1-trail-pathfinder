@@ -182,11 +182,20 @@ def _(mo):
 
 
 @app.cell
-def _(GOLDEN, mo, read_jsonl):
-    golden_rows = read_jsonl(GOLDEN) if GOLDEN.exists() else []
+def _(GOLDEN, json, mo, read_jsonl):
+    def as_text(value) -> str:
+        """A golden's `input` or `output` is a string in the Week 1 template, but a
+        structured request or response (a dict) once the student's schema is real.
+        The scorers below compare text, so a dict is scored as its JSON."""
+        return value if isinstance(value, str) else json.dumps(value, ensure_ascii=False, sort_keys=True)
+
+    golden_rows = [
+        {**seed, "input": as_text(seed.get("input", "")), "output": as_text(seed.get("output", ""))}
+        for seed in (read_jsonl(GOLDEN) if GOLDEN.exists() else [])
+    ]
 
     mo.stop(
-        not golden_rows or any("REPLACE ME" in seed.get("input", "") for seed in golden_rows),
+        not golden_rows or any("REPLACE ME" in seed["input"] for seed in golden_rows),
         mo.md(r"""
         ### ⚠️ Your golden examples are still the template
 
