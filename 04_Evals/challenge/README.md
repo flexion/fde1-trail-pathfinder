@@ -104,17 +104,17 @@ is going to ask you for.
 This is the graded part. Every item comes from a numbered step in the technical
 challenge, which carries the full detail.
 
-- [ ] **A test set you prepared** — `use_case/evals/golden.jsonl` grown past the Week 1 seeds, plus **`use_case/evals/synthetic.jsonl`**: generated failures with their labels and the count of naturally occurring ones for comparison. `use_case/evals/failures.md` — one sentence per failure you saw in fifty real traces, ranked — is how you know which failures to generate
-- [ ] **An eval harness relevant to your problem** — at least three model-free scorers that each trace to a line in `failures.md`, **echo and oracle** run with the oracle scoring 1.0, and one LLM judge (your own prompt, or DeepEval's `GEval`) with its separation shown on echo and oracle. Checking its agreement against twenty outputs you hand-scored is recommended, not graded; if you skip it, say so in the decision row
+- [x] **A test set you prepared** — `use_case/evals/golden.jsonl` grown past the Week 1 seeds, plus **`use_case/evals/synthetic.jsonl`**: generated failures with their labels and the count of naturally occurring ones for comparison. `use_case/evals/failures.md` — one sentence per failure you saw in fifty real traces, ranked — is how you know which failures to generate
+- [x] **An eval harness relevant to your problem** — at least three model-free scorers that each trace to a line in `failures.md`, **echo and oracle** run with the oracle scoring 1.0, and one LLM judge (your own prompt, or DeepEval's `GEval`) with its separation shown on echo and oracle. Checking its agreement against twenty outputs you hand-scored is recommended, not graded; if you skip it, say so in the decision row
 - [ ] **If your app holds a conversation: multi-turn scenarios**, one a refusal, in `use_case/evals/scenarios.py`, repeated with the spread reported if the user is a model. A single-turn eval passes an agent that says the right words without checking anything. Optional for a single-turn endpoint
-- [ ] **`use_case/evals/baseline.json` committed**, with a confidence interval on the headline number, and `harness.compare()` of the file against itself reporting PASS
-- [ ] **Conclusions** — `use_case/decisions.md` has the eval decision: the headline number with its interval, what it does not cover, what you rejected, and what would change your mind
+- [x] **`use_case/evals/baseline.json` committed**, with a confidence interval on the headline number, and `harness.compare()` of the file against itself reporting PASS
+- [x] **Conclusions** — `use_case/decisions.md` has the eval decision: the headline number with its interval, what it does not cover, what you rejected, and what would change your mind
 - [ ] It still runs in Docker
 
 ### 📤 Share
 
-- [ ] **A five-minute demo, rehearsed with a real person before Week 5, with their questions recorded in your own words** — graded, and the one people skip
-- [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
+- [x] **A five-minute demo, rehearsed with a real person before Week 5, with their questions recorded in your own words** — graded, and the one people skip
+- [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->
@@ -704,17 +704,17 @@ is going to ask you for.
 This is the graded part. Every item comes from a numbered step in the technical
 challenge, which carries the full detail.
 
-- [ ] **A test set you prepared** — `use_case/evals/golden.jsonl` grown past the Week 1 seeds, plus **`use_case/evals/synthetic.jsonl`**: generated failures with their labels and the count of naturally occurring ones for comparison. `use_case/evals/failures.md` — one sentence per failure you saw in fifty real traces, ranked — is how you know which failures to generate
-- [ ] **An eval harness relevant to your problem** — at least three model-free scorers that each trace to a line in `failures.md`, **echo and oracle** run with the oracle scoring 1.0, and one LLM judge (your own prompt, or DeepEval's `GEval`) with its separation shown on echo and oracle. Checking its agreement against twenty outputs you hand-scored is recommended, not graded; if you skip it, say so in the decision row
+- [x] **A test set you prepared** — `use_case/evals/golden.jsonl` grown past the Week 1 seeds, plus **`use_case/evals/synthetic.jsonl`**: generated failures with their labels and the count of naturally occurring ones for comparison. `use_case/evals/failures.md` — one sentence per failure you saw in fifty real traces, ranked — is how you know which failures to generate
+- [x] **An eval harness relevant to your problem** — at least three model-free scorers that each trace to a line in `failures.md`, **echo and oracle** run with the oracle scoring 1.0, and one LLM judge (your own prompt, or DeepEval's `GEval`) with its separation shown on echo and oracle. Checking its agreement against twenty outputs you hand-scored is recommended, not graded; if you skip it, say so in the decision row
 - [ ] **If your app holds a conversation: multi-turn scenarios**, one a refusal, in `use_case/evals/scenarios.py`, repeated with the spread reported if the user is a model. A single-turn eval passes an agent that says the right words without checking anything. Optional for a single-turn endpoint
-- [ ] **`use_case/evals/baseline.json` committed**, with a confidence interval on the headline number, and `harness.compare()` of the file against itself reporting PASS
-- [ ] **Conclusions** — `use_case/decisions.md` has the eval decision: the headline number with its interval, what it does not cover, what you rejected, and what would change your mind
+- [x] **`use_case/evals/baseline.json` committed**, with a confidence interval on the headline number, and `harness.compare()` of the file against itself reporting PASS
+- [x] **Conclusions** — `use_case/decisions.md` has the eval decision: the headline number with its interval, what it does not cover, what you rejected, and what would change your mind
 - [ ] It still runs in Docker
 
 ### 📤 Share
 
-- [ ] **A five-minute demo, rehearsed with a real person before Week 5, with their questions recorded in your own words** — graded, and the one people skip
-- [ ] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
+- [x] **A five-minute demo, rehearsed with a real person before Week 5, with their questions recorded in your own words** — graded, and the one people skip
+- [x] **What you would swap to run this at work** — data, model or endpoint, and the approval you would need — three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->
@@ -848,22 +848,20 @@ This is noted in the decision row.
 
 ### Step 7: the demo
 
-**Pending**, combined with the Week 3 demo: one session with the product owner or the
-project lead. It will:
-- show AI-1 running;
-- check the generated inputs against how real people describe their work;
-- settle the open questions:
-  - may a chip alone pre-check;
-  - does transferable work count;
-  - should twins show as one;
-  - which skill retrieval-05 should name;
-  - should a chip stay a fixed list from `framework.json` (the prototype's, instant and
-    the same every time), or should the AI decide a chip's skills from the wiki together
-    with her words (one judgment for both, but slower, a model call even for chip-only,
-    and 10 of the 13 AI-1 goldens would need re-deciding);
-- give the five minutes with the number.
+**Done 2026-11-03**, a 16-minute recorded call with the product owner. It was the call I
+planned, but shorter:
+- I showed AI-1 running on one input (a corps crew description) and how a background-only
+  pick works. She found the output reasonable.
+- I asked about three open questions. She answered one and left two for real user data:
+  - which wins when a background and her words disagree: open (she wants real user data, and
+    leans toward trusting the person's own words);
+  - whether a chip alone may pre-check: open (she wants a fuller description of each background);
+  - how much transferable work counts: answered (she said give suggestions at Entry level, marked
+    `check`, which is the rule the baseline already uses).
+- I did not show the other three examples, the failure, or the number. They still need a
+  reviewer.
 
-Their questions go in `use_case/stakeholders.md`, in my words.
+Her answers are in the Week 4 row of `use_case/stakeholders.md`, in my words.
 
 ## Bring it to work
 
