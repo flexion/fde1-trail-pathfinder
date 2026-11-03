@@ -1,0 +1,47 @@
+{
+  "measured": "2026-11-02",
+  "n": 50,
+  "system": "endpoint",
+  "headline": {
+    "id": "judge_related",
+    "label": "Every pre-checked skill is backed by her words",
+    "traces_to": "lines 5 and 6, scored by a judge model",
+    "value": 0.84,
+    "ci": [
+      0.74,
+      0.94
+    ]
+  },
+  "scorers": [
+    {
+      "id": "valid_output",
+      "label": "Well-formed: real ids, verbatim quotes, no raised level without a rubric line",
+      "traces_to": "guards",
+      "value": 1.0
+    },
+    {
+      "id": "declines_when_it_should",
+      "label": "Declines exactly when it should",
+      "traces_to": "guards",
+      "value": 0.98
+    },
+    {
+      "id": "decline_wording",
+      "label": "A decline never asks for a background she already picked",
+      "traces_to": "line 10",
+      "value": 0.94
+    },
+    {
+      "id": "quote_is_a_phrase",
+      "label": "Quotes point at the words that matter, not a whole sentence",
+      "traces_to": "line 3",
+      "value": 0.84
+    },
+    {
+      "id": "labelled_by_source",
+      "label": "Says the model answered when she wrote text",
+      "traces_to": "line 4",
+      "value": 0.8
+    }
+  ]
+}

@@ -139,6 +139,37 @@
         border-radius: 6px;
         padding: 0.75rem;
       }
+      /* --- How often is it right? (the Week 4 baseline) --- */
+      #eval h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 0.75rem; }
+      .hero { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem; margin: 0.5rem 0 0.25rem; }
+      .hero .value { font-size: 3.25rem; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+      .hero .label { font-size: 1.05rem; max-width: 28rem; }
+      .interval { position: relative; height: 44px; margin: 0.25rem 0 0.75rem; }
+      .interval .track { position: absolute; left: 0; right: 0; top: 16px; border-top: 1px solid var(--line); }
+      .interval .band { position: absolute; top: 8px; height: 16px; background: var(--accent); opacity: 0.18; }
+      .interval .point {
+        position: absolute; top: 16px; width: 12px; height: 12px; margin: -6px 0 0 -6px;
+        border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--card);
+      }
+      .interval .tick { position: absolute; top: 13px; height: 6px; border-left: 1px solid var(--line); }
+      .interval .tick span { position: absolute; top: 14px; font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
+      .interval .tick.start span { left: 0; }
+      .interval .tick.middle span { transform: translateX(-50%); }
+      .interval .tick.end span { right: 0; }
+      .bars { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 0.45rem 1rem; align-items: center; margin: 0.75rem 0 0.5rem; }
+      .bars .name { font-size: 0.9rem; color: var(--muted); }
+      .bars .bar { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+      .bars .track { flex: 1; height: 14px; border-bottom: 1px solid var(--line); position: relative; }
+      .bars .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 0 4px 4px 0; }
+      .bars .num { width: 3ch; text-align: right; font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+      .bars .track:hover .fill { opacity: 0.8; }
+      ul.gaps { padding-left: 1.1rem; margin: 0.25rem 0; }
+      ul.gaps li { margin: 0.15rem 0; }
+      @media (max-width: 36rem) {
+        .bars { grid-template-columns: 1fr; gap: 0.15rem 0; }
+        .bars .bar { margin-bottom: 0.4rem; }
+        .hero .value { font-size: 2.75rem; }
+      }
     </style>
   </head>
   <body>
@@ -176,6 +207,30 @@
       <div id="suggestions" aria-live="polite"></div>
     </section>
 
+    <section class="card" id="eval" hidden>
+      <h2>How often is it right? <span class="badge" id="eval-when"></span></h2>
+      <div class="hero">
+        <span class="value" id="eval-value"></span>
+        <span class="label" id="eval-label"></span>
+      </div>
+      <div class="interval" id="eval-interval" role="img"></div>
+      <p class="muted" id="eval-ci"></p>
+      <h3>The checks that need no model</h3>
+      <div class="bars" id="eval-bars"></div>
+      <h3>What the number does not cover</h3>
+      <ul class="gaps">
+        <li>Skills it should have suggested and did not, and how sure it says it is.</li>
+        <li>The level it suggests. The rubric judge for levels does not exist yet.</li>
+        <li>Real users: 37 of the 50 inputs were generated, and the 13 others were written by the team.</li>
+        <li>Subtle cases: the judge catches about 6 in 10 quiet mismatches, so the number flatters it.</li>
+      </ul>
+      <p class="muted">
+        An answer that only echoes her words scores 0 on every check and a perfect answer scores 1,
+        so the checks measure the answer, not themselves. Interval by bootstrap; details in
+        <code>use_case/evals/</code>.
+      </p>
+    </section>
+
     <script>
       // Plain script, so it runs even when the CDN import below fails.
       function showError(message) {
@@ -204,6 +259,69 @@
           );
         }
       }, 8000);
+
+      // --- How often is it right? (reads data/eval.json through /eval) -------------
+      fetch("/eval")
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then(renderEval)
+        .catch(() => {}); // no baseline in this image: the section stays hidden
+
+      function pct(x) {
+        return `${Math.round(x * 100)}%`;
+      }
+
+      function renderEval(d) {
+        if (!d.available) return;
+        const h = d.headline;
+        document.getElementById("eval-when").textContent = `measured ${d.measured} on ${d.n} cases`;
+        document.getElementById("eval-value").textContent = pct(h.value);
+        document.getElementById("eval-label").textContent =
+          `of answers had every pre-checked skill backed by what she wrote.`;
+
+        // The interval strip: a 0-100% track, the 95% band as a wash, the point on top.
+        const [lo, hi] = h.ci || [h.value, h.value];
+        const strip = document.getElementById("eval-interval");
+        strip.setAttribute("aria-label", `${pct(h.value)}, 95% interval ${pct(lo)} to ${pct(hi)}, on ${d.n} cases`);
+        strip.appendChild(el("div", undefined, "track"));
+        const band = el("div", undefined, "band");
+        band.style.left = `${lo * 100}%`;
+        band.style.width = `${(hi - lo) * 100}%`;
+        strip.appendChild(band);
+        for (const [x, where] of [[0, "start"], [50, "middle"], [100, "end"]]) {
+          const tick = el("div", undefined, `tick ${where}`);
+          tick.style.left = `${x}%`;
+          tick.appendChild(el("span", `${x}%`));
+          strip.appendChild(tick);
+        }
+        const point = el("div", undefined, "point");
+        point.style.left = `${h.value * 100}%`;
+        point.title = `${pct(h.value)} on ${d.n} cases`;
+        strip.appendChild(point);
+        document.getElementById("eval-ci").textContent =
+          `95% interval ${pct(lo)} to ${pct(hi)}. A later change has to clear that band to count as a win.`;
+
+        // The code scorers: one series, one hue, value at the tip.
+        const bars = document.getElementById("eval-bars");
+        for (const s of d.scorers) {
+          const name = el("div", s.label, "name");
+          const bar = el("div", undefined, "bar");
+          const track = el("div", undefined, "track");
+          track.title = `${s.id}: failures.md ${s.traces_to}`;
+          const fill = el("div", undefined, "fill");
+          fill.style.width = `${s.value * 100}%`;
+          track.appendChild(fill);
+          bar.append(track, el("span", pct(s.value), "num"));
+          bars.append(name, bar);
+        }
+        document.getElementById("eval").hidden = false;
+      }
+
+      function el(tag, text, className) {
+        const node = document.createElement(tag);
+        if (text !== undefined) node.textContent = text;
+        if (className) node.className = className;
+        return node;
+      }
     </script>
 
     <script type="module">
@@ -315,13 +433,6 @@
         runSuggest({ text: experienceText.value.trim(), backgrounds: chosenBackgrounds() });
       });
       suggestBtn.disabled = !client;
-
-      function el(tag, text, className) {
-        const node = document.createElement(tag);
-        if (text !== undefined) node.textContent = text;
-        if (className) node.className = className;
-        return node;
-      }
     </script>
   </body>
 </html>
