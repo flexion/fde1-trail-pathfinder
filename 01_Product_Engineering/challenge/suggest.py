@@ -15,7 +15,9 @@ Levels: every suggestion is Entry. Raising one needs her words to match a rubric
 
 Code checks what the model says: an id not in the framework is dropped, a quote not in
 her text is dropped with its suggestion, rejected ids never come back. Her words win
-over a chip on the same skill. At most 12, dropping check then possible first.
+over a chip on the same skill. A chip skill her words point away from (the model names it,
+with her words, in the same call) drops to check: still listed, not pre-checked. At most
+12, dropping check then possible first.
 
 If the wiki is missing or the model or embeddings fail, the text path falls back to the
 prototype's keyword rules (`produced_by: "rules"`), so she still gets an answer.
@@ -62,7 +64,13 @@ SYSTEM = (
     "<skill-id>#<section>.\n"
     "Name a skill only when her words describe doing that work. Do not judge levels.\n"
     "If her text names no task, tool or trail feature, decline.\n"
+    "You may also be given the skills her background chips suggest. Give each one a verdict: "
+    '"supported" when her words describe that work; "points_away" when her words say she did '
+    "not do it, or describe what she did in that field and it is a different kind of work "
+    "(a landscaping chip suggests Retaining Walls, but she writes that she only mowed and "
+    "watered); \"silent\" when she just does not mention it. Silent is not points_away.\n"
     'Reply with JSON only: {"skills": [{"skill_id": "...", "quote": "her exact words"}], '
+    '"chips": [{"skill_id": "...", "verdict": "supported|points_away|silent", "quote": "her words, or null"}], '
     '"declined": false, "reason": null}'
 )
 
@@ -162,13 +170,18 @@ def search_chunks(query: str, k: int = 4) -> str:
     return "\n\n---\n\n".join(f"[{chunks()[i]['id']}]\n{chunks()[i]['text'][:1000]}" for i in order)
 
 
-def find_skills(text: str) -> dict:
-    """Session 5's loop: the model calls search_chunks until it answers. Returns its parsed JSON."""
+def find_skills(text: str, chip_skills: list[CompetencySuggestion] = ()) -> dict:
+    """Session 5's loop: the model calls search_chunks until it answers. Returns its parsed JSON.
+    The chip skills ride along in the same call so it can say which her words contradict."""
     from litellm import completion
 
     from llm import _call_kwargs
 
-    messages: list[dict] = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": text}]
+    user = text
+    if chip_skills:
+        listed = "\n".join(f"- {s.skill_id}: {s.skill} ({s.category})" for s in chip_skills)
+        user = f"{text}\n\nSkills her background chips suggest:\n{listed}"
+    messages: list[dict] = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}]
     for _ in range(MAX_TURNS):
         msg = completion(**_call_kwargs(messages, tools=TOOLS, timeout=60)).choices[0].message
         calls = msg.tool_calls or []
@@ -206,10 +219,19 @@ def from_backgrounds(backgrounds: list[str]) -> list[CompetencySuggestion]:
     return out
 
 
-def from_text_model(text: str) -> list[CompetencySuggestion]:
-    """Suggestions from the dense agent, with every id and quote checked. A decline is an empty list."""
+def from_text_model(text: str, chip_skills: list[CompetencySuggestion] = ()) -> tuple[list[CompetencySuggestion], set[str]]:
+    """(suggestions, chip skill ids her words contradict) from the dense agent, with every id
+    and quote checked. A decline is an empty list. A contradiction counts only for a chip skill
+    actually listed, with a quote of hers that is really in her text."""
     known = {c["id"] for c in framework()["competencies"]}
-    answer = find_skills(text)
+    answer = find_skills(text, chip_skills)
+    listed = {s.skill_id for s in chip_skills}
+    contradicted = set()
+    for item in answer.get("chips") or []:
+        if isinstance(item, dict) and item.get("verdict") == "points_away":
+            sid, quote = str(item.get("skill_id", "")), str(item.get("quote") or "").strip().strip('"')
+            if sid in listed and quote and quote.casefold() in text.casefold():
+                contradicted.add(sid)
     out = []
     for item in answer.get("skills") or []:
         if not isinstance(item, dict):
@@ -221,7 +243,7 @@ def from_text_model(text: str) -> list[CompetencySuggestion]:
             continue
         hedged = any(h in quote.casefold() for h in HEDGES)
         out.append(suggestion(sid, Confidence.CHECK if hedged else Confidence.LIKELY, f'You wrote "{quote}"', quote))
-    return out
+    return out, contradicted
 
 
 def from_text_rules(text: str) -> list[CompetencySuggestion]:
@@ -242,21 +264,28 @@ def suggest(request: ExperienceRequest) -> CompetencySuggestions:
     backgrounds = [b for b in request.backgrounds if b in known_bg]
     text = request.text.strip()
 
+    chip_found = from_backgrounds(backgrounds)
     text_found: list[CompetencySuggestion] = []
+    contradicted: set[str] = set()
     produced_by = "rules"
     if text:
         started = time.perf_counter()
         try:
-            text_found = from_text_model(text)
+            text_found, contradicted = from_text_model(text, chip_found)
             produced_by = "model"
         except Exception as exc:   # wiki missing, gateway down, bad reply: the rules still answer
             log.warning("AI-1 model path failed (%s: %s); using keyword rules", type(exc).__name__, exc)
             text_found = from_text_rules(text)
         log.info("AI-1 text path %s in %.1fs", produced_by, time.perf_counter() - started)
 
+    # A chip skill her words point away from stays on the list but is not pre-checked.
+    chip_found = [s.model_copy(update={"confidence": Confidence.CHECK,
+                                       "reason": f"{s.reason}, but what you wrote points to other work"})
+                  if s.skill_id in contradicted else s for s in chip_found]
+
     # Her words win on overlap; then the chips, in the order she picked them.
     merged: dict[str, CompetencySuggestion] = {}
-    for sug in text_found + from_backgrounds(backgrounds):
+    for sug in text_found + chip_found:
         if sug.skill_id not in merged and sug.skill_id not in request.rejected:
             merged[sug.skill_id] = sug
     ranked = list(merged.values())

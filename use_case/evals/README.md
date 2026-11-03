@@ -72,9 +72,13 @@ AI-1 rows were re-judged under it on 2026-11-01.
   or firing a keyword rule without matching a line: `possible`. A hedged
   mention ("only bucked a few logs"): `check`. A competency from a background
   alone keeps the prototype's buckets on its score (0.75 and up `likely`, 0.55
-  and up `possible`, below that `check`; `core.js` line 125). When her words and
-  a background name the same competency, her words win the reason, confidence
-  and level. Over 12, drop `check` first, then `possible`, lowest confidence
+  and up `possible`, below that `check`; `core.js` line 125), unless her words
+  point away from it (she says she did not do that work, or describes different
+  work in that field): then it drops to `check`, still listed but not
+  pre-checked. Not mentioning it is not pointing away. (Added 2026-11-02; the
+  model makes that call, and in testing it was unreliable, so it is measured.)
+  When her words and a background name the same competency, her words win the
+  reason, confidence and level. Over 12, drop `check` first, then `possible`, lowest confidence
   first.
 - **Reasons.** A background-only suggestion uses the prototype's wording
   ("Common for people with military service experience"), because that is the
