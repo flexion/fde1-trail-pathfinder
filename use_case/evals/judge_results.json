@@ -1,0 +1,204 @@
+{
+  "model": "openai/bedrock/claude-sonnet-5-5",
+  "separation": {
+    "good": 1.0,
+    "known_bad": 0.07692307692307693,
+    "echo": 0.0,
+    "passed": true,
+    "detail": [
+      {
+        "case": "{\"backgrounds\": [\"corps\"], \"text\": \"Two seasons ",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"military\"], \"text\": \"\"}",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"forestry\"], \"text\": \"Four seas",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"landscape\"], \"text\": \"Eight ye",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"volunteer\"], \"text\": \"Nine sea",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [], \"text\": \"I worked on trails.",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [], \"text\": \"Five years as a bar",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"volunteer\", \"landscape\"], \"tex",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"landscape\", \"construction\"], \"",
+        "accepted": 1.0,
+        "wrong": 1.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"corps\"], \"text\": \"Two seasons ",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"none\"], \"text\": \"Five years in",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [], \"text\": \"For three years I c",
+        "accepted": 1.0,
+        "wrong": 0.0
+      },
+      {
+        "case": "{\"backgrounds\": [\"volunteer\"], \"text\": \"Weekend ",
+        "accepted": 1.0,
+        "wrong": 0.0
+      }
+    ]
+  },
+  "agreement": {
+    "judge": 0.9,
+    "combined": 0.95,
+    "floor": 0.6,
+    "detail": [
+      {
+        "id": "t-ai1-04",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-26",
+        "human": false,
+        "judge": false,
+        "combined": false
+      },
+      {
+        "id": "t-ai1-06",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-32",
+        "human": false,
+        "judge": false,
+        "combined": false
+      },
+      {
+        "id": "t-ai1-13",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-23",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-25",
+        "human": false,
+        "judge": false,
+        "combined": false
+      },
+      {
+        "id": "t-ai1-14",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-ai1-03",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-30",
+        "human": false,
+        "judge": true,
+        "combined": false
+      },
+      {
+        "id": "t-gen-31",
+        "human": true,
+        "judge": true,
+        "combined": false
+      },
+      {
+        "id": "t-gen-20",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-10",
+        "human": false,
+        "judge": false,
+        "combined": false
+      },
+      {
+        "id": "t-gen-13",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-ai1-12",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-37",
+        "human": false,
+        "judge": true,
+        "combined": false
+      },
+      {
+        "id": "t-gen-28",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-08",
+        "human": false,
+        "judge": false,
+        "combined": false
+      },
+      {
+        "id": "t-ai1-07",
+        "human": true,
+        "judge": true,
+        "combined": true
+      },
+      {
+        "id": "t-gen-12",
+        "human": false,
+        "judge": false,
+        "combined": false
+      }
+    ]
+  },
+  "calls": 59
+}
