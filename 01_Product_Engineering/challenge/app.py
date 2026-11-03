@@ -196,14 +196,6 @@ def roles(scope: str = DEFAULT_SCOPE) -> dict:
     }
 
 
-@app.get("/backgrounds")
-def backgrounds() -> list[dict]:
-    """The background chips for the AI-1 screen, straight from framework.json."""
-    from suggest import framework
-
-    return [{"id": b["id"], "label": b["label"]} for b in framework()["backgrounds"]]
-
-
 @app.get("/health")
 def health() -> dict:
     """Your future ops team will thank you. Load balancers need this."""
