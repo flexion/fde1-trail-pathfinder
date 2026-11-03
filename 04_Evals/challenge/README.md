@@ -109,7 +109,7 @@ challenge, which carries the full detail.
 - [ ] **If your app holds a conversation: multi-turn scenarios**, one a refusal, in `use_case/evals/scenarios.py`, repeated with the spread reported if the user is a model. A single-turn eval passes an agent that says the right words without checking anything. Optional for a single-turn endpoint
 - [x] **`use_case/evals/baseline.json` committed**, with a confidence interval on the headline number, and `harness.compare()` of the file against itself reporting PASS
 - [x] **Conclusions** — `use_case/decisions.md` has the eval decision: the headline number with its interval, what it does not cover, what you rejected, and what would change your mind
-- [ ] It still runs in Docker
+- [x] It still runs in Docker
 
 ### 📤 Share
 
@@ -709,7 +709,7 @@ challenge, which carries the full detail.
 - [ ] **If your app holds a conversation: multi-turn scenarios**, one a refusal, in `use_case/evals/scenarios.py`, repeated with the spread reported if the user is a model. A single-turn eval passes an agent that says the right words without checking anything. Optional for a single-turn endpoint
 - [x] **`use_case/evals/baseline.json` committed**, with a confidence interval on the headline number, and `harness.compare()` of the file against itself reporting PASS
 - [x] **Conclusions** — `use_case/decisions.md` has the eval decision: the headline number with its interval, what it does not cover, what you rejected, and what would change your mind
-- [ ] It still runs in Docker
+- [x] It still runs in Docker
 
 ### 📤 Share
 
