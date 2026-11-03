@@ -24,6 +24,7 @@ from suggest import suggest
 app = Server()
 
 FRONTEND = Path(__file__).parent / "frontend" / "index.html"
+EVAL = Path(__file__).parent / "data" / "eval.json"
 SAMPLE = Path(__file__).parent / "data" / "sample.json"
 
 
@@ -183,6 +184,14 @@ def homepage() -> str:
 def sample() -> dict:
     """Synthetic roles and trainings for the UI's Week 1 path. The API looks real roles up itself (see /roles)."""
     return json.loads(SAMPLE.read_text(encoding="utf-8"))
+
+
+@app.get("/eval")
+def eval_summary() -> dict:
+    """The Week 4 baseline the page shows under the suggestions: `use_case/evals/run.py --save` writes it."""
+    if not EVAL.exists():
+        return {"available": False}
+    return {"available": True, **json.loads(EVAL.read_text(encoding="utf-8"))}
 
 
 @app.get("/roles")
