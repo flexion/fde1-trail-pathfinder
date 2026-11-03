@@ -3,16 +3,27 @@
 Written in TC1 Step 5, before any implementation. The charter's In → Out row
 is the prose version of this file; `use_case/CHARTER.md` is the source.
 
-Week 1 passes the role's required skills and the training catalog slice in
-with the request, because nothing can retrieve them yet. Week 3 replaces
-those two fields with retrieval from the role library and the catalog. The
-shape of the answer does not change.
+Week 1 passed the role's required skills and the training catalog slice in
+with the request, because nothing could retrieve them yet. Week 3 (TC3) makes
+both optional: left empty, the app looks them up in its stored corpus
+(`corpus.py`) by role name within a scope, and `Response.sources` names the
+record ids it used. The shape of the answer otherwise does not change.
+
+TC3 also adds `Answer`: the contract for `ask_pathfinder`, a free-text
+question answered from the same records, with sources, that can decline.
+
+2026-10-28 pivot (product owner meeting, see use_case/stakeholders.md): the
+product's P1 AI features are AI-1 and AI-2 of the career-explorer repo's
+`docs/trailskills-2.0/04-ai-integration-spec.md`. `ExperienceRequest` →
+`CompetencySuggestions` is AI-1; `JobTextRequest` → `RoleMatches` is AI-2.
+The gap contract above stays as the downstream step (AI-4).
 """
 
 from __future__ import annotations
 
 import os
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -78,17 +89,24 @@ class Training(BaseModel):
 
 
 class Request(BaseModel):
-    """What the explorer hands in, plus the governed content the answer needs."""
+    """What the explorer hands in. The governed content (requirements, catalog)
+    is looked up from the stored corpus unless the caller supplies it."""
 
     role: str = Field(description="A draft role from the role library, by name")
-    required_skills: list[RequiredSkill] = Field(
-        min_length=1, description="The role's required skills and levels (role library)"
-    )
     self_ratings: list[SelfRating] = Field(
         description="Her rating on each required skill. Unrated skills count as missing."
     )
+    scope: str = Field(
+        default="trailskills",
+        description="Which stored records to look in: 'trailskills' (the real role library) or a scenario id",
+    )
+    required_skills: list[RequiredSkill] = Field(
+        default_factory=list,
+        description="The role's required skills and levels. Empty means look the role up in the corpus.",
+    )
     trainings: list[Training] = Field(
-        default_factory=list, description="The catalog slice that touches these skills"
+        default_factory=list,
+        description="The catalog slice that touches these skills. Empty means look it up in the corpus.",
     )
 
 
@@ -128,6 +146,111 @@ class Response(BaseModel):
         ),
     )
     review_reason: str | None = Field(default=None, description="Why needs_review is True")
+    sources: list[str] = Field(
+        default_factory=list,
+        description="Record ids the answer was grounded in: the role record and every training considered. Empty when the caller supplied the content itself.",
+    )
+
+
+class Answer(BaseModel):
+    """What `ask_pathfinder` returns: a grounded answer to one question, or a decline."""
+
+    question: str
+    scope: str
+    answer: str = Field(description="Plain text she can read on a phone. Names the records it used.")
+    sources: list[str] = Field(
+        default_factory=list, description="Every record id the answer was grounded in. Never empty unless declined."
+    )
+    declined: bool = Field(
+        default=False,
+        description="True when the stored records cannot answer: nothing in scope is named, or the fact asked for is not a field any record has.",
+    )
+    reason: str | None = Field(default=None, description="Why it declined, or why the model's words were replaced")
+    trace: dict = Field(default_factory=dict, description="What the lookup matched: roles, trainings, skills")
+
+
+class Confidence(StrEnum):
+    """How sure a suggestion is. `likely` and `possible` are pre-checked on screen,
+    `check` is not. The person confirms every one; nothing is recorded until then."""
+
+    LIKELY = "likely"
+    POSSIBLE = "possible"
+    CHECK = "check"
+
+
+class ExperienceRequest(BaseModel):
+    """AI-1 input: what she has done, in her words, plus any backgrounds she picked."""
+
+    backgrounds: list[str] = Field(
+        default_factory=list,
+        description="Background ids from data/framework.json (corps, military, landscape, ...). May be empty.",
+    )
+    text: str = Field(default="", description="Her own words. May be empty when a background is picked.")
+    rejected: list[str] = Field(
+        default_factory=list,
+        description="Competency ids she rejected earlier in this session. Never re-offered (spec AI-1).",
+    )
+
+
+class CompetencySuggestion(BaseModel):
+    """One proposed competency. Every id and level is checked against the framework
+    before it reaches the screen; an unknown id is dropped, never shown (BR-10.5)."""
+
+    skill_id: str = Field(description="Competency id from data/framework.json")
+    category: Category
+    skill: str = Field(description="Competency name, as the framework spells it")
+    level: SkillLevel = Field(
+        description="Entry by default. Full Performance or Expert only when her quote matches that level's description (level_basis).",
+    )
+    confidence: Confidence
+    reason: str = Field(description="One line. Quotes her words, or names the background it came from.")
+    quote: str | None = Field(
+        default=None,
+        description="The exact words of hers this rests on (spec §6, 'quoted source text'). None when it came from a background rule.",
+    )
+    level_basis: str | None = Field(
+        default=None,
+        description="The trailskills.org level description line her quote matched, verbatim. Required above Entry; None on a default Entry.",
+    )
+
+
+class CompetencySuggestions(BaseModel):
+    """AI-1 output: at most 12 suggestions, or a decline when the text names nothing."""
+
+    suggestions: list[CompetencySuggestion] = Field(default_factory=list, max_length=12)
+    declined: bool = Field(default=False, description="True when nothing in the text or backgrounds maps to a competency")
+    reason: str | None = Field(default=None, description="Why it declined")
+    sources: list[str] = Field(default_factory=list, description="Framework and rule records the suggestions were grounded in")
+    framework_version: str | None = Field(
+        default=None, description="Which golden data answered, e.g. 'role profiles and competency map 2026-10-20' (spec §6)"
+    )
+    produced_by: Literal["rules", "model"] | None = Field(
+        default=None, description="What the screen's AI label says: the rule-based fallback or the model. None in a golden."
+    )
+
+
+class JobTextRequest(BaseModel):
+    """AI-2 input: a description of her current job, or the posting for the job she does now."""
+
+    text: str
+
+
+class RoleMatch(BaseModel):
+    role_id: str = Field(description="Role id from data/framework.json")
+    title: str
+    reason: str = Field(description="One line, drawn from the role profile")
+
+
+class RoleMatches(BaseModel):
+    """AI-2 output: the one to three closest of the 12 roles, or a decline when
+    the library has nothing close ("The role library doesn't cover that yet")."""
+
+    roles: list[RoleMatch] = Field(default_factory=list, max_length=3)
+    declined: bool = False
+    reason: str | None = None
+    sources: list[str] = Field(default_factory=list)
+    framework_version: str | None = None
+    produced_by: Literal["rules", "model"] | None = None
 
 
 def solve(request: Request, *, use_model: bool = True) -> Response:

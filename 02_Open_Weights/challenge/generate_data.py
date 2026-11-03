@@ -24,7 +24,7 @@ from schema import REC_MAX, Category, Request, Response, SkillLevel
 
 from helpers import nb, sdg
 
-GOLDEN = ROOT / "use_case" / "evals" / "golden.jsonl"
+GOLDEN = ROOT / "use_case" / "evals" / "golden-gap.jsonl"  # TC1 gap goldens; golden.jsonl is AI-1/AI-2 since 2026-10-29
 OUT = ROOT / "use_case" / "data" / "synthetic_v1.jsonl"
 
 # schema.py's `category` and skill-level fields are closed enums, not free

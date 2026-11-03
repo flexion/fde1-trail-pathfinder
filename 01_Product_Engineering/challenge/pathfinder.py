@@ -442,12 +442,43 @@ def _model_words(facts: dict, n_steps: int) -> tuple[list[str | None], str | Non
 # --- The whole product ------------------------------------------------------------
 
 
+def resolve(request: Request) -> tuple[Request, list[str]]:
+    """Fill the governed content from the stored corpus when the caller left it out.
+
+    An empty `required_skills` means "look the role up": the role record and the
+    catalog slice touching its skills come from `corpus.py`, by exact name within
+    `request.scope`, and their ids are returned as the sources. A caller that
+    supplies `required_skills` owns the catalog too (Week 1 behaviour, unchanged),
+    so nothing is looked up and the sources are empty.
+    """
+    if request.required_skills:
+        return request, []
+    from corpus import load  # imported here so the Week 1 path never touches the corpus
+
+    corpus = load()
+    role_record = corpus.role(request.role, request.scope)
+    if role_record is None:
+        return request, []
+    trainings = corpus.trainings_for_role(role_record, request.scope)
+    filled = request.model_copy(update={
+        "required_skills": corpus.required_skills(role_record),
+        "trainings": [corpus.as_training(t) for t in trainings],
+    })
+    return filled, [role_record["id"], *(t["id"] for t in trainings)]
+
+
 def solve(request: Request, *, use_model: bool = True) -> Response:
     """Compare her ratings to the role and name up to REC_MAX next steps.
 
     The gap and the ranking are deterministic. With `use_model`, the model only
     rewords the reasons and the summary, and falls back to templates on any failure.
     """
+    request, sources = resolve(request)
+    if not request.required_skills:
+        return Response(
+            gaps=[], summary=NO_SCORE_SUMMARY, needs_review=True,
+            review_reason=f"Role '{request.role}' is not in the '{request.scope}' role library. Route to the manual path.",
+        )
     if reason := _review_reason(request):
         return Response(gaps=[], summary=NO_SCORE_SUMMARY, needs_review=True, review_reason=reason)
 
@@ -478,4 +509,5 @@ def solve(request: Request, *, use_model: bool = True) -> Response:
         ],
         no_training_for=no_training,
         summary=summary,
+        sources=sources,
     )

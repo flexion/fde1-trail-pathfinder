@@ -2,17 +2,112 @@
 
 ## `golden.jsonl`
 
-Five examples, written by hand, in TC1 Step 7. Five — not fifty, and not
-generated.
+**Rewritten 2026-10-29 after the product owner meeting of 2026-10-28** (see
+`use_case/stakeholders.md`, Week 3). The product's P1 AI features are AI-1 and
+AI-2 of the career-explorer repo's `docs/trailskills-2.0/04-ai-integration-spec.md`:
+
+| Capability | In | Out | Rows |
+| --- | --- | --- | --- |
+| AI-1 | backgrounds she picked plus her own words about what she has done | up to 12 competencies, each with level, confidence (`likely`, `possible`, `check`) and a one-line reason that quotes her words or names the background | `ai1-01` … `ai1-14`, no `ai1-10` (11 answerable, 2 decline; `ai1-10` was the career-changer row, deleted 2026-10-31 with the background; `ai1-11` tests a rejected id; `ai1-12` is "No trail experience yet" plus another trade, a placeholder description; `ai1-13` (volunteer coordinator: outreach, grants) and `ai1-14` (volunteer chip, water crossing) were written by the team on 2026-11-02, to verify at the demo) |
+| AI-2 | a description of her current job, or the posting for the job she does now | the 1 to 3 closest of the 12 roles, each with a one-line reason from the role profile | `ai2-01` … `ai2-09` (7 answerable, 2 decline) |
 
 Each line is one object:
 
 ```json
-{"input": "...", "output": "...", "why": "what makes this the right answer"}
+{"id": "ai1-01", "capability": "AI-1", "status": "...", "input": {...}, "output": {...}, "why": "..."}
 ```
 
-The `why` field is the one that earns its keep. In Week 4 you calibrate an
-LLM judge against these, and "why" is what you calibrate it on.
+AI-2 rows may add `also_acceptable`: role ids a scorer should accept in the
+list without counting them as the top match. AI-1 rows may add
+`also_acceptable_levels`: for a borderline level, other levels a scorer should
+accept, e.g. `{"crew-management": ["Entry"]}` when "a six-person crew" could be
+read as a small crew (Entry) or a larger one (Full Performance). The contracts are
+`ExperienceRequest` → `CompetencySuggestions` and `JobTextRequest` →
+`RoleMatches` in `schema.py`. Every competency id, level, role id and quoted
+phrase is checked by `01_Product_Engineering/challenge/check_goldens.py`
+against `data/framework.json`, which `use_case/build_corpus.py` builds from the
+golden role profiles and competency map (dated 2026-10-20) in the
+career-explorer repo.
+
+**Status: draft, written by the course team, not yet validated.** The product
+owner agreed on 2026-10-28 that we generate goldens from the real roles and
+mapping and that she and the project lead validate them. Until that happens,
+`status` on every row says so. The spec's own open question 1 (who writes the
+test sets with partners) is still open; the partner contacts named in the
+meeting are the people to ask for ten real experience descriptions.
+
+Conventions used in the AI-1 rows, ours until validation says otherwise. The
+level rule below replaced the earlier season convention on 2026-10-31; the
+AI-1 rows were re-judged under it on 2026-11-01.
+
+- **Where suggestions come from.** Two sources, merged. Her words are the
+  evidence: each competency they describe is assessed against that
+  competency's level descriptions. A picked background adds its own list of
+  competencies typical for that background (`backgrounds[].suggestions` in
+  `framework.json`), whether or not she wrote anything. With no words and no
+  background there is nothing to assess, and the answer is a decline that asks
+  her to describe what she did. An id in `rejected` never appears.
+- **Level** (rubric, decided 2026-10-31; Entry by default, 2026-11-01). Every
+  suggestion starts at `Entry`, the framework's beginner level (its lines say
+  "demonstrate understanding" and "with supervision"). That covers every
+  competency from a background alone, and every one her words mention without
+  describing more. A higher level comes only from American Trails' level
+  descriptions for that competency (trailskills.org; local copy built by
+  `use_case/fetch_trailskills_levels.py`): `Full Performance` or `Expert` only
+  when her words match a description line at that level, citing the line in
+  `level_basis`; if her words match lines at more than one level, the highest
+  wins. Nothing else raises a level: not a background, not seasons or years
+  ("nine seasons building trail" alone matches no line), and not a self-rating
+  (`Expert` needs a match to an Expert line, not the word "expert"). Work from
+  another trade counts when what she describes matches a line (a landscaper
+  who built stone walls *independently* matches Full Performance on Retaining
+  Walls). An `Entry` with a `level_basis` was judged from her words; one
+  without is the default. "Match" means meaning, not exact text: the model
+  judges whether her words describe the work in a line ("I train the new
+  hires" matches "Conduct training for new crew members"). Only the two ends
+  are exact, and code checks them: `quote` is her words copied verbatim, and
+  `level_basis` is a rubric line copied verbatim.
+- **Confidence** (whether she has the competency at all; separate from level).
+  Her words matching a description line: `likely`. Her words naming the area
+  or firing a keyword rule without matching a line: `possible`. A hedged
+  mention ("only bucked a few logs"): `check`. A competency from a background
+  alone keeps the prototype's buckets on its score (0.75 and up `likely`, 0.55
+  and up `possible`, below that `check`; `core.js` line 125). When her words and
+  a background name the same competency, her words win the reason, confidence
+  and level. Over 12, drop `check` first, then `possible`, lowest confidence
+  first.
+- **Reasons.** A background-only suggestion uses the prototype's wording
+  ("Common for people with military service experience"), because that is the
+  screen the project lead showed on 2026-10-28. A quoted suggestion carries the
+  quote in `quote` as well as in the reason (spec §6, "quoted source text").
+- **Category names.** The app says "Crew Management" (the trailskills.org URL
+  slug, chosen in TC1); the map and the prototype say "Crew Leadership".
+  Recorded in `decisions.md`; the ids are the same.
+- **AI-2 declines.** The spec's AI-2 fallback is the role list, and "the role
+  library doesn't cover that yet" is AI-3's wording. Declining with the nearest
+  competencies named is our call, pending the product owner (`decisions.md`).
+- **`produced_by` is null in every row.** A golden says what the right answer
+  is, not whether the rules or the model produced it; the Week 4 harness fills
+  it in per run.
+- **Sources.** `framework:competency:<id>`, `framework:background:<id>` and
+  `framework:role:<id>` name entries in `data/framework.json`;
+  `framework_version` names the golden data release (2026-10-20).
+
+Who else reads `golden.jsonl`: the Week 2 session notebook
+(`02_Open_Weights/sessions/S4_Synthetic_Data_Generation.py`) seeds from it and
+expects the gap shape. It is course material, already run, and not changed
+here; point it at `golden-gap.jsonl` if it is run again. `generate_data.py`
+and the retrieval fixtures already point at `golden-gap.jsonl`.
+
+Not covered yet, in the order the product owner is likely to notice: a real
+posting from her (promised 2026-10-28); a long posting full of benefits
+boilerplate; a Trail Crew Member versus Technical Trail Builder split; text
+naming more than 12 competencies; the personal "how close am I" case (AI-3,
+needs consent); text in Spanish; prompt injection (Week 6).
+
+The TC1 gap-and-next-step goldens are kept as `golden-gap.jsonl` (same checker).
+They are still valid for the downstream step (AI-4) but were written against
+invented roles and skills, so they are no longer the bar.
 
 ### Why you write these by hand
 
@@ -38,20 +133,151 @@ wrong thing.
   know"* or *"escalate this"*. A system that never declines is not calibrated.
 - Keep them short enough to read in full during review.
 
-## `retrieval.jsonl`
+## `retrieval.jsonl` (AI-1, after the pivot)
 
-Ten real questions from your use case, written in TC3, each labelled with the
-record(s) in `use_case/data/synthetic_v1.jsonl` that should answer it — plus
-the five your first real user typed. One object per line:
+Labels for step 1 of AI-1: given what she wrote, which competency pages in the
+skills wiki (`use_case/data/wiki/`, one page per competency id) should
+retrieval find. **Ten questions, generated from the AI-1 goldens** so the two
+cannot drift:
+
+| Question | Golden | Gold pages | Kind |
+| --- | --- | --- | --- |
+| retrieval-01 | ai1-01 | 4 | multi-hop |
+| retrieval-02 | ai1-03 | 4 | multi-hop |
+| retrieval-03 | ai1-04 | 4 | multi-hop |
+| retrieval-04 | ai1-05 | 5 | multi-hop |
+| retrieval-05 | ai1-08 | 1 | lookup |
+| retrieval-06 | ai1-12 | 5 | multi-hop |
+| retrieval-07 | ai1-06 | 0 | decline |
+| retrieval-08 | ai1-07 | 0 | decline |
+| retrieval-09 | ai1-13 | 5 | multi-hop |
+| retrieval-10 | ai1-14 | 3 | multi-hop |
+
+- **Gold** is the competencies her words support: the golden's suggestions that
+  carry a quote. Background-only suggestions are a fixed lookup, not retrieval,
+  so they are not in the gold.
+- **Left out:** `ai1-02` and `ai1-09` (background only, no text to search) and
+  `ai1-11` (the same text as `ai1-01`).
+- **Six of the eight answerable questions need four or five pages**, so top-1
+  retrieval cannot pass them; the top-*k* floor is 5.
+- **Twins count as one.** The framework lists some skills twice, under
+  Construction and Maintenance (and Planning for Trail Sustainability
+  Principles): the same title, or for drainage and chainsaw felling nearly so.
+  Finding either twin passes; step 2 and the category on screen decide which
+  she has. The scorer (`ai1_find_skill.py`, `twin_groups`) groups them, so a
+  label naming both twins needs only one found.
+- **Ten, but not yet real.** `ai1-08` is the project lead's own demo input;
+  the others were written by the course team from the role profiles, `ai1-12`
+  is a placeholder, and `ai1-13` and `ai1-14` were written by the team on
+  2026-11-02. All are to be checked against real people's words at the demo.
+
+`context.backgrounds` is passed along for the merge step but is not a search
+input. Never pass `gold` or the golden's output to the retriever or the model.
+
+## `retrieval-gap.jsonl` (pre-pivot, AI-4)
+
+The pre-pivot set, kept as `golden-gap.jsonl` is, for the gap step it was
+written against. `retrieval_compare.py` and the `retrieval_results*` files use
+it. It contains **ten questions adapted from the existing golden
+fixtures**. A [readable question list](retrieval-questions.md) is also available.
+These are assistant-authored
+test questions, not collected user utterances or stakeholder-approved questions.
+They do not by themselves satisfy the assignment's real-question provenance
+requirement. `retrieval-11` and `retrieval-12` are the product owner's own words from the 2026-11-02 demo, with draft labels to confirm with her.
+
+This set uses `retrieval-corpus.jsonl`, derived from golden inputs, **not** the
+35-row TC2 `synthetic_v1.jsonl`. It is a small fixture-based development suite,
+not an independent holdout or evidence that the TC2 data problem is repaired.
+The first three original goldens were also shown to the TC2 generator.
+
+One object per line retains the assignment's core fields:
 
 ```json
 {"question": "...", "gold": ["<record id>", "<record id>"], "kind": "lookup | multi-hop | decline"}
 ```
 
-`gold` lists **every** record needed, because the measure is complete answers,
-not "something relevant came back". At least one question is a `decline` — one
-your data cannot answer — so you find out whether the endpoint knows when its
-top *k* is the wrong answer.
+Each case additionally has an `id`, explicit scenario `context`, an
+`expected_answer` for review/scoring, and provenance naming the original golden
+line and file checksum. Only the question and context are inference inputs;
+never pass `gold`, `expected_answer`, or the original golden `output`/`why`
+to the answering model or retrieval index.
+
+| Question | Golden | Coverage | Kind |
+| --- | --- | --- | --- |
+| retrieval-01 | 1 | Required skills, categories, and levels | lookup |
+| retrieval-02 | 1 | Has / close / missing from supplied self-ratings | lookup |
+| retrieval-03 | 1 | Tread-maintenance gap, matching training, price, and evidence | multi-hop |
+| retrieval-04 | 1 | Free drainage training meeting the role requirement | multi-hop |
+| retrieval-05 | 1 | Compare two courses' prices and completion evidence | multi-hop |
+| retrieval-06 | 2 | Same skill name in different categories | lookup |
+| retrieval-07 | 2 | Jobsite Safety gap and the approved training match | multi-hop |
+| retrieval-08 | 3 | Decline to invent a course for an empty catalog | decline |
+| retrieval-09 | 5 | Do not sell unnecessary training to someone meeting the role | multi-hop |
+| retrieval-10 | 1 | Decline to invent online availability or a session date | decline |
+
+**Five of ten questions require two source records.** For this fixture record
+layout, returning only one record cannot supply all evidence for those cases.
+This is an evidence-count requirement, not a measured choice of retrieval
+strategy. The other cases are three single-record lookups and two declines.
+Some lookups also require deterministic computation against request context;
+`lookup` here means one evidence record, not that the answer is a copied string.
+
+Golden 4 remains an existing unknown-skill regression case; it is not used to
+manufacture a valid role record. Golden 6 remains excluded from this suite
+because its recommendation-order decision is explicitly unresolved.
+
+### Corpus and source IDs
+
+`retrieval-corpus.jsonl` contains **eight fixture records**, copied only from
+the inputs of goldens 1, 2, 3, and 5: four scenario-specific role records and
+four training records. It contains no generated answers, `why` explanations,
+or self-ratings. Each record points to its original JSON field(s).
+
+- `golden-01:role` means the role and required skills in original line 1.
+- `golden-01:training-02` means the second training in original line 1.
+- `profile_id` identifies the scenario; role names and training titles must
+  never be used to merge different scenarios.
+
+These IDs are pinned to the source checksum stored in the files. If the
+goldens are edited or reordered, review and update both files together before
+running evaluations; line-based IDs are not stable across such changes.
+
+Apply `context.profile_id` as a scope filter before retrieval. The evaluation
+assumes the existing category-scoped skill rules: compute gaps deterministically,
+accept only approved alignments at the required level or higher, and do not
+recommend a course to close a gap that does not exist. Approval and prices in
+these fixtures are simulated, not claims about real offerings.
+
+`gold` names every required evidence record for answerable questions. For both
+decline cases it is deliberately empty: there is no record supporting a course
+recommendation (08) or an availability/date claim (10). A decline can explain
+the absence of information, but must not manufacture the requested facts.
+The profile 3 catalog is known to be empty from the complete scoped fixture;
+one search returning no results is not generally proof that a catalog is empty.
+Citation recall is not applicable to empty-gold cases; review refusal behavior
+separately rather than dividing by zero or counting a refusal as retrieval success.
+
+### Scoring labels (TC3 Step 3)
+
+Each line also carries Session 5's scoring fields. `expected_terms` lists what
+a passing answer must contain (case-insensitive substrings; `a|b` means either).
+The two decline cases carry `must_not` instead: a refusal that contains any of
+those invented something. `retrieval_compare.py` reads both.
+
+### The comparison
+
+```sh
+uv run --group week3 python use_case/evals/retrieval_compare.py             # scoped, with the model: the canonical run
+uv run --group week3 python use_case/evals/retrieval_compare.py --unscoped   # no scope key: what ranking has to cope with
+uv run --group week3 python use_case/evals/retrieval_compare.py --no-model   # retrieval only: recall, evidence, latency
+```
+
+Five techniques over the app's stored corpus (`01_Product_Engineering/challenge/data/corpus.jsonl`,
+built by `use_case/build_corpus.py`): `lookup` (what shipped: exact names, SQL
+join, no ranking), `bm25_rag` and `dci_wiki` (Session 5's two tool loops),
+`dense` (embeddings and cosine) and `hybrid` (RRF over BM25 and dense). Results
+land in `retrieval_results[_unscoped][_nomodel].md` with the raw answers and
+traces in the matching `.jsonl`. The canonical file is `retrieval_results.md`.
 
 | Week | What uses this file |
 | --- | --- |

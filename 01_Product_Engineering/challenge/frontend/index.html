@@ -113,6 +113,62 @@
       .who { font-weight: 600; }
       form.chat { display: flex; gap: 0.5rem; }
       form.chat input { flex: 1; min-width: 0; }
+      /* --- AI-1: what have you done? --- */
+      fieldset { border: 0; padding: 0; margin: 0 0 1rem; min-width: 0; }
+      legend { font-weight: 600; padding: 0; margin-bottom: 0.4rem; }
+      .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+      .chips label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-weight: 400;
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.25rem 0.75rem;
+        background: var(--card);
+        cursor: pointer;
+      }
+      .chips label:has(input:checked) { border-color: var(--accent); background: #e8f1ec; }
+      .chips input { margin: 0; padding: 0; }
+      textarea {
+        font: inherit;
+        width: 100%;
+        min-height: 6rem;
+        padding: 0.5rem;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        resize: vertical;
+      }
+      .suggestion {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0.6rem 0.75rem;
+        margin: 0.5rem 0;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 0.25rem 0.6rem;
+        align-items: start;
+      }
+      .suggestion input[type="checkbox"] { margin: 0.3rem 0 0; padding: 0; }
+      .suggestion .name { font-weight: 600; margin: 0; display: inline; }
+      .suggestion .body { min-width: 0; overflow-wrap: anywhere; }
+      button.remove {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        padding: 0.15rem 0.6rem;
+        font-size: 0.85rem;
+      }
+      .tag.likely { background: var(--has); }
+      .tag.possible { background: var(--close); }
+      .tag.check { background: var(--muted); }
+      .note {
+        background: var(--warn-bg);
+        border: 1px solid var(--close);
+        border-radius: 6px;
+        padding: 0.75rem;
+      }
     </style>
   </head>
   <body>
@@ -121,6 +177,34 @@
       <span class="badge" id="model">model: checking...</span>
     </header>
     <div id="errors" aria-live="polite"></div>
+
+    <section class="card" id="experience">
+      <h2>What have you done?</h2>
+      <p class="muted">
+        Pick any backgrounds that fit and say what the work involved, in your own
+        words. You confirm every suggestion yourself; nothing you enter is saved.
+      </p>
+      <fieldset>
+        <legend>Your background (pick any)</legend>
+        <!-- ids and labels from data/framework.json backgrounds[]; the API takes the ids. -->
+        <div class="chips" id="backgrounds">
+          <label><input type="checkbox" value="corps" /> Conservation corps</label>
+          <label><input type="checkbox" value="military" /> Military service</label>
+          <label><input type="checkbox" value="landscape" /> Landscaping or grounds</label>
+          <label><input type="checkbox" value="construction" /> Construction trades</label>
+          <label><input type="checkbox" value="forestry" /> Forestry or wildland fire</label>
+          <label><input type="checkbox" value="volunteer" /> Trail volunteering</label>
+          <label><input type="checkbox" value="none" /> No trail experience yet</label>
+        </div>
+      </fieldset>
+      <label for="experience-text">In your own words</label>
+      <textarea
+        id="experience-text"
+        placeholder="For example: Two seasons on a conservation corps crew. We brushed corridors, dug water bars and set rock steps."
+      ></textarea>
+      <p><button id="suggest" type="button" disabled>Suggest</button></p>
+      <div id="suggestions" aria-live="polite"></div>
+    </section>
 
     <section class="card" id="pathfinder">
       <h2>Compare yourself to a role</h2>
@@ -167,7 +251,7 @@
         if (!window.gradioClientLoaded) {
           // Kept so a slow-but-successful load can take the warning back down.
           window.cdnWarning = showError(
-            "The Gradio client did not load from cdn.jsdelivr.net. Chat and Compare " +
+            "The Gradio client did not load from cdn.jsdelivr.net. Suggest, Compare and Chat " +
               "will not work on this network until that request is allowed."
           );
         }
@@ -190,6 +274,99 @@
       } catch (e) {
         showError(`Could not connect to the API: ${e.message || e}`);
       }
+
+      // --- What have you done? (AI-1) -----------------------------------------
+
+      const CONFIDENCE = { likely: "Likely", possible: "Possible", check: "Needs a check" };
+      const suggestBtn = document.getElementById("suggest");
+      const experienceText = document.getElementById("experience-text");
+      const suggestionsBox = document.getElementById("suggestions");
+      // Ids she removed this page session. Sent on every request, so they never come back.
+      const rejected = [];
+      // Her own ticks, by id, so a re-run after Remove keeps what she chose.
+      const ticked = new Map();
+      let lastAsk = null;
+
+      function chosenBackgrounds() {
+        return [...document.querySelectorAll("#backgrounds input:checked")].map((x) => x.value);
+      }
+
+      function suggestionCard(s) {
+        const card = el("div", undefined, "suggestion");
+        const box = el("input");
+        box.type = "checkbox";
+        box.id = `suggestion-${s.skill_id}`;
+        // likely and possible start ticked, check does not (use_case/evals/README.md, AI-1).
+        box.checked = ticked.has(s.skill_id) ? ticked.get(s.skill_id) : s.confidence !== "check";
+        box.addEventListener("change", () => ticked.set(s.skill_id, box.checked));
+
+        const body = el("div", undefined, "body");
+        const head = el("div");
+        head.appendChild(el("span", CONFIDENCE[s.confidence] || s.confidence, `tag ${s.confidence}`));
+        const name = el("label", s.skill, "name");
+        name.htmlFor = box.id;
+        head.appendChild(name);
+        body.appendChild(head);
+        body.appendChild(el("div", `${s.category} - ${s.level}`, "muted"));
+        body.appendChild(el("div", s.reason));
+
+        const remove = el("button", "Remove", "remove");
+        remove.type = "button";
+        remove.setAttribute("aria-label", `Remove ${s.skill}`);
+        remove.addEventListener("click", () => removeSuggestion(s.skill_id, card));
+
+        card.append(box, body, remove);
+        return card;
+      }
+
+      function renderSuggestions(res) {
+        suggestionsBox.replaceChildren();
+        if (res.declined) {
+          const note = el("div", undefined, "note");
+          note.appendChild(el("p", res.reason || "Nothing to suggest yet. Pick a background or describe work you have done."));
+          suggestionsBox.appendChild(note);
+        } else {
+          suggestionsBox.appendChild(el("h3", `Suggested competencies (${res.suggestions.length})`));
+          suggestionsBox.appendChild(
+            el("p", "Untick anything that isn't you. Remove one and it won't be suggested again.", "muted")
+          );
+          for (const s of res.suggestions) suggestionsBox.appendChild(suggestionCard(s));
+        }
+        const footer = [];
+        if (res.produced_by) footer.push(`Produced by: ${res.produced_by}`);
+        if (res.framework_version) footer.push(`Framework: ${res.framework_version}`);
+        if (rejected.length) footer.push(`${rejected.length} removed`);
+        if (footer.length) suggestionsBox.appendChild(el("p", footer.join(" · "), "muted"));
+      }
+
+      async function runSuggest(ask, showLoading = true) {
+        suggestBtn.disabled = true;
+        suggestionsBox.querySelectorAll("button").forEach((b) => (b.disabled = true));
+        if (showLoading) suggestionsBox.replaceChildren(el("p", "Looking...", "muted"));
+        try {
+          const out = await client.predict("/suggest_competencies", { ...ask, rejected: [...rejected] });
+          lastAsk = ask;
+          renderSuggestions(JSON.parse(out.data[0]));
+        } catch (e) {
+          suggestionsBox.replaceChildren();
+          showError(`Suggest failed: ${e.message || JSON.stringify(e)}`);
+        } finally {
+          suggestBtn.disabled = false;
+        }
+      }
+
+      function removeSuggestion(id, card) {
+        if (!rejected.includes(id)) rejected.push(id);
+        ticked.delete(id);
+        card.remove();
+        runSuggest(lastAsk, false);
+      }
+
+      suggestBtn.addEventListener("click", () => {
+        ticked.clear();
+        runSuggest({ text: experienceText.value.trim(), backgrounds: chosenBackgrounds() });
+      });
+      suggestBtn.disabled = !client;
 
       // --- Pathfinder ----------------------------------------------------------
 
