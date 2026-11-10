@@ -1,15 +1,15 @@
 {
-  "measured": "2026-11-02",
+  "measured": "2026-11-10",
   "n": 50,
   "system": "endpoint",
   "headline": {
     "id": "judge_related",
     "label": "Every pre-checked skill is backed by her words",
     "traces_to": "lines 5 and 6, scored by a judge model",
-    "value": 0.84,
+    "value": 0.9,
     "ci": [
-      0.74,
-      0.94
+      0.8,
+      0.98
     ]
   },
   "scorers": [
@@ -23,7 +23,7 @@
       "id": "declines_when_it_should",
       "label": "Declines exactly when it should",
       "traces_to": "guards",
-      "value": 0.98
+      "value": 1.0
     },
     {
       "id": "decline_wording",
