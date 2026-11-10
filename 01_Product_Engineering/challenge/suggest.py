@@ -3,8 +3,8 @@
 Two inputs, two paths, merged:
 
 - A background chip is a lookup: `framework.json` `backgrounds[].suggestions`, all Entry,
-  no model. The prototype's score becomes the confidence (0.75 and up likely, 0.55 and
-  up possible, else check).
+  no model. A chip never pre-checks a skill (TC5, fix #3): every chip skill comes back
+  check, whatever the prototype's score was. Only her own words pre-check.
 - Her text goes to the step 1 retriever chosen in TC3 (`use_case/decisions.md`): dense
   Agentic RAG. The model calls `search_chunks` over the trailskills.org skills wiki,
   ranked by embeddings, and names the skills her words describe, each with her exact
@@ -16,8 +16,11 @@ Levels: every suggestion is Entry. Raising one needs her words to match a rubric
 Code checks what the model says: an id not in the framework is dropped, a quote not in
 her text is dropped with its suggestion, rejected ids never come back. Her words win
 over a chip on the same skill. A chip skill her words point away from (the model names it,
-with her words, in the same call) drops to check: still listed, not pre-checked. At most
-12, dropping check then possible first.
+with her words, in the same call) says so in its reason: still listed, not pre-checked. At
+most 12, dropping check then possible first.
+
+When chips are picked and her words support no skill (no text, or text that names no task),
+the chip skills still come back and `follow_up_prompt` asks what the work involved.
 
 How the model reaches the wiki is SUGGEST_WAY (TC5): "tool" (default) is the loop below, the
 crediting policy in SYSTEM; "skill" is suggest_skill.py, the same policy in
@@ -60,6 +63,7 @@ MAX_SUGGESTIONS = 12
 MAX_TURNS = 6
 MAX_K = 8
 FRAMEWORK_VERSION = "role profiles and competency map 2026-10-20; trailskills.org skill pages"
+FOLLOW_UP_BACKGROUND_ONLY = "Tell us what the work involved so we can confirm which suggestions fit."
 
 SYSTEM = (
     "You find which trail skills a person's own words support, using only the skills wiki. "
@@ -364,6 +368,12 @@ def suggest(request: ExperienceRequest, *, way: str | None = None, **measure) ->
             text_found = from_text_rules(text)
         log.info("AI-1 text path %s in %.1fs", produced_by, time.perf_counter() - started)
 
+    # Background chips suggest skills, but never pre-check them.
+    chip_found = [
+        s.model_copy(update={"confidence": Confidence.CHECK})
+        for s in chip_found
+    ]
+
     # A chip skill her words point away from stays on the list but is not pre-checked.
     chip_found = [s.model_copy(update={"confidence": Confidence.CHECK,
                                        "reason": f"{s.reason}, but what you wrote points to other work"})
@@ -390,4 +400,5 @@ def suggest(request: ExperienceRequest, *, way: str | None = None, **measure) ->
         sources=[f"framework:competency:{s.skill_id}" for s in ranked] + [f"framework:background:{b}" for b in backgrounds],
         framework_version=FRAMEWORK_VERSION,
         produced_by=produced_by if text_found or not backgrounds else "rules",
+        follow_up_prompt=FOLLOW_UP_BACKGROUND_ONLY if not text_found else None,
     )

@@ -101,6 +101,12 @@
       }
       .chips label:has(input:checked) { border-color: var(--accent); background: #e8f1ec; }
       .chips input { margin: 0; padding: 0; }
+      .chips .adds { color: var(--muted); font-size: 0.8rem; }
+      #background-adds { margin-top: 0.6rem; }
+      #background-adds summary { cursor: pointer; color: var(--accent); font-size: 0.9rem; padding: 0.25rem 0; }
+      #background-adds dl { margin: 0.25rem 0 0; }
+      #background-adds dt { font-weight: 600; margin-top: 0.5rem; }
+      #background-adds dd { margin: 0.1rem 0 0; font-size: 0.9rem; }
       textarea {
         font: inherit;
         width: 100%;
@@ -197,6 +203,15 @@
           <label><input type="checkbox" value="volunteer" /> Trail volunteering</label>
           <label><input type="checkbox" value="none" /> No trail experience yet</label>
         </div>
+        <!-- Filled from /backgrounds: what each chip adds, shown before she picks one. -->
+        <details id="background-adds" hidden>
+          <summary>What does each background add?</summary>
+          <p class="muted">
+            A background adds its usual skills to your list as suggestions to check.
+            Nothing from a background is ticked for you.
+          </p>
+          <dl id="background-adds-list"></dl>
+        </details>
       </fieldset>
       <label for="experience-text">In your own words</label>
       <textarea
@@ -240,6 +255,23 @@
         document.getElementById("errors").appendChild(div);
         return div;
       }
+
+      // What each background adds: a count on the chip, the full list one tap away.
+      // If this fails the chips still work, so it stays quiet.
+      fetch("/backgrounds")
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then((data) => {
+          const list = document.getElementById("background-adds-list");
+          for (const bg of data.backgrounds) {
+            if (!bg.skills.length) continue;
+            const chip = document.querySelector(`#backgrounds input[value="${bg.id}"]`);
+            if (chip) chip.parentElement.appendChild(el("span", `adds ${bg.skills.length}`, "adds"));
+            list.appendChild(el("dt", bg.label));
+            list.appendChild(el("dd", bg.skills.join(", ")));
+          }
+          if (list.children.length) document.getElementById("background-adds").hidden = false;
+        })
+        .catch(() => {});
 
       fetch("/health")
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
@@ -393,9 +425,19 @@
           suggestionsBox.appendChild(note);
         } else {
           suggestionsBox.appendChild(el("h3", `Suggested competencies (${res.suggestions.length})`));
-          suggestionsBox.appendChild(
-            el("p", "Untick anything that isn't you. Remove one and it won't be suggested again.", "muted")
-          );
+          if (res.follow_up_prompt) {
+            // Chips with no task named: nothing is pre-ticked, so say why and ask for more.
+            const ask = el("div", undefined, "note");
+            ask.appendChild(el("p", res.follow_up_prompt));
+            suggestionsBox.appendChild(ask);
+            suggestionsBox.appendChild(
+              el("p", "Nothing is ticked yet. Tick the ones that are you, or describe the work above and suggest again.", "muted")
+            );
+          } else {
+            suggestionsBox.appendChild(
+              el("p", "Untick anything that isn't you. Remove one and it won't be suggested again.", "muted")
+            );
+          }
           for (const s of res.suggestions) suggestionsBox.appendChild(suggestionCard(s));
         }
         const footer = [];

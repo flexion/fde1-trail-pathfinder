@@ -220,6 +220,10 @@ class CompetencySuggestions(BaseModel):
     suggestions: list[CompetencySuggestion] = Field(default_factory=list, max_length=12)
     declined: bool = Field(default=False, description="True when nothing in the text or backgrounds maps to a competency")
     reason: str | None = Field(default=None, description="Why it declined")
+    follow_up_prompt: str | None = Field(
+        default=None,
+        description="A question to ask when background-based suggestions need confirmation; None otherwise.",
+    )
     sources: list[str] = Field(default_factory=list, description="Framework and rule records the suggestions were grounded in")
     framework_version: str | None = Field(
         default=None, description="Which golden data answered, e.g. 'role profiles and competency map 2026-10-20' (spec §6)"

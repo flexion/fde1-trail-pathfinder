@@ -19,7 +19,7 @@ from corpus import DEFAULT_SCOPE, load as load_corpus
 from llm import stream_reply
 from pathfinder import NO_SCORE_SUMMARY, solve
 from schema import Answer, CompetencySuggestions, ExperienceRequest, Request, Response, SelfRating
-from suggest import suggest
+from suggest import framework, suggest
 
 app = Server()
 
@@ -143,14 +143,18 @@ def suggest_competencies(text: str = "", backgrounds: list | None = None, reject
     background's usual competencies from the framework. Every suggestion names
     the competency, its category, a level, a confidence (likely and possible
     are pre-checked on screen, check is not) and a one-line reason that quotes
-    her words or names the background. At most 12.
+    her words or names the background. Only her own words pre-check a
+    competency: one that comes from a background alone is always check.
+    At most 12.
 
     Levels are Entry until a rubric-matching step exists: a background, years,
     or calling herself expert never raises one. Every competency id is checked
     against the framework and every quote against her text before it is
     returned. Text that names no task, tool or trail feature, with no
-    background, is declined with a reason that asks for more. Nothing is
-    recorded; she confirms every suggestion herself.
+    background, is declined with a reason that asks for more. With a
+    background, the same text (or none) returns that background's
+    competencies as check, and `follow_up_prompt` asks what the work
+    involved. Nothing is recorded; she confirms every suggestion herself.
 
     Args:
         text: Her own words about work she has done. May be empty when a background is picked.
@@ -158,7 +162,7 @@ def suggest_competencies(text: str = "", backgrounds: list | None = None, reject
         rejected: Optional competency ids she already rejected this session; they are never suggested again.
 
     Returns:
-        A JSON-encoded CompetencySuggestions: suggestions, declined, reason, sources, framework_version, produced_by.
+        A JSON-encoded CompetencySuggestions: suggestions, declined, reason, follow_up_prompt, sources, framework_version, produced_by.
     """
     try:
         request = ExperienceRequest(text=text or "", backgrounds=backgrounds or [], rejected=rejected or [])
@@ -192,6 +196,18 @@ def eval_summary() -> dict:
     if not EVAL.exists():
         return {"available": False}
     return {"available": True, **json.loads(EVAL.read_text(encoding="utf-8"))}
+
+
+@app.get("/backgrounds")
+@cache  # the framework only changes with a new image
+def backgrounds() -> dict:
+    """What each background chip adds, so the page can show it before she picks one."""
+    fw = framework()
+    names = {c["id"]: c["name"] for c in fw["competencies"]}
+    return {"backgrounds": [
+        {"id": b["id"], "label": b["label"], "skills": [names[s["skill_id"]] for s in b["suggestions"]]}
+        for b in fw["backgrounds"]
+    ]}
 
 
 @app.get("/roles")
