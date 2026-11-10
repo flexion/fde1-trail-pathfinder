@@ -143,9 +143,9 @@ def suggest_competencies(text: str = "", backgrounds: list | None = None, reject
     background's usual competencies from the framework. Every suggestion names
     the competency, its category, a level, a confidence (likely and possible
     are pre-checked on screen, check is not) and a one-line reason that quotes
-    her words or names the background. Only her own words pre-check a
-    competency: one that comes from a background alone is always check.
-    At most 12.
+    her words or names the background. When her words support no
+    competency, every background competency is check: a background alone
+    never pre-checks. At most 12.
 
     Levels are Entry until a rubric-matching step exists: a background, years,
     or calling herself expert never raises one. Every competency id is checked

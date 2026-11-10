@@ -3,8 +3,9 @@
 Two inputs, two paths, merged:
 
 - A background chip is a lookup: `framework.json` `backgrounds[].suggestions`, all Entry,
-  no model. A chip never pre-checks a skill (TC5, fix #3): every chip skill comes back
-  check, whatever the prototype's score was. Only her own words pre-check.
+  no model. The prototype's score becomes the confidence (0.75 and up likely, 0.55 and
+  up possible, else check), unless her words support no skill at all: then every chip
+  skill comes back check (TC5, fix #3), so a chip alone never gets past the vague guard.
 - Her text goes to the step 1 retriever chosen in TC3 (`use_case/decisions.md`): dense
   Agentic RAG. The model calls `search_chunks` over the trailskills.org skills wiki,
   ranked by embeddings, and names the skills her words describe, each with her exact
@@ -368,11 +369,10 @@ def suggest(request: ExperienceRequest, *, way: str | None = None, **measure) ->
             text_found = from_text_rules(text)
         log.info("AI-1 text path %s in %.1fs", produced_by, time.perf_counter() - started)
 
-    # Background chips suggest skills, but never pre-check them.
-    chip_found = [
-        s.model_copy(update={"confidence": Confidence.CHECK})
-        for s in chip_found
-    ]
+    # Her words support nothing (no text, or text that names no task): the chips still
+    # suggest, but nothing is pre-checked. With her words behind a skill, a chip keeps its score.
+    if not text_found:
+        chip_found = [s.model_copy(update={"confidence": Confidence.CHECK}) for s in chip_found]
 
     # A chip skill her words point away from stays on the list but is not pre-checked.
     chip_found = [s.model_copy(update={"confidence": Confidence.CHECK,
