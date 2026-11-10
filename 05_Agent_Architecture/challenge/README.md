@@ -88,12 +88,12 @@ challenge is going to ask you for.
 This is the graded part. Every item comes from a numbered step in the technical
 challenge, which has the full detail.
 
-- [ ] **The room's questions written down** in `use_case/decisions.md`: the two you will fix, and the one you could not answer
-- [ ] **A second implementation of your endpoint**, in the way you judged second best, running
-- [ ] **Both implementations measured**: model calls, **capability calls**, latency and tokens, on the same two requests
-- [ ] **The token measurement repeated at your endpoint's real response size**, with the size in bytes recorded
-- [ ] `use_case/decisions.md` has the architecture row: decision, closest reject, why in terms of the six questions, and **switch condition**
-- [ ] It still runs in Docker
+- [x] **The room's questions written down** in `use_case/decisions.md`: the two you will fix, and the one you could not answer
+- [x] **A second implementation of your endpoint**, in the way you judged second best, running
+- [x] **Both implementations measured**: model calls, **capability calls**, latency and tokens, on the same two requests
+- [x] **The token measurement repeated at your endpoint's real response size**, with the size in bytes recorded
+- [x] `use_case/decisions.md` has the architecture row: decision, closest reject, why in terms of the six questions, and **switch condition**
+- [x] It still runs in Docker
 
 ### 📤 Share
 
@@ -609,12 +609,12 @@ challenge is going to ask you for.
 This is the graded part. Every item comes from a numbered step in the technical
 challenge, which has the full detail.
 
-- [ ] **The room's questions written down** in `use_case/decisions.md`: the two you will fix, and the one you could not answer
-- [ ] **A second implementation of your endpoint**, in the way you judged second best, running
-- [ ] **Both implementations measured**: model calls, **capability calls**, latency and tokens, on the same two requests
-- [ ] **The token measurement repeated at your endpoint's real response size**, with the size in bytes recorded
-- [ ] `use_case/decisions.md` has the architecture row: decision, closest reject, why in terms of the six questions, and **switch condition**
-- [ ] It still runs in Docker
+- [x] **The room's questions written down** in `use_case/decisions.md`: the two you will fix, and the one you could not answer
+- [x] **A second implementation of your endpoint**, in the way you judged second best, running
+- [x] **Both implementations measured**: model calls, **capability calls**, latency and tokens, on the same two requests
+- [x] **The token measurement repeated at your endpoint's real response size**, with the size in bytes recorded
+- [x] `use_case/decisions.md` has the architecture row: decision, closest reject, why in terms of the six questions, and **switch condition**
+- [x] It still runs in Docker
 
 ### 📤 Share
 
@@ -623,6 +623,126 @@ challenge, which has the full detail.
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->
+
+---
+
+## 📝 My answers
+
+AI-1 (`suggest_competencies`: her words and background chips → competency
+suggestions). The code is in `01_Product_Engineering/challenge/`, the
+measurement in `use_case/evals/ways_compare.py`, its full output in
+`use_case/evals/ways_results.md`. Measured 2026-11-10 through the gateway.
+
+### Step 1 — what the room asked
+
+In `use_case/decisions.md` under *Week 5 — what the room asked*: six
+questions from the 2026-11-03 demo. Fair: #3 (background chips override the
+vague-input guard) and #4 (text vs chips untested; missed skills unmeasured).
+Open: #5 (the test data is synthetic; a pilot with real people). Confusion:
+#6 (who gets value from the platform; the demo's opening, not the system).
+
+### Step 2 — the second way, and why
+
+**A skill.** The capability underneath is `search_chunks`: dense retrieval
+over the trailskills.org skills wiki. Today the model reaches it as a tool,
+in a loop, with the crediting policy in the system prompt.
+
+| # | Question | For AI-1 |
+| :---: | --- | --- |
+| 1 | Already an HTTP API at work? | No. Nothing at the client held this capability before we built it. |
+| 2 | Something outside our codebase needs to discover it? | No. The one named caller in the next year is the client's career-explorer web frontend, by URL. No agent client. |
+| 3 | Several calls, or calls that return a lot? | Yes on the numbers (4–8 searches × ~1.5 KB per request), but Code Mode cannot keep that data out of context: choosing skills from wiki chunks is a judgment the model has to read to make. There is no sandbox in the image either. **The closest reasoned reject.** |
+| 4 | Knowledge changes more often than the code? | **Yes.** The crediting policy (what counts as evidence, hedges, the decline rule, chip verdicts, "Entry and `check` on low certainty") changed on 2026-11-02 and 2026-11-03 from product-owner feedback. She is a PM. Today the policy ships as a deploy of a string in `suggest.py`. |
+
+So the skill: policy in `SKILL.md`, the capability in `run.py` on the far
+side of a process boundary, two model calls (plan, answer) instead of a loop.
+
+### Step 3 — built
+
+- `skills/suggest-competencies/SKILL.md`: the policy, moved out of `SYSTEM`
+  into prose, behaviour unchanged. `run.py`: `python run.py "<query>" [k]`,
+  prints the chunks as JSON and one `capability_call search_chunks` line to
+  stderr per search, because nothing in-process can see it.
+- `suggest_skill.py`: plan with a schema (`plan_searches`, at most 4,
+  `tool_choice="required"`), one subprocess per query, answer with the
+  `SKILL.md` body as the system prompt. Same parsed answer as `find_skills`,
+  so `from_text_model` takes either. `SUGGEST_WAY=skill` switches the
+  running app; the default is `tool`.
+- The dispatcher. `find_skills` used to run `search_chunks` for any tool
+  name the model emitted, the no-name-check loop from Session 10. Now
+  `dispatch` checks the name and the arguments and the model is handed a
+  message, never an exception (`check_dispatch.py` shows it with no model):
+  - unknown name: `Unknown tool: 'lookup_skill'. Available tools: search_chunks`
+  - malformed arguments: `(tool error: arguments were not a JSON object: Expecting property name enclosed in double quotes: line 1 column 25 (char 24))`
+- The `Dockerfile` copies `suggest_skill.py` and `skills/`; the image
+  builds and `run.py` runs inside it.
+
+### Step 4 — both ways, two requests, demo scale
+
+`t-ai1-01` is one kind of work (a corps crew) with the `corps` chip.
+`t-ai1-13` is the multi-topic one (volunteer coordination, a newsletter, a
+grant, drain clearing) with no chip, so every skill has to come from a
+search. Median of 3 runs, range in brackets.
+
+| way | request | model calls | capability calls | seconds | tokens |
+| --- | --- | --- | --- | --- | --- |
+| tool | t-ai1-01 | 3 (2–3) | 8 (5–8) | 7.0 | 7,009 (3,917–7,396) |
+| skill | t-ai1-01 | 2 | 0 in-process / **1** far side | 9.8 | 2,674 (2,407–2,955) |
+| tool | t-ai1-13 | 3 (2–3) | 4 (3–8) | 4.9 | 4,517 (2,984–5,412) |
+| skill | t-ai1-13 | 2 | 0 in-process / **4** (1–4) far side | 12.3 | 2,499 (1,545–2,702) |
+
+**Parallel tool calls: yes.** `len(msg.tool_calls)` on the first turn was
+4–5 for `t-ai1-01` and 3–4 for `t-ai1-13`, so eight searches cost three
+model calls, not nine. The round-trip argument does not apply to this model
+through this gateway.
+
+**The blind spot, as a finding.** The counting wrapper around `search_chunks`
+read 0 on every skill run. The work happened in `run.py`'s process, where
+neither the counter nor our logging can see it; the far-side count is
+`run.py`'s stderr lines, and we had to add them to know.
+
+### Step 5 — the real response size
+
+One `search_chunks` reply at today's k=4 is **984–1,958 bytes, median
+1,474** (85 distinct queries the tool loop actually sent, re-run; measured).
+Chunks are cut at 1,000 characters, so k=8 is about 3 KB. `t-ai1-13`, k
+forced, medians:
+
+| way | k | bytes per reply | capability calls | tokens | seconds |
+| --- | --- | --- | --- | --- | --- |
+| tool | 1 | 370 | 9 | 3,047 | 5.1 |
+| skill | 1 | 281 | 4 far side | 1,536 | 12.5 |
+| tool | 4 | 1,511 | 8 | 5,466 | 6.1 |
+| skill | 4 | 1,479 | 3 far side | 2,240 | 10.2 |
+| tool | 8 | 3,068 | 4 | 6,009 | 3.8 |
+| skill | 8 | 2,879 | 4 far side | 3,719 | 14.0 |
+
+All measured. Where it disagrees with Session 10's table: the tool loop's
+tokens did not fall with smaller payloads, because the model searched more
+when each reply said less (9 searches at k=1). And the skill's latency is the
+process boundary after all: a cached query runs in 0.2 s, a new one in about
+4.5 s, because every fresh process imports litellm, calls Titan for the
+embedding and rewrites the 5 MB embeddings cache.
+
+**At 10× the volume:** both ways cost ten times the tokens; the skill saves
+about 45% of them and adds about 5 s to every request. She is waiting on a
+form, so the seconds cost more than the tokens until somebody shows us a
+token bill that says otherwise.
+
+### Step 6 — the decision
+
+The Week 5 row in `use_case/decisions.md`: keep the tool loop; the skill is
+the built reject, Code Mode the closest reasoned one; three switch
+conditions (a second client, policy churn, call count). The open question
+(#5) is answered there as still open, with what closes it.
+
+### Step 7 — the refined demo
+
+<!-- Not yet shown to a stakeholder after the critique. Fill in only from a real session: what changed, what they asked, in our own words. New row in use_case/stakeholders.md. -->
+
+### Step 8 — bring it to work
+
+<!-- Three swap lines (data, model or endpoint, approval), to be written by the team. -->
 
 ---
 

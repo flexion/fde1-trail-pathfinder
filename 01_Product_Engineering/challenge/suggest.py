@@ -19,6 +19,10 @@ over a chip on the same skill. A chip skill her words point away from (the model
 with her words, in the same call) drops to check: still listed, not pre-checked. At most
 12, dropping check then possible first.
 
+How the model reaches the wiki is SUGGEST_WAY (TC5): "tool" (default) is the loop below, the
+crediting policy in SYSTEM; "skill" is suggest_skill.py, the same policy in
+skills/suggest-competencies/SKILL.md, where a product manager can change it without touching code.
+
 If the wiki is missing or the model or embeddings fail, the text path falls back to the
 prototype's keyword rules (`produced_by: "rules"`), so she still gets an answer.
 
@@ -170,38 +174,107 @@ def search_chunks(query: str, k: int = 4) -> str:
     return "\n\n---\n\n".join(f"[{chunks()[i]['id']}]\n{chunks()[i]['text'][:1000]}" for i in order)
 
 
-def find_skills(text: str, chip_skills: list[CompetencySuggestion] = ()) -> dict:
-    """Session 5's loop: the model calls search_chunks until it answers. Returns its parsed JSON.
-    The chip skills ride along in the same call so it can say which her words contradict."""
+class Meter:
+    """What the loop cost: model round trips, their tokens, and the tool calls the model emitted."""
+
+    def __init__(self):
+        self.calls = 0
+        self.prompt_tokens = 0
+        self.completion_tokens = 0
+        self.total_tokens = 0
+        self.first_turn_tool_calls: int | None = None   # len(msg.tool_calls) on turn one
+        self.tool_calls_emitted = 0
+        self.notes: list[str] = []
+
+    def track(self, response):
+        self.calls += 1
+        usage = getattr(response, "usage", None)
+        if usage:
+            self.prompt_tokens += usage.prompt_tokens or 0
+            self.completion_tokens += usage.completion_tokens or 0
+            self.total_tokens += usage.total_tokens or 0
+
+
+class CapabilityCounter:
+    """What the work was: how many times search_chunks ran, and the bytes each run returned."""
+
+    def __init__(self):
+        self.calls = 0
+        self.bytes: list[int] = []
+
+
+TOOL_NAMES = [t["function"]["name"] for t in TOOLS]
+
+
+def dispatch(call: dict, search=search_chunks, counter: CapabilityCounter | None = None) -> str:
+    """One tool call from the model -> the text the model gets back.
+
+    A wrong tool name or bad arguments is a message to the model, never an exception, and never
+    a search: a loop with no name check runs search_chunks for any name the model makes up.
+    A failed search still raises, so the caller falls back to the rules instead of letting the
+    model guess ids it never saw.
+    """
+    name = call["function"]["name"]
+    if name not in TOOL_NAMES:
+        return f"Unknown tool: {name!r}. Available tools: {', '.join(TOOL_NAMES)}"
+    try:
+        args = json.loads(call["function"]["arguments"] or "{}")
+        if not isinstance(args, dict):
+            raise TypeError(f"expected an object like {{\"query\": \"...\"}}, got {type(args).__name__}")
+        query, k = str(args["query"]), int(args.get("k", 4))
+    except json.JSONDecodeError as exc:
+        return f"(tool error: arguments were not a JSON object: {exc})"
+    except KeyError as exc:
+        return f"(tool error: missing required argument {exc}. search_chunks takes query (string) and k (integer))"
+    except (TypeError, ValueError) as exc:
+        return f"(tool error: {type(exc).__name__}: {exc})"
+    result = search(query=query, k=k)
+    if counter is not None:
+        counter.calls += 1
+        counter.bytes.append(len(result.encode()))
+    return result
+
+
+def parse_answer(content: str | None) -> dict:
+    found = re.search(r"\{.*\}", content or "", re.S)
+    if not found:
+        raise ValueError("model reply had no JSON")
+    return json.loads(found.group(0))
+
+
+def chip_prompt(text: str, chip_skills: list[CompetencySuggestion] = ()) -> str:
+    if not chip_skills:
+        return text
+    listed = "\n".join(f"- {s.skill_id}: {s.skill} ({s.category})" for s in chip_skills)
+    return f"{text}\n\nSkills her background chips suggest:\n{listed}"
+
+
+def find_skills(text: str, chip_skills: list[CompetencySuggestion] = (), meter: Meter | None = None,
+                counter: CapabilityCounter | None = None, search=search_chunks) -> dict:
+    """Way 1, the tool: Session 5's loop, the model calls search_chunks until it answers.
+    Returns its parsed JSON. The chip skills ride along in the same call so it can say which her
+    words contradict. `search` is the capability, an argument so a measurement can wrap it."""
     from litellm import completion
 
     from llm import _call_kwargs
 
-    user = text
-    if chip_skills:
-        listed = "\n".join(f"- {s.skill_id}: {s.skill} ({s.category})" for s in chip_skills)
-        user = f"{text}\n\nSkills her background chips suggest:\n{listed}"
-    messages: list[dict] = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}]
-    for _ in range(MAX_TURNS):
-        msg = completion(**_call_kwargs(messages, tools=TOOLS, timeout=60)).choices[0].message
+    messages: list[dict] = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": chip_prompt(text, chip_skills)}]
+    for turn in range(MAX_TURNS):
+        response = completion(**_call_kwargs(messages, tools=TOOLS, timeout=60))
+        msg = response.choices[0].message
         calls = msg.tool_calls or []
+        if meter is not None:
+            meter.track(response)
+            meter.tool_calls_emitted += len(calls)
+            if turn == 0:
+                meter.first_turn_tool_calls = len(calls)
         if not calls:
-            found = re.search(r"\{.*\}", msg.content or "", re.S)
-            if not found:
-                raise ValueError("model reply had no JSON")
-            return json.loads(found.group(0))
+            return parse_answer(msg.content)
         shaped = [{"id": c.id, "type": "function", "function": {"name": c.function.name, "arguments": c.function.arguments}}
                   for c in calls]
         messages.append({"role": "assistant", "content": msg.content or "", "tool_calls": shaped})
         for call in shaped:
-            # Bad arguments go back to the model; a failed search raises, so the caller falls
-            # back to the rules instead of letting the model guess ids it never saw.
-            try:
-                args = json.loads(call["function"]["arguments"] or "{}")
-                result = search_chunks(query=str(args["query"]), k=int(args.get("k", 4)))
-            except (json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
-                result = f"(tool error: {type(exc).__name__}: {exc})"
-            messages.append({"role": "tool", "tool_call_id": call["id"], "content": result})
+            messages.append({"role": "tool", "tool_call_id": call["id"], "content": dispatch(call, search, counter)})
     raise TimeoutError(f"no answer in {MAX_TURNS} turns")
 
 
@@ -219,12 +292,25 @@ def from_backgrounds(backgrounds: list[str]) -> list[CompetencySuggestion]:
     return out
 
 
-def from_text_model(text: str, chip_skills: list[CompetencySuggestion] = ()) -> tuple[list[CompetencySuggestion], set[str]]:
+def from_text_model(text: str, chip_skills: list[CompetencySuggestion] = (), way: str | None = None,
+                    **measure) -> tuple[list[CompetencySuggestion], set[str]]:
     """(suggestions, chip skill ids her words contradict) from the dense agent, with every id
     and quote checked. A decline is an empty list. A contradiction counts only for a chip skill
-    actually listed, with a quote of hers that is really in her text."""
+    actually listed, with a quote of hers that is really in her text.
+
+    `way` (default: SUGGEST_WAY, else "tool") picks how the model reaches the wiki: "tool" is
+    find_skills' loop, "skill" is suggest_skill.find_skills_skill. `measure` goes to that function
+    (meter, counter, and search for the tool or k for the skill)."""
     known = {c["id"] for c in framework()["competencies"]}
-    answer = find_skills(text, chip_skills)
+    way = way or os.getenv("SUGGEST_WAY") or "tool"
+    if way == "skill":
+        from suggest_skill import find_skills_skill
+
+        answer = find_skills_skill(text, chip_skills, **measure)
+    elif way == "tool":
+        answer = find_skills(text, chip_skills, **measure)
+    else:
+        raise ValueError(f"SUGGEST_WAY must be 'tool' or 'skill', not {way!r}")
     listed = {s.skill_id for s in chip_skills}
     contradicted = set()
     for item in answer.get("chips") or []:
@@ -259,7 +345,7 @@ def from_text_rules(text: str) -> list[CompetencySuggestion]:
     return out
 
 
-def suggest(request: ExperienceRequest) -> CompetencySuggestions:
+def suggest(request: ExperienceRequest, *, way: str | None = None, **measure) -> CompetencySuggestions:
     known_bg = {b["id"] for b in framework()["backgrounds"]}
     backgrounds = [b for b in request.backgrounds if b in known_bg]
     text = request.text.strip()
@@ -271,7 +357,7 @@ def suggest(request: ExperienceRequest) -> CompetencySuggestions:
     if text:
         started = time.perf_counter()
         try:
-            text_found, contradicted = from_text_model(text, chip_found)
+            text_found, contradicted = from_text_model(text, chip_found, way, **measure)
             produced_by = "model"
         except Exception as exc:   # wiki missing, gateway down, bad reply: the rules still answer
             log.warning("AI-1 model path failed (%s: %s); using keyword rules", type(exc).__name__, exc)
