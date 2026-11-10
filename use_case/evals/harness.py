@@ -149,6 +149,70 @@ def labelled_by_source(actual: str, case: dict) -> float:
     return 0.0 if has_text and out.produced_by == "rules" else 1.0
 
 
+def load_conflict_cases() -> list[dict]:
+    """The text-versus-chips cases (`conflict_inputs.jsonl`), kept out of `load_cases()` so the
+    fifty-case baseline and its fingerprint do not change. Each row's `expect` is the label."""
+    path = EVALS / "conflict_inputs.jsonl"
+    rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return [{"id": r["id"], "input": r["input"], "output": r["expect"], "kind": r["kind"]} for r in rows]
+
+
+def conflict_problems(actual: str, case: dict) -> list[str]:
+    """Why a conflict case failed, in words; empty when it passed. An item in `present` or
+    `still_prechecked` may be a list of twin ids (the framework has duplicate twins on purpose,
+    see the module docstring); any one of them being pre-checked satisfies it."""
+    out = parse(actual)
+    if out is None:
+        return ["output did not parse"]
+    expect = case["output"]
+    prechecked = {s.skill_id for s in out.suggestions if s.confidence != "check"}
+    problems = [f"pre-checked but her words point away: {i}" for i in expect.get("not_prechecked", []) if i in prechecked]
+    for item in expect.get("present", []) + expect.get("still_prechecked", []):
+        ids = [item] if isinstance(item, str) else item
+        if not prechecked & set(ids):
+            problems.append(f"not pre-checked: {' or '.join(ids)}")
+    return problems
+
+
+def text_beats_chips(actual: str, case: dict) -> float:
+    """Phil's #4: when her words and her chips disagree, her words win. Every skill in
+    `expect.not_prechecked` is absent or not pre-checked (her words point away from it), and
+    every skill in `expect.present` and `expect.still_prechecked` is pre-checked (her words
+    name it, or she is silent and a silent chip skill must not be demoted). All or nothing
+    per case. Pre-checked means `likely` or `possible`; `check` is not."""
+    return 0.0 if conflict_problems(actual, case) else 1.0
+
+
+def _base(skill_id: str) -> str:
+    """A skill and its numbered twin (`...-brushing`, `...-brushing-2`) count as one skill."""
+    return re.sub(r"-2$", "", skill_id)
+
+
+def _described(case: dict) -> set[str]:
+    """Golden skills her words back and that are pre-checked: a quote, and not `check`."""
+    return {_base(s["skill_id"]) for s in case["output"].get("suggestions", [])
+            if s.get("quote") and s["confidence"] != "check"}
+
+
+def load_missed_cases() -> list[dict]:
+    """The golden rows where she wrote text and the golden answer quotes her words for at
+    least one skill. A chip-only or declined row has nothing she described, so nothing to miss."""
+    return [c for c in load_cases() if c["input"].get("text", "").strip() and _described(c)]
+
+
+def found_skills(actual: str, case: dict) -> float:
+    """Phil's #4, second half: the share of skills she described that the answer pre-checked.
+    Expected = the golden skills with a quote that are pre-checked. Twins count as one.
+    This is recall; `judge_related` is the over-crediting side. Reverses failures.md's easy
+    rule ("a skill she described that the output missed is not a fail") on purpose."""
+    out = parse(actual)
+    if out is None:
+        return 0.0
+    expected = _described(case)
+    found = {_base(s.skill_id) for s in out.suggestions if s.confidence != "check"}
+    return len(expected & found) / len(expected)
+
+
 SCORERS = {
     "valid_output": valid_output,
     "declines_when_it_should": declines_when_it_should,

@@ -19,7 +19,9 @@ COPY pyproject.toml uv.lock ./
 RUN uv export --frozen --no-dev --no-emit-project -o requirements.txt \
  && uv pip install --system --no-cache -r requirements.txt
 
-COPY llm.py app.py schema.py pathfinder.py corpus.py ask.py suggest.py ./
+COPY llm.py app.py schema.py pathfinder.py corpus.py ask.py suggest.py suggest_skill.py ./
+# TC5's second way (SUGGEST_WAY=skill): SKILL.md holds the crediting policy, run.py the search.
+COPY skills/ ./skills/
 COPY data/ ./data/
 COPY frontend/ ./frontend/
 
