@@ -39,6 +39,26 @@ Pathfinder compares skill ratings to a role and suggests trainings. Every record
 3. **Descriptions or one parse per image?** Not needed. There are no images.
 4. **Video or audio?** None, so no transcript question.
 
+## Week 5 — what the room asked
+
+Session 9 demo, 2026-11-03, recorded. We presented last. Six things came back, in the order they were raised.
+
+| # | Who | What they asked | Mark |
+| --- | --- | --- | --- |
+| 1 | Greg (instructor) | Our skills ontology is fixed and top-down. If we built one bottom-up from the real trailskills.org profiles, would it look different, and could we use both? | |
+| 2 | Tyler (SME) | Which of our evals are fact-based, which we can settle on our own, and which are company rules that need the subject experts (does Army crew leadership count as crew management)? | |
+| 3 | Phil (SME) | Background chips can override the vague-input guard: "I worked on trails" plus a couple of backgrounds can return a dozen skills. Chips alone should lead to follow-up questions, not skills. | **Fair** |
+| 4 | Phil (SME) | When the text and the chips conflict, which wins? Decide that written text beats chips and test it in an eval. Skills we miss are not measured: track under-crediting as well as over-crediting. | **Fair** |
+| 5 | Phil (SME) | The test data is mostly synthetic. Can we run a small pilot with real people before rollout? We said "maybe the November 9th demo". | **Open** |
+| 6 | Greg (instructor) | He was not clear how people create value with the platform. Open with that story, and focus first on the user population with the highest value. | **Confusion** |
+
+What we will change for the two fair questions:
+
+- **#3:** When her text names no task, tool or feature, the skills from her background chips stop being pre-checked: they come back at Entry marked `check`, next to the "tell us what the work involved" prompt, and the screen shows what each background will apply before she picks it. That keeps the product owner's 2026-11-02 and 2026-11-03 ask (still suggest, at Entry and marked `check`) and meets Phil's point that chips alone should not credit skills. Whether chips should ask follow-up questions instead waits on real user data, as she asked.
+- **#4:** Text already wins over chips in `suggest.py` (since 2026-11-02) and a chip skill her words point away from drops to `check`, but nothing tests it and the judge ignores misses. We add eval cases where the text and the chips disagree, with a scorer that checks the text won, and a missed-skills scorer on the golden rows that list expected skills, reported next to `judge_related` so under-crediting and over-crediting are both on the page.
+
+For #6 we rewrite the opening of the demo, not the system.
+
 ---
 
 The last column is the one people skip and the one people ask about. "We chose
