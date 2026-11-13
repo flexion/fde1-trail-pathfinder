@@ -20,6 +20,7 @@ from llm import stream_reply
 from pathfinder import NO_SCORE_SUMMARY, solve
 from schema import Answer, CompetencySuggestions, ExperienceRequest, Request, Response, SelfRating
 from suggest import framework, suggest
+from trailapp import PrototypeRequest, to_prototype, to_request
 
 app = Server()
 
@@ -172,6 +173,21 @@ def suggest_competencies(text: str = "", backgrounds: list | None = None, reject
     if not request.text.strip() and not request.backgrounds:
         return CompetencySuggestions(declined=True, reason="Pick a background or describe work you have done.").model_dump_json()
     return suggest(request).model_dump_json()
+
+
+# --- The TrailSkills prototype ------------------------------------------------
+# Plain JSON over POST, so the prototype needs no Gradio client. Its CloudFront
+# distribution forwards /api/* here, which keeps the call same-origin: no CORS.
+
+
+@app.post("/api/suggest")
+def api_suggest(body: PrototypeRequest) -> dict:
+    """AI-1 for the career-explorer prototype: its chip and competency ids in, its field names out."""
+    request = to_request(body)
+    if not request.text.strip() and not request.backgrounds:
+        # Also where a chip that maps to no background lands: nothing to go on, so the prototype's rules answer.
+        return to_prototype(CompetencySuggestions(declined=True, reason="Pick a background or describe work you have done."))
+    return to_prototype(suggest(request))
 
 
 # --- The frontend ------------------------------------------------------------
