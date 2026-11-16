@@ -1,6 +1,10 @@
 # A plain, readable Dockerfile. Not the smallest possible image, not the
 # cleverest. You should be able to read every line and say what it does.
 
+# Empty unless the build names a directory: `--build-context data=<dir>` replaces
+# this stage with <dir> (see the /data COPY below and deploy.md).
+FROM scratch AS data
+
 FROM python:3.12-slim
 
 # uv installs dependencies fast and is already how we run things locally.
@@ -19,19 +23,23 @@ COPY pyproject.toml uv.lock ./
 RUN uv export --frozen --no-dev --no-emit-project -o requirements.txt \
  && uv pip install --system --no-cache -r requirements.txt
 
-COPY llm.py app.py schema.py pathfinder.py corpus.py ask.py suggest.py suggest_skill.py ./
+COPY llm.py app.py schema.py pathfinder.py corpus.py ask.py suggest.py suggest_skill.py trailapp.py ./
 # TC5's second way (SUGGEST_WAY=skill): SKILL.md holds the crediting policy, run.py the search.
 COPY skills/ ./skills/
 COPY data/ ./data/
 COPY frontend/ ./frontend/
 
 # The trailskills.org skills wiki is American Trails' content: it is not in git
-# and not in this image. Mount use_case/data at /data when you run it (README);
-# without it, suggest_competencies falls back to the keyword rules.
+# and not in a plain build of this image. Mount use_case/data at /data when you
+# run it (README); without it, suggest_competencies falls back to the keyword rules.
 ENV WIKI_DIR=/data/wiki EMBED_CACHE=/data/embeddings_cache.json
 
 # Don't run as root. Your security review will ask about this.
 RUN useradd --create-home appuser
+
+# The demo deploy copies the wiki in with `--build-context data=<dir>`; that image
+# goes to the private ECR repository only. A plain build copies nothing here.
+COPY --from=data --chown=appuser / /data/
 USER appuser
 
 EXPOSE 7860
