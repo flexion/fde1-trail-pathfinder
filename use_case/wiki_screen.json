@@ -1,0 +1,232 @@
+{
+  "screened": "2026-11-16",
+  "rungs": [
+    "rules",
+    "judge"
+  ],
+  "judge": "ollama_chat/qwen2.5:7b",
+  "chunks": 220,
+  "seconds": 67.1,
+  "pages": {
+    "agreement-development-2": {
+      "sha256": "eff9f5b94f59b04d7723708efdae82cb264daa539c9f650fec66b4ff217ecbd0",
+      "flagged": []
+    },
+    "budgeting": {
+      "sha256": "f193775b40af7237bacf225e8edc515719201b657f468f39303bfa07591936df",
+      "flagged": []
+    },
+    "communications": {
+      "sha256": "628d9a159aa1fe3fd41bfed47f207fe143ab0fb4c8a314c2d43f7fc3a23d90e1",
+      "flagged": []
+    },
+    "conceptual-trail-plan-development": {
+      "sha256": "838b0ddc4a1ef5402aabb43fa004c20ccc94f9ac26b720da16a61d1ff513dad8",
+      "flagged": []
+    },
+    "construction-specifications": {
+      "sha256": "a43a47ff493174d0d7ec562d18bb968ea160fcf4ed44903f459f22dd06f72e94",
+      "flagged": []
+    },
+    "contract-administration": {
+      "sha256": "683143ac6208edc40d689fe774f421a5ba2fc9194d1a90588e895f823c425b5b",
+      "flagged": []
+    },
+    "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut": {
+      "sha256": "7b1484a1cccb3e6ceacb92ab91114ba713172c2d0c8ce5801fca256b2a9021c9",
+      "flagged": []
+    },
+    "corridor-clearing-felling-tree-removal-chainsaw-crosscut": {
+      "sha256": "9af26bdb5b2f2355df65633099dcfe55ba45ce0b8ddac949c8946d90cd395f54",
+      "flagged": []
+    },
+    "corridor-clearing-material-and-debris-management-2": {
+      "sha256": "6a7a98dc474f751feb9caee6addc74c4d9abf567faf6317cbeecf1b98b250f82",
+      "flagged": []
+    },
+    "corridor-clearing-material-and-debris-management": {
+      "sha256": "852b6276e270c1b4e8ad593281c18156536036fba44e6872ecf4c1734b8625cd",
+      "flagged": []
+    },
+    "corridor-clearing-power-tools": {
+      "sha256": "539c7c888a7df56d13aed67b095fb44af36b44463aadcf3530fe96a50054d1bc",
+      "flagged": []
+    },
+    "corridor-clearing-pruning-side-cutting-brushing-2": {
+      "sha256": "ef51188b242af9a11aa87d8a8777f03a22d8a37ff4f202ffe268d5e953bb05bc",
+      "flagged": []
+    },
+    "corridor-clearing-pruning-side-cutting-brushing": {
+      "sha256": "f7397b99a736c17392ec7c5b21960bbf75fcbba665eb489114436c918e5bd283",
+      "flagged": []
+    },
+    "corridor-clearing": {
+      "sha256": "07458c47c07b630701ca8d170e08bf272dfa3d07314fc4901a9befd7a7ae7c3d",
+      "flagged": []
+    },
+    "corridor-planning": {
+      "sha256": "ac14e9c649de07fa883832b8fc961d3f815e3351bf356411da1f6863016760f9",
+      "flagged": []
+    },
+    "cost-estimation": {
+      "sha256": "ea0ec290a5f152b90501442686364bf776c136ba7e63ac9d9e6fa9670b3e9b34",
+      "flagged": []
+    },
+    "crew-management": {
+      "sha256": "9f586613e413c57d2f6836ed57aafc05d57517d88d61b4639f9efa078453b5e8",
+      "flagged": []
+    },
+    "crew-recruitment": {
+      "sha256": "022837c75d19d3cc4d9d5aec01f668694827fb1898309cdfbc72ece1adde822c",
+      "flagged": []
+    },
+    "crew-training": {
+      "sha256": "5df9cecebe3e6be361e8f5d0d10cdc3d1485de72289395fc01ddd289c4a2f182",
+      "flagged": []
+    },
+    "decommissioning-trails": {
+      "sha256": "a207bc022d713b8d80f253b5fff4a1e8f5b9c0eb9c6f6a5069a8c17356881851",
+      "flagged": []
+    },
+    "define-purpose-and-need-of-project": {
+      "sha256": "fd3b7fea83d8a6af73d030e8e3b78703c7bebfa1eba8d83c098865f3d5692a24",
+      "flagged": []
+    },
+    "design": {
+      "sha256": "f776c7cdbef81a6f70b0d301945d418507477757bd70cffbf84b4739a66dcd8c",
+      "flagged": []
+    },
+    "education-and-public-outreach": {
+      "sha256": "07a4e9ab664be410299e0a0df9922ac65d44240e128adf28d83169990ede92d0",
+      "flagged": []
+    },
+    "funding-grants": {
+      "sha256": "cfbaa125a943fd4163f0be3d6790b82683850c81bf125c1ce03c487727403466",
+      "flagged": []
+    },
+    "hand-built-trail-construction": {
+      "sha256": "6723392b0696579be93068aff69b9ed975a0aaf14f6673f44a4b21fdbcfa9773",
+      "flagged": []
+    },
+    "implementation-plan": {
+      "sha256": "1c49ab553ee07b224b6d085282717f200dc1989e124296214676e169683e18b9",
+      "flagged": []
+    },
+    "inspections-monitoring": {
+      "sha256": "492b7ed3501114ecbd50b9557adb8f16a626b079c9d2a5e83082cd26de648054",
+      "flagged": []
+    },
+    "interpretation": {
+      "sha256": "199bffc7f7d3240fbe60cacc86c338ea9cec04917dae64a9120a81b2b4c72861",
+      "flagged": []
+    },
+    "jobsite-safety": {
+      "sha256": "c76d745c0b1089af549b6ebbb78049805fba5b5cb519c3f3006e8183ab6e8ff0",
+      "flagged": []
+    },
+    "land-use-plan-conformance": {
+      "sha256": "d1b8c684f6b4100e0918d05ad463c6fbc29c343da7a891a609fe47041c79a344",
+      "flagged": []
+    },
+    "maintenance-specifications": {
+      "sha256": "afe396f6cc4dffbded450f5695f0d8fe1a1c49646b843368d7b88a9d55fdf87d",
+      "flagged": []
+    },
+    "mechanized-trail-construction": {
+      "sha256": "e665772285c48477d55b4d3b0a5b48d43fdefbcb63e12b22081781559f5a9193",
+      "flagged": []
+    },
+    "operations-and-maintenance-plan-development": {
+      "sha256": "ce932c57dba545cb8517b149c04cce7280762a5b105f23883eaa8a12940e0d0b",
+      "flagged": []
+    },
+    "partnership-and-collaboration": {
+      "sha256": "8e69018dd1ae62140f8707980e162f42d99a2cc8a2ccd97ca901271aa78f5ceb",
+      "flagged": []
+    },
+    "performance-management": {
+      "sha256": "36876f021b0ab120ce657b8c8939f489bce4e43bafb45a6f06c1db5f573880d9",
+      "flagged": []
+    },
+    "permitting": {
+      "sha256": "d8a452d00c5285368e518cd77e5159ca06a791c4fe24d501040f996f6380dfbe",
+      "flagged": []
+    },
+    "policy-directives-law": {
+      "sha256": "b53d492e26c12acf6d6f4db45a9792328c7ba1425e6ca23f7ffe2207a6fbfcef",
+      "flagged": []
+    },
+    "retaining-walls": {
+      "sha256": "1fee6877421a78e08593ab6ff7012c9b80034c200cab06a514ebedf63927e196",
+      "flagged": []
+    },
+    "safety-site-management-2": {
+      "sha256": "5bdec9d0aae003709451967f341e73956ac89be520ab7af5fdeca02bc4d2ab0a",
+      "flagged": []
+    },
+    "safety-site-management": {
+      "sha256": "43095a22ac09cb5701bcb4ab82eb59c3ed90e9c4e956a083508ea7f185a76f11",
+      "flagged": []
+    },
+    "stakeholder-engagement-2": {
+      "sha256": "fef24fc783c7c160dfaa18a3f2817426ed5c4f8f40e71d49cc873a69cb023d52",
+      "flagged": []
+    },
+    "trail-finishwork": {
+      "sha256": "828f9e29bf5ee85c79de370a7b8d1042b52c66356cf1859dbc4ce6d48c3bb677",
+      "flagged": []
+    },
+    "trail-inventory-and-assessment": {
+      "sha256": "67eb635438dd46dcc19695e6d4b050839387a3e6c91aa62df99494322eeb965f",
+      "flagged": []
+    },
+    "trail-plans": {
+      "sha256": "4aff066b28190d1bb107f9212c777b884cd7828db3d429799928e69264dbdc9e",
+      "flagged": []
+    },
+    "trail-specifications": {
+      "sha256": "4f6020207e9026d28f6041195769fc016b85c26db0f145a1b6fa06c28ea8b0d9",
+      "flagged": []
+    },
+    "trail-sustainability-principles-2": {
+      "sha256": "b58de226347320a43328eb9e77d593dff14ec111156a47ec22cfec78bad8ea8c",
+      "flagged": []
+    },
+    "trail-sustainability-principles-3": {
+      "sha256": "de72d5d74657fc25f57057ba9ac494e9adf19bdbb5022479d96732be95b5a3f1",
+      "flagged": []
+    },
+    "trail-sustainability-principles": {
+      "sha256": "1b9df1507d85f5eee4f9639f40e4f6713212cf1806bf56536370967146a0caec",
+      "flagged": []
+    },
+    "tread-hardening": {
+      "sha256": "3dcc57291884f70bf8bed620821ee1b64cc9d56238d10a93abb59e203f0f0352",
+      "flagged": []
+    },
+    "tread-maintenance-hand-tools": {
+      "sha256": "0b4e9fbdf1fe1184523ae1c0192f371c07a22d28e602426536597625e3d862af",
+      "flagged": []
+    },
+    "tread-maintenance-mechanized-equipment": {
+      "sha256": "1cc287126cd364e37b6f1fa11f2a319f396d75a154ad83a897e175ba1fa7cddc",
+      "flagged": []
+    },
+    "visitor-use-management-and-monitoring": {
+      "sha256": "70d8bea5630360eee9318016b8383531f8f0689d2bc9095e476508867c10c6f5",
+      "flagged": []
+    },
+    "water-crossing-structures-boardwalk-puncheon-turnpike-ford": {
+      "sha256": "95ac36c0bc81c8ad22ec617b6d776dd640d2d08415a6d11f9374701b99c83469",
+      "flagged": []
+    },
+    "water-management-drainage-features-2": {
+      "sha256": "df126b9fc18ec381acbd087763832f5243e9b6b7866cb52170a0d830d0336773",
+      "flagged": []
+    },
+    "water-management-drainage-features": {
+      "sha256": "95cd39f11f07d783d4ccbe6c49449ceece35b18b61e765123cc83361412123bd",
+      "flagged": []
+    }
+  }
+}

@@ -31,6 +31,12 @@ ACCOUNT=991085100884
 REPO=$ACCOUNT.dkr.ecr.us-east-2.amazonaws.com/pathfinder
 TAG=ai1-$(git rev-parse --short HEAD)        # name the tag after what is in it
 
+# 0. TC6: the wiki is third-party text the model reads on every request. Refuse to bake
+#    in a page that changed since it was screened, or that the screen flagged. No model
+#    calls (DATA is an absolute path). A failure means: re-run `use_case/screen_wiki.py`
+#    on the new copy and have a person read the pages it names before deploying.
+(cd ../.. && uv run python use_case/screen_wiki.py --check --wiki $DATA/wiki)   # stop here unless it exits 0
+
 # 1. Build for the task's architecture (ARM64) and load it into local Docker.
 #    DATA is a directory OUTSIDE the repo holding wiki/ (a copy of use_case/data/wiki)
 #    and, optionally, embeddings_cache.json built with the task's EMBED_MODEL. It lands

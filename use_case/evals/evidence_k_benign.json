@@ -1,0 +1,907 @@
+{
+  "pairs": [
+    {
+      "set": "golden",
+      "id": "ai1-01",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "brushing and lopping",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-01",
+      "skill": "water-management-drainage-features-2",
+      "quote": "water bars and grade dips",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-01",
+      "skill": "hand-built-trail-construction",
+      "quote": "bench cut on new trail",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-01",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "only bucked a few logs",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-03",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "certified sawyer",
+      "rank": 2
+    },
+    {
+      "set": "golden",
+      "id": "ai1-03",
+      "skill": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+      "quote": "certified sawyer",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-03",
+      "skill": "crew-management",
+      "quote": "squad boss the last season",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-03",
+      "skill": "jobsite-safety",
+      "quote": "ran the morning briefing",
+      "rank": 43
+    },
+    {
+      "set": "golden",
+      "id": "ai1-04",
+      "skill": "retaining-walls",
+      "quote": "dry-stack stone walls and flagstone steps",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-04",
+      "skill": "mechanized-trail-construction",
+      "quote": "mini-ex and skid steer",
+      "rank": 2
+    },
+    {
+      "set": "golden",
+      "id": "ai1-04",
+      "skill": "water-management-drainage-features",
+      "quote": "French drains",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-04",
+      "skill": "water-management-drainage-features-2",
+      "quote": "drain",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-05",
+      "skill": "retaining-walls",
+      "quote": "expert at dry-stone retaining walls and rock steps",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-05",
+      "skill": "hand-built-trail-construction",
+      "quote": "nine seasons building trail",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-05",
+      "skill": "crew-management",
+      "quote": "crew lead for a six-person crew",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-05",
+      "skill": "crew-training",
+      "quote": "train the new hires",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-05",
+      "skill": "jobsite-safety",
+      "quote": "tool safety every spring",
+      "rank": 3
+    },
+    {
+      "set": "golden",
+      "id": "ai1-08",
+      "skill": "tread-maintenance-hand-tools",
+      "quote": "maintain about three miles of trail",
+      "rank": 4
+    },
+    {
+      "set": "golden",
+      "id": "ai1-11",
+      "skill": "water-management-drainage-features-2",
+      "quote": "water bars and grade dips",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-11",
+      "skill": "hand-built-trail-construction",
+      "quote": "bench cut on new trail",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-11",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "only bucked a few logs",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-12",
+      "skill": "retaining-walls",
+      "quote": "built dry-stack stone walls on my own",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-12",
+      "skill": "mechanized-trail-construction",
+      "quote": "ran a mini excavator",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-12",
+      "skill": "tread-hardening",
+      "quote": "laid flagstone paths",
+      "rank": 6
+    },
+    {
+      "set": "golden",
+      "id": "ai1-12",
+      "skill": "water-management-drainage-features",
+      "quote": "dig drainage trenches",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-12",
+      "skill": "water-management-drainage-features-2",
+      "quote": "dig drainage trenches",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-13",
+      "skill": "communications",
+      "quote": "wrote the monthly newsletter",
+      "rank": 4
+    },
+    {
+      "set": "golden",
+      "id": "ai1-13",
+      "skill": "education-and-public-outreach",
+      "quote": "showed new volunteers how to clear drains and brush the trail",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-13",
+      "skill": "funding-grants",
+      "quote": "helped write a state grant",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-13",
+      "skill": "water-management-drainage-features-2",
+      "quote": "clear drains",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-13",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "brush the trail",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-14",
+      "skill": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+      "quote": "built a puncheon bridge across a wet meadow",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-14",
+      "skill": "tread-maintenance-hand-tools",
+      "quote": "rebuilt washed-out tread with hand tools",
+      "rank": 1
+    },
+    {
+      "set": "golden",
+      "id": "ai1-14",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "cleared blowdowns with a crosscut saw",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-01",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing",
+      "quote": "Mostly brushing and lopping",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-01",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "Mostly brushing and lopping",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-01",
+      "skill": "water-management-drainage-features",
+      "quote": "dug a lot of water bars and grade dips",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-01",
+      "skill": "water-management-drainage-features-2",
+      "quote": "dug a lot of water bars and grade dips",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-01",
+      "skill": "hand-built-trail-construction",
+      "quote": "some bench cut on new trail",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-01",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "only bucked a few logs",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-01",
+      "skill": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+      "quote": "only bucked a few logs",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-03",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "Certified sawyer, ran saw on fuels reduction and hazard trees.",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-03",
+      "skill": "crew-management",
+      "quote": "Squad boss the last season, ran the morning briefing.",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-04",
+      "skill": "retaining-walls",
+      "quote": "Built dry-stack stone walls",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-04",
+      "skill": "mechanized-trail-construction",
+      "quote": "ran a mini-ex and skid steer",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-04",
+      "skill": "water-management-drainage-features",
+      "quote": "put in French drains",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-05",
+      "skill": "hand-built-trail-construction",
+      "quote": "Nine seasons building trail",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-05",
+      "skill": "crew-management",
+      "quote": "the last four as crew lead for a six-person crew",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-05",
+      "skill": "retaining-walls",
+      "quote": "Expert at dry-stone retaining walls",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-05",
+      "skill": "crew-training",
+      "quote": "I train the new hires on tool safety every spring",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-05",
+      "skill": "jobsite-safety",
+      "quote": "tool safety",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-08",
+      "skill": "maintenance-specifications",
+      "quote": "Through scouts I helped maintain about three miles of trail.",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-11",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing",
+      "quote": "Mostly brushing and lopping",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-11",
+      "skill": "water-management-drainage-features",
+      "quote": "dug a lot of water bars and grade dips",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-11",
+      "skill": "hand-built-trail-construction",
+      "quote": "some bench cut on new trail",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-11",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "only bucked a few logs",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-12",
+      "skill": "retaining-walls",
+      "quote": "I built dry-stack stone walls on my own",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-12",
+      "skill": "tread-hardening",
+      "quote": "laid flagstone paths",
+      "rank": 6
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-12",
+      "skill": "water-management-drainage-features",
+      "quote": "ran a mini excavator to dig drainage trenches",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-13",
+      "skill": "crew-management",
+      "quote": "I coordinated volunteers for our local trail club.",
+      "rank": 3
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-13",
+      "skill": "funding-grants",
+      "quote": "helped write a state grant for new trail signs",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-13",
+      "skill": "education-and-public-outreach",
+      "quote": "I showed new volunteers how to clear drains and brush the trail.",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-14",
+      "skill": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+      "quote": "We built a puncheon bridge across a wet meadow",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-14",
+      "skill": "tread-maintenance-hand-tools",
+      "quote": "rebuilt washed-out tread with hand tools",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-ai1-14",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "I cleared blowdowns with a crosscut saw",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-01",
+      "skill": "corridor-clearing",
+      "quote": "clearing brush",
+      "rank": 4
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-01",
+      "skill": "water-management-drainage-features-2",
+      "quote": "digging drainage",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-01",
+      "skill": "tread-maintenance-hand-tools",
+      "quote": "fixing muddy spots on trails",
+      "rank": 3
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-01",
+      "skill": "corridor-clearing-power-tools",
+      "quote": "clearing brush",
+      "rank": 3
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-02",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "used a brush cutter",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-02",
+      "skill": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+      "quote": "helped with some small bridge repairs",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-03",
+      "skill": "hand-built-trail-construction",
+      "quote": "building rock steps",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-03",
+      "skill": "tread-hardening",
+      "quote": "building rock steps, moving gravel",
+      "rank": 4
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-03",
+      "skill": "water-management-drainage-features",
+      "quote": "putting in culverts",
+      "rank": 8
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-04",
+      "skill": "corridor-clearing",
+      "quote": "Mostly clearing storm damage, carrying logs",
+      "rank": 5
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-05",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "We cut back overgrown plants",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-06",
+      "skill": "tread-maintenance-hand-tools",
+      "quote": "some basic trail repairs",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-07",
+      "skill": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+      "quote": "saw work",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-07",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "quote": "saw work",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-09",
+      "skill": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+      "quote": "I was a sawyer on trail and fuels projects, mostly clearing down trees",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-09",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing",
+      "quote": "brushing in rough country",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-11",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing",
+      "quote": "Lots of planting, trimming, hauling mulch, and using small equipment.",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-11",
+      "skill": "tread-maintenance-mechanized-equipment",
+      "quote": "using small equipment",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-13",
+      "skill": "retaining-walls",
+      "quote": "I helped on a few patio and retaining wall jobs, mixing materials and moving rock.",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-14",
+      "skill": "corridor-clearing-power-tools",
+      "quote": "Did volunteer cleanups at a local park and some brush clearing with my neighbor.",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-14",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "some brush clearing with my neighbor",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-16",
+      "skill": "mechanized-trail-construction",
+      "quote": "running equipment",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-16",
+      "skill": "corridor-clearing",
+      "quote": "clearing sites",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-16",
+      "skill": "safety-site-management",
+      "quote": "safety procedures",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-17",
+      "skill": "crew-management",
+      "quote": "I led crews on different projects and handled planning, training, and daily task assignments.",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-17",
+      "skill": "crew-training",
+      "quote": "handled planning, training, and daily task assignments",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-18",
+      "skill": "corridor-clearing-power-tools",
+      "quote": "mostly picking up trash and moving small branches",
+      "rank": 4
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-19",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "clearing brush",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-19",
+      "skill": "tread-maintenance-hand-tools",
+      "quote": "fixing a couple muddy spots. Used hand tools",
+      "rank": 3
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-20",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing",
+      "quote": "trimming plants",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-20",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "trimming plants",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-21",
+      "skill": "corridor-clearing-power-tools",
+      "quote": "Cleared fallen trees",
+      "rank": 3
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-21",
+      "skill": "water-management-drainage-features-2",
+      "quote": "dug drainage ditches",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-21",
+      "skill": "hand-built-trail-construction",
+      "quote": "helped build steps",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-23",
+      "skill": "mechanized-trail-construction",
+      "quote": "Ran skid steer and mini excavator on site prep and utility jobs.",
+      "rank": 4
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-24",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "Helped a volunteer group clear brush and fallen trees too.",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-24",
+      "skill": "corridor-clearing-material-and-debris-management-2",
+      "quote": "moving materials, cleanup",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-24",
+      "skill": "corridor-clearing-power-tools",
+      "quote": "Helped a volunteer group clear brush and fallen trees too.",
+      "rank": 4
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-25",
+      "skill": "trail-plans",
+      "quote": "basic map updates",
+      "rank": 19
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-25",
+      "skill": "inspections-monitoring",
+      "quote": "site checks",
+      "rank": 5
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-25",
+      "skill": "permitting",
+      "quote": "helping with permits",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-26",
+      "skill": "funding-grants",
+      "quote": "helped a nonprofit write grants",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-26",
+      "skill": "communications",
+      "quote": "sent emails",
+      "rank": 2
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-27",
+      "skill": "trail-plans",
+      "quote": "I did planning work with GIS",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-27",
+      "skill": "permitting",
+      "quote": "reviewed permits for small projects",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-27",
+      "skill": "communications",
+      "quote": "talking with the public",
+      "rank": 3
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-33",
+      "skill": "hand-built-trail-construction",
+      "quote": "building trails",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-33",
+      "skill": "corridor-clearing-pruning-side-cutting-brushing-2",
+      "quote": "clearing brush",
+      "rank": 1
+    },
+    {
+      "set": "trace",
+      "id": "t-gen-34",
+      "skill": "corridor-clearing",
+      "quote": "I\u2019ve done crew work, repairs, cleanup, and some landscaping",
+      "rank": 6
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-01",
+      "skill": "budgeting",
+      "quote": "tracked the project budget",
+      "rank": 1
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-01",
+      "skill": "crew-management",
+      "quote": "led a volunteer crew",
+      "rank": 1
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-02",
+      "skill": "budgeting",
+      "quote": "managed a $40,000 budget",
+      "rank": 1
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-03",
+      "skill": "budgeting",
+      "quote": "built the job budgets",
+      "rank": 1
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-04",
+      "skill": "budgeting",
+      "quote": "put together the annual budget",
+      "rank": 1
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-04",
+      "skill": "funding-grants",
+      "quote": "wrote the grant report",
+      "rank": 1
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-05",
+      "skill": "budgeting",
+      "quote": "planned the crew's operating budget",
+      "rank": 2
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-06",
+      "skill": "budgeting",
+      "quote": "forecast and tracked the unit's supply budget",
+      "rank": 1
+    },
+    {
+      "set": "benign budgeting",
+      "id": "bb-07",
+      "skill": "budgeting",
+      "quote": "keep the books",
+      "rank": 28
+    }
+  ],
+  "points_away": [
+    {
+      "id": "t-conf-01",
+      "skill": "retaining-walls",
+      "best_rank": 2
+    },
+    {
+      "id": "t-conf-01",
+      "skill": "tread-hardening",
+      "best_rank": 10
+    },
+    {
+      "id": "t-conf-01",
+      "skill": "water-management-drainage-features",
+      "best_rank": 1
+    },
+    {
+      "id": "t-conf-03",
+      "skill": "water-crossing-structures-boardwalk-puncheon-turnpike-ford",
+      "best_rank": 3
+    },
+    {
+      "id": "t-conf-03",
+      "skill": "retaining-walls",
+      "best_rank": 1
+    },
+    {
+      "id": "t-conf-03",
+      "skill": "mechanized-trail-construction",
+      "best_rank": 2
+    },
+    {
+      "id": "t-conf-04",
+      "skill": "corridor-clearing-bucking-felling-hazard-tree-removal-chainsaw-crosscut",
+      "best_rank": 5
+    },
+    {
+      "id": "t-conf-04",
+      "skill": "corridor-clearing-felling-tree-removal-chainsaw-crosscut",
+      "best_rank": 1
+    }
+  ]
+}

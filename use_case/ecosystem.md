@@ -108,6 +108,61 @@ have to run on the phone.
 
 ---
 
+## Week 6 — who can write to what AI-1 reads
+
+AI-1 reads five kinds of text. Each one can carry an instruction, so each one
+is an injection door. *Read from the code and the deploy record (`deploy.md`),
+2026-11-16.*
+
+| Source | Who can write there |
+| --- | --- |
+| Her text | The person using the form: public job seekers, through the client's career explorer. |
+| Background chip ids | The same person. Only known ids are kept. |
+| The skills wiki (`use_case/data/wiki`, `/data/wiki` in the image) | trailskills.org's editors (American Trails, a third party). `fetch_trailskills_levels.py` and `build_wiki.py` copy it verbatim. From TC6, `screen_wiki.py` screens it before it ships (below). After that, anyone with write access to the build machine or the image. |
+| `framework.json` (skill ids, backgrounds, keyword rules) | Our team, in git. The content is copied from the client's career-explorer prototype. |
+| `SKILL.md` (skill way only) | By its own header, a product manager. It is the system prompt on that way, and an edit is live on the next request. The repo has no CODEOWNERS file, so review is the only control. |
+| `suggest.SYSTEM` and `TOOLS` (tool way, the default) | Our engineers, in code, reviewed. |
+| Embeddings cache (`EMBED_CACHE`) | The app process, which rewrites it, and anyone with the volume. It can reorder search results, but it cannot add text. |
+| Env (`LLM_*`, `SYSTEM_PROMPT`) | Whoever deploys the container: the ECS task definition. |
+
+The public can write exactly one source that reaches the model as words: her
+own text. The wiki is the third-party door. Anyone who can edit trailskills.org,
+or the copy we bake in, gets text into every request that retrieves that page.
+
+**Level 0 does not exist for us.** AI-1 runs on closed hosted models: the
+Flexion gateway in development (`openai/bedrock/gpt-5.6-luna`) and Bedrock
+Claude Haiku 5.5 in the deployed demo (`deploy.md`). We have no logits, so
+constrained decoding is not available. The app does not ask for structured
+output. Whether the gateway passes `response_format` through to the Bedrock
+model is **untested**. The output is already a closed set, enforced in code
+rather than by the decoder:
+
+- ids must come from `framework.json`;
+- a quote must be her own words;
+- the quote must be about the skill (the TC6 evidence check);
+- the reason is built by code.
+
+**Attack testing ran on a local model.** *Team decision:* no attack text was
+sent to the gateway or to Bedrock. Nobody has approved either for adversarial
+testing, and we did not ask. Attacks ran on `qwen2.5:7b` in Ollama on a
+laptop, with `bge-m3` embeddings, also local. So the hosted production model
+was never attacked. Its leak rate is unknown, not zero.
+
+**What the guardrail ladder needs, and where.**
+
+- The rules rung needs nothing: no model, no network. It is the only rung that
+  runs inline, in the image.
+- The judge needs an endpoint approved for reading attack text (`GUARDRAIL_*`
+  or `INJECTION_*`). It runs only at build time, in `screen_wiki.py`, on the
+  machine that builds the wiki. Nothing in the image calls it.
+- The classifier would need a 90 MB embedding model from Hugging Face. It is
+  declined (`decisions.md`, Week 6), so nothing downloads it.
+
+A deploy must not ship a wiki page that changed since it was screened.
+`deploy.md` step 0 runs `screen_wiki.py --check` for that.
+
+---
+
 ## Week 9 — the full checklist
 
 <!--

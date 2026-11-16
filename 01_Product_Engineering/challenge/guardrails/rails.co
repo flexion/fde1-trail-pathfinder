@@ -1,0 +1,13 @@
+# Level 2: the classifier rung, a custom action wired in as an input rail
+# (Session 12's shape). `regex check input` (Level 1) and `self check input`
+# (Level 3) are NeMo's built-in flows; config.yml switches them on and orders them.
+#
+# An action that raises does not let the input through: NeMo marks this rail
+# stopped and replies "an internal error has occurred", which rails.py reports as
+# `error:classifier check input`.
+
+define subflow classifier check input
+  $allowed = execute classify_input(text=$user_message)
+  if not $allowed
+    bot refuse to respond
+    stop
