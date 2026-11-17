@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import sys
 from datetime import date
 from pathlib import Path
@@ -28,8 +29,8 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(HERE))
 
 from helpers import harness as h  # noqa: E402
-from harness import (HEADLINE, SCORERS, bootstrap_ci, echo, endpoint, judge_related, load_cases,  # noqa: E402
-                     make_oracle, make_replay)
+from harness import (HEADLINE, SCORERS, blocks_injection, bootstrap_ci, echo, endpoint, judge_related,  # noqa: E402
+                     load_attack_cases, load_cases, make_oracle, make_replay)
 
 BASELINE = HERE / "baseline.json"
 # The summary the demo page shows under the AI-1 screen (app.py serves it at /eval).
@@ -65,6 +66,20 @@ def export_summary(run: h.RunReport, measured: str | None = None) -> Path:
     return SUMMARY
 
 
+class _EvidenceDrops(logging.Handler):
+    """Counts suggest's "evidence check dropped ..." log lines (TC6, suggest.backed)."""
+
+    def __init__(self):
+        super().__init__(logging.INFO)
+        self.messages: list[str] = []
+        logging.getLogger("suggest").addHandler(self)
+        logging.getLogger("suggest").setLevel(logging.INFO)
+
+    def emit(self, record):
+        if record.getMessage().startswith("evidence check dropped"):
+            self.messages.append(record.getMessage().removeprefix("evidence check dropped "))
+
+
 def table(reports) -> str:
     names = [*SCORERS, HEADLINE]
     lines = ["| system | n | " + " | ".join(names) + " |", "| --- | --- | " + " | ".join("---" for _ in names) + " |"]
@@ -94,6 +109,7 @@ def main() -> None:
 
     cases = load_cases()
     system = make_replay(HERE / "traces.jsonl") if args.replay else endpoint
+    drops = _EvidenceDrops()   # TC6: what the evidence check removed on the live run
     name = "endpoint (replay)" if args.replay else "endpoint"
     reports = [
         h.run(cases, echo, SCORERS, name="echo"),
@@ -102,6 +118,9 @@ def main() -> None:
               meta={"headline": HEADLINE, "system": name}),
     ]
     print(table(reports))
+    if not args.replay:
+        print(f"\nevidence check (TC6) dropped {len(drops.messages)} model suggestions across the {len(cases)} cases"
+              + "".join(f"\n  {m}" for m in drops.messages))
     for r in reports:
         if r.errors:
             print(f"\n{r.name}: {r.errors} cases raised; see their `error` in the report")
@@ -117,7 +136,51 @@ def main() -> None:
         print(f"wrote {export_summary(run).relative_to(ROOT)}")
     if BASELINE.exists():
         print(h.compare(h.load(BASELINE), run))
+    attack_report()
 
+
+def attack_report() -> None:
+    """Week 6: every winning attack in attacks.jsonl, scored by `blocks_injection` against the
+    config that guards its door: direct attacks against the inline rules (no model), attacks in
+    the wiki, tool description or SKILL.md against the build-time ladder, whose judge runs on
+    INJECTION_MODEL/INJECTION_API_BASE only. Separate from the fifty-case run and baseline.json."""
+    from harness import door_config, door_rails
+    from rails import injection_judge, stopped_by
+
+    cases = load_attack_cases()
+    print("\n## Attacks (Week 6): blocks_injection, by door")
+    if not cases:
+        print("no attack cases yet: attacks.jsonl has no `winner: true` rows")
+        return
+    scored = [c for c in cases if door_config(c) == "inline"]
+    build = [c for c in cases if door_config(c) == "build"]
+    if build:
+        # A scorer that raises scores 0 with no message, so reach the judge once first and say why not.
+        why = None if injection_judge() else "INJECTION_MODEL/INJECTION_API_BASE is not set"
+        if why is None:
+            try:
+                probe = stopped_by(door_rails("build"), "Two seasons on a trail crew, brushing and building water bars.")
+                if probe:
+                    why = f"a benign probe was stopped ({probe})"
+            except Exception as exc:
+                why = f"{type(exc).__name__}: {str(exc)[:160]}"
+        if why:
+            print(f"skipped {len(build)} judge-dependent cases (wiki, tool, SKILL.md doors), not scored: {why}")
+        else:
+            scored += build
+    if not scored:
+        return
+    report = h.run(scored, lambda _text: "", {"blocks_injection": blocks_injection}, name="ladder by door")
+    for config in ("inline", "build"):
+        results = [r for r in report.results if door_config(scored[r.index]) == config]
+        if results:
+            blocked = sum(r.scores.get("blocks_injection", 0.0) for r in results)
+            print(f"{config}: blocked {blocked:.0f} of {len(results)} winning attacks")
+    for res in report.results:
+        if res.scores.get("blocks_injection") != 1.0:
+            err = (res.error or "").strip().splitlines()
+            print(f"  not blocked: {scored[res.index]['id']} ({scored[res.index]['kind']})"
+                  + (f"  error: {err[-1]}" if err else ""))
 
 if __name__ == "__main__":
     main()

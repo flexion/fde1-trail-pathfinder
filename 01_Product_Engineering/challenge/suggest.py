@@ -15,7 +15,10 @@ Levels: every suggestion is Entry. Raising one needs her words to match a rubric
 (`level_basis`), which is step 2, the Week 4 judge; until then nothing is raised.
 
 Code checks what the model says: an id not in the framework is dropped, a quote not in
-her text is dropped with its suggestion, rejected ids never come back. Her words win
+her text is dropped with its suggestion, a quote the wiki index does not rank the skill for
+(top EVIDENCE_K) is dropped (TC6: a quote of hers proves the words are hers, not that they
+describe that skill), rejected ids never come back. Before any of that, text matching a
+Level 1 guardrail rule (guardrails/config.yml, instruction-shaped text) is declined. Her words win
 over a chip on the same skill. A chip skill her words point away from (the model names it,
 with her words, in the same call) says so in its reason: still listed, not pre-checked. At
 most 12, dropping check then possible first.
@@ -47,6 +50,7 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import cache
 from pathlib import Path
 
+from rails import rules_stop
 from schema import Category, CompetencySuggestion, CompetencySuggestions, Confidence, ExperienceRequest, SkillLevel
 
 log = logging.getLogger(__name__)
@@ -61,6 +65,9 @@ EMBED_CACHE = Path(os.getenv("EMBED_CACHE") or REPO_DATA / "embeddings_cache.jso
 EMBED_MODEL = os.getenv("EMBED_MODEL") or "openai/bedrock/amazon.titan-embed-text-v2:0"
 
 MAX_SUGGESTIONS = 12
+# TC6: a quote backs a skill only when the wiki index, asked about the quote, ranks that skill
+# in its top EVIDENCE_K (use_case/decisions.md, Week 6). Chosen from data in evidence_k.py.
+EVIDENCE_K = int(os.getenv("EVIDENCE_K") or 8)
 MAX_TURNS = 6
 MAX_K = 8
 FRAMEWORK_VERSION = "role profiles and competency map 2026-10-20; trailskills.org skill pages"
@@ -92,6 +99,8 @@ TOOLS = [{"type": "function", "function": {
 DECLINE_VAGUE = "Not enough to go on: no task, tool or feature is named. Ask for what the work involved."
 DECLINE_NOTHING = ("Nothing here maps to a trail competency. Pick a background or describe any outdoor, "
                    "construction or crew work.")
+DECLINE_INSTRUCTIONS = ("This reads like instructions to the tool, not a description of your work. "
+                        "Tell us what trail, outdoor or crew work you did.")
 HEDGES = ("only ", "a little", "a few", "some ", "helped", "tried", "watched", "took the", "class")
 
 
@@ -177,6 +186,29 @@ def search_chunks(query: str, k: int = 4) -> str:
     scores = chunk_matrix() @ embed([query])[0]
     order = scores.argsort()[::-1][: max(1, min(int(k), MAX_K))]
     return "\n\n---\n\n".join(f"[{chunks()[i]['id']}]\n{chunks()[i]['text'][:1000]}" for i in order)
+
+
+def _twin(skill_id: str) -> str:
+    """A skill and its numbered twin (`...-brushing`, `...-brushing-2`) are one skill here."""
+    return re.sub(r"-2$", "", skill_id)
+
+
+def skills_for(quote: str) -> list[str]:
+    """Every skill id, best first, as the wiki index ranks them for `quote`; twins collapsed."""
+    scores = chunk_matrix() @ embed([quote])[0]
+    ranked: list[str] = []
+    for i in scores.argsort()[::-1]:
+        sid = _twin(chunks()[i]["id"].split("#")[0])
+        if sid not in ranked:
+            ranked.append(sid)
+    return ranked
+
+
+def backed(skill_id: str, quote: str) -> bool:
+    """The evidence check. The model may name any skill; her quote must be about it. Rank, not a
+    similarity threshold, so it holds for Titan in production and bge-m3 in local attack runs.
+    An embedding failure raises, and suggest() falls back to the rules: never accepted unchecked."""
+    return _twin(skill_id) in skills_for(quote)[:EVIDENCE_K]
 
 
 class Meter:
@@ -323,7 +355,7 @@ def from_text_model(text: str, chip_skills: list[CompetencySuggestion] = (), way
             sid, quote = str(item.get("skill_id", "")), str(item.get("quote") or "").strip().strip('"')
             if sid in listed and quote and quote.casefold() in text.casefold():
                 contradicted.add(sid)
-    out = []
+    named = []
     for item in answer.get("skills") or []:
         if not isinstance(item, dict):
             continue
@@ -331,6 +363,15 @@ def from_text_model(text: str, chip_skills: list[CompetencySuggestion] = (), way
         quote = (item.get("quote") or "").strip().strip('"')
         if sid not in known or not quote or quote.casefold() not in text.casefold():
             log.info("dropped model suggestion %r (unknown id or quote not in her text)", item)
+            continue
+        named.append((sid, quote))
+    if named:
+        embed([quote for _, quote in named])   # one parallel batch, so the evidence check costs one round trip
+    out = []
+    for sid, quote in named:
+        if not backed(sid, quote):
+            # The prompt says "name a skill only when her words describe doing that work"; this is that rule in code.
+            log.info("evidence check dropped %s for quote %r", sid, quote)
             continue
         hedged = any(h in quote.casefold() for h in HEDGES)
         out.append(suggestion(sid, Confidence.CHECK if hedged else Confidence.LIKELY, f'You wrote "{quote}"', quote))
@@ -354,6 +395,11 @@ def suggest(request: ExperienceRequest, *, way: str | None = None, **measure) ->
     known_bg = {b["id"] for b in framework()["backgrounds"]}
     backgrounds = [b for b in request.backgrounds if b in known_bg]
     text = request.text.strip()
+
+    # TC6 Level 1, inline: instruction-shaped text is declined before any model sees it.
+    if text and rules_stop(text):
+        log.warning("AI-1 input stopped by guardrail rung rules")
+        return CompetencySuggestions(declined=True, reason=DECLINE_INSTRUCTIONS, produced_by="rules")
 
     chip_found = from_backgrounds(backgrounds)
     text_found: list[CompetencySuggestion] = []
