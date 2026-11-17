@@ -98,7 +98,7 @@ challenge, which has the full detail.
 ### 📤 Share
 
 - [ ] **The refined demo, shown to a real stakeholder**, with what changed after critique and what they asked, recorded in your own words. Graded
-- [ ] **What you would swap to run this at work**: data, model or endpoint, and the approval you would need, as three lines in your README
+- [x] **What you would swap to run this at work**: data, model or endpoint, and the approval you would need, as three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->
@@ -619,7 +619,7 @@ challenge, which has the full detail.
 ### 📤 Share
 
 - [ ] **The refined demo, shown to a real stakeholder**, with what changed after critique and what they asked, recorded in your own words. Graded
-- [ ] **What you would swap to run this at work**: data, model or endpoint, and the approval you would need, as three lines in your README
+- [x] **What you would swap to run this at work**: data, model or endpoint, and the approval you would need, as three lines in your README
 - [ ] Your repo link posted in [our community on Maven](https://bit.ly/fde1-maven-community)
 - [ ] Comments on at least two other students' submissions, after the deadline
 <!-- deliverables:end -->
@@ -742,7 +742,37 @@ conditions (a second client, policy churn, call count). The open question
 
 ### Step 8 — bring it to work
 
-<!-- Three swap lines (data, model or endpoint, approval), to be written by the team. -->
+**Which capability at work this is for:** `search_chunks`, the dense lookup
+over the trailskills.org skills wiki that only AI-1's `suggest_competencies`
+calls, reached by one caller, the client's career-explorer front end.
+
+- **Data.** One `search_chunks` reply at `k=4` is 984–1,958 bytes (median
+  1,474, over the 85 distinct queries the tool loop sent), and a request
+  needs 4–8 of them, so 6–12 KB of chunk text enters the context per
+  request; the multi-topic request costs 5,466 tokens at that size,
+  *measured* 2026-11-10 (`use_case/evals/ways_results.md`, Step 5). The
+  corpus is 55 public pages, 220 chunks, rebuilt by
+  `use_case/fetch_trailskills_levels.py` into a gitignored 5 MB embeddings
+  cache. To run this at work the swap is the live skills catalog the
+  client's platform will hold instead of a scrape of the wiki, re-embedded
+  when a page changes, and the client's role profiles in a store we do not
+  copy into the image.
+- **Model or endpoint.** The capability does not exist as an HTTP API: it
+  is a function inside the container, and the embeddings and the model go
+  out to Amazon Bedrock. Locally that is through Flexion's gateway
+  (`openai/bedrock/gpt-5.6-luna`, Titan v2 for embeddings); on ECS the task
+  role calls Bedrock directly, so there is no key to hold
+  (`use_case/ecosystem.md` rows 6 and 8). At work the credential moves to
+  the client's AWS account under the grant, held by a task or Lambda role
+  the platform steward owns, and the model becomes whichever Bedrock model
+  that account has enabled; `llm.py` makes that a config change.
+- **Approval.** No sandbox, because we kept the tool loop and rejected
+  Code Mode. What we would have to ask for: a deployment target in the
+  client's AWS account, where the planned shape is serverless and a Python
+  container has no obvious home (`ecosystem.md` row 1), approved by the
+  grant's platform steward, with Bedrock model access enabled in that
+  account; and the product owner's sign-off to keep real workers' inputs in
+  `traces.jsonl`, which is what closes open question #5.
 
 ---
 
