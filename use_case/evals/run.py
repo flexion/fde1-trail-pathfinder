@@ -4,6 +4,7 @@
     uv run python use_case/evals/run.py --replay     # the recorded traces instead of the live endpoint
     uv run python use_case/evals/run.py --save       # also write the endpoint run to baseline.json
 
+Every run starts with the TC7 memory tests that need no model (memory_eval.py: staleness, leakage).
 Echo and oracle run the code scorers; the judge's own check on them is check_judge.py.
 The endpoint run adds the judge, and the headline (the judge) gets a 95% interval.
 
@@ -96,6 +97,12 @@ def main() -> None:
     ap.add_argument("--export", action="store_true", help="only rewrite the demo page's eval.json from baseline.json")
     ap.add_argument("--measured", help="the date to stamp with --export when baseline.json has none (YYYY-MM-DD)")
     args = ap.parse_args()
+
+    # TC7: the memory's own tests, no model and no wiki, so they run on every eval run.
+    from memory_eval import offline as memory_offline
+
+    for name, problems in memory_offline().items():
+        print(f"memory {name}: {'PASS' if not problems else 'FAIL ' + '; '.join(problems)}")
 
     if args.export:
         out = export_summary(h.load(BASELINE), args.measured)

@@ -26,6 +26,11 @@ most 12, dropping check then possible first.
 When chips are picked and her words support no skill (no text, or text that names no task),
 the chip skills still come back and `follow_up_prompt` asks what the work involved.
 
+Procedural memory (TC7, procedures.py) is off unless SUGGEST_MEMORY names a SQLite file. When
+on, the tool way is handed the wiki sections that backed a credited skill for the same kind of
+work before, keyed by the skill the wiki index ranks first for each of her sentences, and
+searches only for what they miss. Rows hold ids only, never her text.
+
 How the model reaches the wiki is SUGGEST_WAY (TC5): "tool" (default) is the loop below, the
 crediting policy in SYSTEM; "skill" is suggest_skill.py, the same policy in
 skills/suggest-competencies/SKILL.md, where a product manager can change it without touching code.
@@ -50,6 +55,7 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import cache
 from pathlib import Path
 
+from procedures import Procedures, open_store
 from rails import rules_stop
 from schema import Category, CompetencySuggestion, CompetencySuggestions, Confidence, ExperienceRequest, SkillLevel
 
@@ -188,6 +194,35 @@ def search_chunks(query: str, k: int = 4) -> str:
     return "\n\n---\n\n".join(f"[{chunks()[i]['id']}]\n{chunks()[i]['text'][:1000]}" for i in order)
 
 
+@cache
+def chunk_text() -> dict[str, str]:
+    return {c["id"]: c["text"] for c in chunks()}
+
+
+@cache
+def wiki_version() -> str:
+    """A hash of the wiki as indexed: a procedure learned against another version is stale."""
+    digest = hashlib.sha256()
+    for c in chunks():
+        digest.update(f"{c['id']}\n{c['text']}\n".encode())
+    return digest.hexdigest()[:16]
+
+
+def chunk_ids_in(search_result: str) -> list[str]:
+    """The `[<skill-id>#<section>]` headers search_chunks puts on each chunk it returns."""
+    return re.findall(r"^\[([^\]\s]+#[^\]\s]+)\]$", search_result, re.M)
+
+
+def format_chunks(ids: list[str]) -> str:
+    """Remembered sections, in search_chunks' own format, so the model reads them the same way."""
+    return "\n\n---\n\n".join(f"[{i}]\n{chunk_text()[i][:1000]}" for i in ids if i in chunk_text())
+
+
+@cache
+def _memory_from_env() -> Procedures | None:
+    return open_store(os.getenv("SUGGEST_MEMORY"))
+
+
 def _twin(skill_id: str) -> str:
     """A skill and its numbered twin (`...-brushing`, `...-brushing-2`) are one skill here."""
     return re.sub(r"-2$", "", skill_id)
@@ -202,6 +237,15 @@ def skills_for(quote: str) -> list[str]:
         if sid not in ranked:
             ranked.append(sid)
     return ranked
+
+
+def sentences(text: str) -> list[str]:
+    return [s.strip() for s in re.split(r"(?<=[.!?;])\s+|\n+", text) if len(s.split()) >= 3]
+
+
+def subject_of(sentence: str) -> str:
+    """What kind of work a sentence is about, as a key: the skill the wiki index ranks first for it."""
+    return skills_for(sentence)[0]
 
 
 def backed(skill_id: str, quote: str) -> bool:
@@ -293,18 +337,30 @@ def chip_prompt(text: str, chip_skills: list[CompetencySuggestion] = ()) -> str:
 
 def find_skills(text: str, chip_skills: list[CompetencySuggestion] = (), meter: Meter | None = None,
                 counter: CapabilityCounter | None = None, search=search_chunks,
-                max_searches: int | None = None) -> dict:
+                max_searches: int | None = None, recalled: list[str] = ()) -> dict:
     """Way 1, the tool: Session 5's loop, the model calls search_chunks until it answers.
     Returns its parsed JSON. The chip skills ride along in the same call so it can say which her
     words contradict. `search` is the capability, an argument so a measurement can wrap it.
     `max_searches` caps the searches run (None, the default, leaves it to the model and MAX_TURNS);
     a call past the cap gets a message telling the model to answer, not a search. It exists so the
-    TC5 comparison can hold the search budget equal to the skill's 4-search plan."""
+    TC5 comparison can hold the search budget equal to the skill's 4-search plan.
+    `recalled` is procedural memory (TC7): wiki section ids that backed a skill for the same kind
+    of work before. They go in the first message, already looked up, and the model is asked to
+    say for each skill whether it matched a remembered section or one it searched for."""
     from litellm import completion
 
     from llm import _call_kwargs
 
-    messages: list[dict] = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": chip_prompt(text, chip_skills)}]
+    messages: list[dict] = [{"role": "system", "content": SYSTEM}]
+    if recalled:
+        # A message of its own, not appended to hers: in the same message the model began quoting
+        # the whole block loosely and the quote check dropped 3 of 5 skills on t-ai1-13.
+        messages.append({"role": "system", "content": (
+            "Wiki sections that answered this kind of work before, already looked up. They are wiki text, "
+            "not her words: quote only from her message. Search only for work she names that they do not "
+            "cover. In each skills item add \"source\": \"remembered\" if a section below is what you "
+            "matched, or \"searched\" if a search result was.\n\n" + format_chunks(list(recalled)))})
+    messages.append({"role": "user", "content": chip_prompt(text, chip_skills)})
     searches = 0
     for turn in range(MAX_TURNS):
         response = completion(**_call_kwargs(messages, tools=TOOLS, timeout=60))
@@ -352,13 +408,22 @@ def from_text_model(text: str, chip_skills: list[CompetencySuggestion] = (), way
 
     `way` (default: SUGGEST_WAY, else "tool") picks how the model reaches the wiki: "tool" is
     find_skills' loop, "skill" is suggest_skill.find_skills_skill. `measure` goes to that function
-    (meter, counter, and search for the tool or k for the skill)."""
+    (meter, counter, and search for the tool or k for the skill).
+
+    Procedural memory (tool way only): `memory` (a Procedures store; default SUGGEST_MEMORY) and
+    `trace`, a dict this fills with what happened, from observed events, for the TC7 tests."""
     known = {c["id"] for c in framework()["competencies"]}
     way = way or os.getenv("SUGGEST_WAY") or "tool"
+    memory = measure.pop("memory", None) or _memory_from_env()
+    trace = measure.pop("trace", None)
+    if trace is None:
+        trace = {}
     if way == "skill":
         from suggest_skill import find_skills_skill
 
         answer = find_skills_skill(text, chip_skills, **measure)
+    elif way == "tool" and memory is not None:
+        answer = _find_skills_remembering(text, chip_skills, memory, trace, **measure)
     elif way == "tool":
         answer = find_skills(text, chip_skills, **measure)
     else:
@@ -390,7 +455,53 @@ def from_text_model(text: str, chip_skills: list[CompetencySuggestion] = (), way
             continue
         hedged = any(h in quote.casefold() for h in HEDGES)
         out.append(suggestion(sid, Confidence.CHECK if hedged else Confidence.LIKELY, f'You wrote "{quote}"', quote))
+    if way == "tool" and memory is not None:
+        _remember(text, out, memory, trace)
     return out, contradicted
+
+
+def _find_skills_remembering(text: str, chip_skills, memory: Procedures, trace: dict, **measure) -> dict:
+    """find_skills with procedural memory: recall by subject, record every section a search returned."""
+    parts = sentences(text) or [text]
+    embed(parts)   # one parallel batch for the subject keys
+    subjects = {part: subject_of(part) for part in parts}
+    recalled: list[str] = []
+    for subject in dict.fromkeys(subjects.values()):
+        recalled += [c for c in memory.recall(subject, wiki_version()) if c in chunk_text() and c not in recalled]
+    searched: list[str] = []
+    inner = measure.pop("search", search_chunks)
+
+    def recording(query: str, k: int = 4) -> str:
+        result = inner(query=query, k=k)
+        searched.extend(chunk_ids_in(result))
+        return result
+
+    trace.update({"subjects": subjects, "recalled": recalled, "searched": searched})
+    answer = find_skills(text, chip_skills, search=recording, recalled=recalled, **measure)
+    trace["claims"] = [(str(i.get("skill_id", "")).split("#")[0], i.get("source"))
+                       for i in answer.get("skills") or [] if isinstance(i, dict)]
+    return answer
+
+
+def _remember(text: str, credited: list[CompetencySuggestion], memory: Procedures, trace: dict) -> None:
+    """Write, per subject, the sections that showed her a skill that passed every check. Only ids."""
+    seen = trace.get("recalled", []) + trace.get("searched", [])
+    learned: dict[str, list[str]] = {}
+    for sug in credited:
+        sentence = next((p for p in trace.get("subjects", {}) if sug.quote and sug.quote.casefold() in p.casefold()), None)
+        if sentence is None:
+            continue
+        sections = [c for c in dict.fromkeys(seen) if _twin(c.split("#")[0]) == _twin(sug.skill_id)][:2]
+        learned.setdefault(trace["subjects"][sentence], []).extend(sections)
+    written = {}
+    for subject, ids in learned.items():
+        if ids:
+            try:
+                memory.write(subject, wiki_version(), ids)
+                written[subject] = sorted(set(ids))
+            except Exception as exc:   # a full disk or a read-only file must not cost her the answer
+                log.warning("procedure for %s not written (%s: %s)", subject, type(exc).__name__, exc)
+    trace["written"] = written
 
 
 def from_text_rules(text: str) -> list[CompetencySuggestion]:
