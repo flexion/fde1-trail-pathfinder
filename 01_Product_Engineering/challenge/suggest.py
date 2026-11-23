@@ -221,6 +221,7 @@ class Meter:
         self.total_tokens = 0
         self.first_turn_tool_calls: int | None = None   # len(msg.tool_calls) on turn one
         self.tool_calls_emitted = 0
+        self.turns: list[dict] = []   # per model call: prompt and completion tokens, tool calls emitted
         self.notes: list[str] = []
 
     def track(self, response):
@@ -230,6 +231,10 @@ class Meter:
             self.prompt_tokens += usage.prompt_tokens or 0
             self.completion_tokens += usage.completion_tokens or 0
             self.total_tokens += usage.total_tokens or 0
+        message = response.choices[0].message
+        self.turns.append({"prompt_tokens": getattr(usage, "prompt_tokens", None),
+                           "completion_tokens": getattr(usage, "completion_tokens", None),
+                           "tool_calls": len(message.tool_calls or [])})
 
 
 class CapabilityCounter:
@@ -287,15 +292,20 @@ def chip_prompt(text: str, chip_skills: list[CompetencySuggestion] = ()) -> str:
 
 
 def find_skills(text: str, chip_skills: list[CompetencySuggestion] = (), meter: Meter | None = None,
-                counter: CapabilityCounter | None = None, search=search_chunks) -> dict:
+                counter: CapabilityCounter | None = None, search=search_chunks,
+                max_searches: int | None = None) -> dict:
     """Way 1, the tool: Session 5's loop, the model calls search_chunks until it answers.
     Returns its parsed JSON. The chip skills ride along in the same call so it can say which her
-    words contradict. `search` is the capability, an argument so a measurement can wrap it."""
+    words contradict. `search` is the capability, an argument so a measurement can wrap it.
+    `max_searches` caps the searches run (None, the default, leaves it to the model and MAX_TURNS);
+    a call past the cap gets a message telling the model to answer, not a search. It exists so the
+    TC5 comparison can hold the search budget equal to the skill's 4-search plan."""
     from litellm import completion
 
     from llm import _call_kwargs
 
     messages: list[dict] = [{"role": "system", "content": SYSTEM}, {"role": "user", "content": chip_prompt(text, chip_skills)}]
+    searches = 0
     for turn in range(MAX_TURNS):
         response = completion(**_call_kwargs(messages, tools=TOOLS, timeout=60))
         msg = response.choices[0].message
@@ -311,7 +321,12 @@ def find_skills(text: str, chip_skills: list[CompetencySuggestion] = (), meter: 
                   for c in calls]
         messages.append({"role": "assistant", "content": msg.content or "", "tool_calls": shaped})
         for call in shaped:
-            messages.append({"role": "tool", "tool_call_id": call["id"], "content": dispatch(call, search, counter)})
+            if max_searches is not None and searches >= max_searches:
+                content = f"(search budget of {max_searches} used: answer now from the results you have)"
+            else:
+                searches += 1
+                content = dispatch(call, search, counter)
+            messages.append({"role": "tool", "tool_call_id": call["id"], "content": content})
     raise TimeoutError(f"no answer in {MAX_TURNS} turns")
 
 
