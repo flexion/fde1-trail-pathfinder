@@ -2,8 +2,10 @@
 
     uv run python use_case/evals/ways_compare.py            # Step 4 and Step 5, 3 runs each
     uv run python use_case/evals/ways_compare.py --runs 1   # quicker
+    uv run python use_case/evals/ways_compare.py --cap 4    # tool loop capped at 4 searches, vs the skill
 
 Writes ways_results.jsonl (one row per run) and ways_results.md (medians and ranges).
+--cap writes ways_capped.jsonl and ways_capped.md instead, leaving the uncapped results alone.
 
 Each run goes through suggest() in-process, the same code as the API, with the way chosen
 per call. Per run: model calls, capability calls counted two ways (an in-process counting
@@ -46,6 +48,8 @@ WAYS = ("tool", "skill")
 SWEEP_K = (1, 4, 8)
 OUT_JSONL = HERE / "ways_results.jsonl"
 OUT_MD = HERE / "ways_results.md"
+CAP_JSONL = HERE / "ways_capped.jsonl"
+CAP_MD = HERE / "ways_capped.md"
 
 
 class Failures(logging.Handler):
@@ -73,12 +77,15 @@ def counting_search(sink: dict, force_k: int | None):
     return search
 
 
-def run_once(way: str, rid: str, case_input: dict, force_k: int | None, step: str) -> dict:
+def run_once(way: str, rid: str, case_input: dict, force_k: int | None, step: str,
+             max_searches: int | None = None) -> dict:
     meter, far = Meter(), CapabilityCounter()
     sink = {"calls": 0, "asked_k": [], "bytes": [], "queries": []}
     measure = {"meter": meter}
     if way == "tool":
         measure["search"] = counting_search(sink, force_k)
+        if max_searches is not None:
+            measure["max_searches"] = max_searches
     else:
         measure["counter"] = far
         if force_k:
@@ -113,6 +120,7 @@ def run_once(way: str, rid: str, case_input: dict, force_k: int | None, step: st
         "response_bytes": len(result.model_dump_json().encode()),
         "text_skill_ids": sorted(s.skill_id for s in model_sugs),
         "prechecked_ids": sorted(s.skill_id for s in result.suggestions if s.confidence != Confidence.CHECK),
+        "turns": meter.turns,
         "notes": meter.notes,
         "error": "; ".join(failures.messages) or None,
     }
@@ -212,23 +220,88 @@ def report(rows: list[dict]) -> str:
     return "\n".join(out)
 
 
+def token_split(row: dict) -> dict:
+    """Split a run's tokens into the fixed prompt and what the searches added on top of it.
+
+    The fixed prompt is turn 1's prompt (system + her text + chips): every later model call re-sends
+    it. What a search adds is the growth of the prompt from one call to the next, less the previous
+    call's own completion (which is re-sent too), divided over the searches that call asked for."""
+    turns = row.get("turns") or []
+    if not turns or any(t["prompt_tokens"] is None for t in turns):
+        return {}
+    fixed = turns[0]["prompt_tokens"]
+    added, searches = 0, 0
+    for prev, cur in zip(turns, turns[1:]):
+        added += cur["prompt_tokens"] - prev["prompt_tokens"] - (prev["completion_tokens"] or 0)
+        searches += prev["tool_calls"]
+    # Count searches that ran, not calls emitted: past the cap a call gets a one-line refusal, and
+    # the skill's plan call emits one plan_searches call however many searches it plans.
+    searches = row["capability_calls_in_process"] if row["way"] == "tool" else row["capability_calls_far_side"] or 0
+    return {"fixed_prompt": fixed, "fixed_resent": fixed * (len(turns) - 1), "search_added": added,
+            "per_search": round(added / searches) if searches else None,
+            "completion": sum(t["completion_tokens"] or 0 for t in turns)}
+
+
+def capped_report(rows: list[dict], cap: int) -> str:
+    out = [f"# TC5: the tool loop capped at {cap} searches vs the skill", "",
+           f"Measured {time.strftime('%Y-%m-%d')} by `ways_compare.py --cap {cap}`, same requests, model and "
+           "k as Step 4 in `ways_results.md`. The tool loop's `find_skills` stops searching after "
+           f"{cap} calls (`max_searches`; past it the model is told to answer), matching the skill's "
+           f"`MAX_SEARCHES = {cap}` plan. Median of the runs, range in brackets.", "",
+           "Searches run counts only calls that reached `search_chunks`. The token split: **fixed prompt** "
+           "is turn 1's prompt (system prompt + her text + chips); **fixed re-sent** is that prompt again on "
+           "every later model call; **search added** is how much each later prompt grew beyond the previous "
+           "one plus its completion, i.e. the search results; **per search** divides that by the searches run. "
+           "For the skill, the answer call has its own system prompt (the policy), so its search added also "
+           "carries the difference between the plan and answer prompts: read it as an upper bound.", "",
+           "| way | request | searches run | model calls | tokens | fixed prompt | fixed re-sent | search added "
+           "| per search | completion | latency ms | errors |",
+           "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+    for rid in REQUESTS:
+        for way in WAYS:
+            rs = [{**r, **token_split(r), "searches": r["capability_calls_in_process"] if way == "tool"
+                   else r["capability_calls_far_side"]}
+                  for r in rows if r["request"] == rid and r["way"] == way]
+            if not rs:
+                continue
+            errs = sum(1 for r in rs if r["error"])
+            cells = " | ".join(med(rs, key) if all(key in r for r in rs) else "n/a"
+                               for key in ("fixed_prompt", "fixed_resent", "search_added", "per_search", "completion"))
+            out.append(f"| {way} | {rid} | {med(rs, 'searches')} | {med(rs, 'model_calls')} | "
+                       f"{med(rs, 'total_tokens')} | {cells} | {med(rs, 'latency_ms')} | {errs}/{len(rs)} |")
+    out += ["", "## Per run", "", "| way | request | run | searches | per-turn prompt / completion / tool calls |",
+            "| --- | --- | --- | --- | --- |"]
+    for rid in REQUESTS:
+        for way in WAYS:
+            for n, r in enumerate([r for r in rows if r["request"] == rid and r["way"] == way], 1):
+                turns = "; ".join(f"{t['prompt_tokens']}/{t['completion_tokens']}/{t['tool_calls']}" for t in r["turns"])
+                searches = r["capability_calls_in_process"] if way == "tool" else r["capability_calls_far_side"]
+                out.append(f"| {way} | {rid} | {n} | {searches} | {turns} |")
+    return "\n".join(out) + "\n"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--report", action="store_true", help="rewrite the md from the jsonl, no model calls")
+    parser.add_argument("--cap", type=int, help="cap the tool loop at this many searches; Step 4 requests only")
     args = parser.parse_args()
+    out_jsonl, out_md = (CAP_JSONL, CAP_MD) if args.cap else (OUT_JSONL, OUT_MD)
+    write = (lambda rows: capped_report(rows, args.cap)) if args.cap else report
     if args.report:
-        OUT_MD.write_text(report([json.loads(line) for line in OUT_JSONL.read_text().splitlines() if line.strip()]))
+        out_md.write_text(write([json.loads(line) for line in out_jsonl.read_text().splitlines() if line.strip()]))
         return
     inputs = {json.loads(line)["id"]: json.loads(line)["input"]
               for line in (HERE / "trace_inputs.jsonl").read_text().splitlines() if line.strip()}
-    plan = [("step4", way, rid, None) for rid in REQUESTS for way in WAYS]
-    plan += [("step5", way, MULTI, k) for k in SWEEP_K for way in WAYS]
+    step4 = "capped" if args.cap else "step4"
+    plan = [(step4, way, rid, None) for rid in REQUESTS for way in WAYS]
+    if not args.cap:
+        plan += [("step5", way, MULTI, k) for k in SWEEP_K for way in WAYS]
     rows = []
-    with OUT_JSONL.open("w") as f:
+    with out_jsonl.open("w") as f:
         for step, way, rid, k in plan:
             for n in range(args.runs):
-                row = run_once(way, rid, inputs[rid], k, step)
+                row = run_once(way, rid, inputs[rid], k, step, args.cap if way == "tool" else None)
                 rows.append(row)
                 f.write(json.dumps(row) + "\n")
                 f.flush()
@@ -236,8 +309,8 @@ def main() -> None:
                       f"{row['capability_calls_in_process']}/{row['capability_calls_far_side']} capability, "
                       f"{row['total_tokens']} tokens, {row['latency_ms']} ms"
                       + (f"  ERROR {row['error']}" if row["error"] else ""), flush=True)
-    OUT_MD.write_text(report(rows))
-    print(f"wrote {OUT_JSONL.relative_to(ROOT)} and {OUT_MD.relative_to(ROOT)}")
+    out_md.write_text(write(rows))
+    print(f"wrote {out_jsonl.relative_to(ROOT)} and {out_md.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
