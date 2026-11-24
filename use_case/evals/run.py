@@ -161,6 +161,14 @@ def attack_report() -> None:
         return
     scored = [c for c in cases if door_config(c) == "inline"]
     build = [c for c in cases if door_config(c) == "build"]
+    # Both configs are NeMo rails. Without the package every scorer raises, the harness scores
+    # that 0, and "blocked 0 of 15" reads as a broken guardrail when it is a missing install.
+    try:
+        import nemoguardrails  # noqa: F401
+    except ImportError:
+        print(f"skipped {len(cases)} attack cases, not scored: nemoguardrails is not installed "
+              "(it is in the week6 group: uv run --group week6 python use_case/evals/run.py)")
+        return
     if build:
         # A scorer that raises scores 0 with no message, so reach the judge once first and say why not.
         why = None if injection_judge() else "INJECTION_MODEL/INJECTION_API_BASE is not set"
