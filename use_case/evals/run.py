@@ -4,6 +4,7 @@
     uv run python use_case/evals/run.py --replay     # the recorded traces instead of the live endpoint
     uv run python use_case/evals/run.py --save       # also write the endpoint run to baseline.json
 
+Every run starts with the TC7 memory tests that need no model (memory_eval.py: staleness, leakage).
 Echo and oracle run the code scorers; the judge's own check on them is check_judge.py.
 The endpoint run adds the judge, and the headline (the judge) gets a 95% interval.
 
@@ -97,6 +98,12 @@ def main() -> None:
     ap.add_argument("--measured", help="the date to stamp with --export when baseline.json has none (YYYY-MM-DD)")
     args = ap.parse_args()
 
+    # TC7: the memory's own tests, no model and no wiki, so they run on every eval run.
+    from memory_eval import offline as memory_offline
+
+    for name, problems in memory_offline().items():
+        print(f"memory {name}: {'PASS' if not problems else 'FAIL ' + '; '.join(problems)}")
+
     if args.export:
         out = export_summary(h.load(BASELINE), args.measured)
         print(f"wrote {out.relative_to(ROOT)}")
@@ -154,6 +161,14 @@ def attack_report() -> None:
         return
     scored = [c for c in cases if door_config(c) == "inline"]
     build = [c for c in cases if door_config(c) == "build"]
+    # Both configs are NeMo rails. Without the package every scorer raises, the harness scores
+    # that 0, and "blocked 0 of 15" reads as a broken guardrail when it is a missing install.
+    try:
+        import nemoguardrails  # noqa: F401
+    except ImportError:
+        print(f"skipped {len(cases)} attack cases, not scored: nemoguardrails is not installed "
+              "(it is in the week6 group: uv run --group week6 python use_case/evals/run.py)")
+        return
     if build:
         # A scorer that raises scores 0 with no message, so reach the judge once first and say why not.
         why = None if injection_judge() else "INJECTION_MODEL/INJECTION_API_BASE is not set"
